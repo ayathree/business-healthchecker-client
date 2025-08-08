@@ -1,0 +1,89 @@
+[
+    {
+  "category": "Market and Customer",
+  "description": "Assesses your understanding of your market, customer base, and competitive landscape.",
+  "scoreTiers": [
+    {
+      "minScore": 0,
+      "maxScore": 38,
+      "tier": "Critical",
+      "advice": {
+        "message": "Your understanding of the market and customer base is critically lacking. Immediate action is needed.",
+        "specificActions": [
+          "Conduct thorough market research to understand customer needs and trends.",
+          "Identify your target customer segments clearly.",
+          "Perform a competitor analysis to benchmark your position."
+        ],
+        "resources": [
+          {
+            "title": "Customer Research Toolkit",
+            "url": "https://example.com/customer-research-toolkit"
+          },
+          {
+            "title": "Market Analysis Template",
+            "url": "https://example.com/market-analysis-template"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 39,
+      "maxScore": 62,
+      "tier": "Developing",
+      "advice": {
+        "message": "You have a basic understanding of your market and customers, but there is room for improvement.",
+        "specificActions": [
+          "Refine your customer personas.",
+          "Gather feedback through surveys or interviews.",
+          "Use data analytics to identify customer behavior patterns."
+        ],
+        "resources": [
+          {
+            "title": "Customer Persona Template",
+            "url": "https://example.com/customer-persona-template"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 63,
+      "maxScore": 81,
+      "tier": "Good",
+      "advice": {
+        "message": "You have a solid grasp of your market and customer needs. Consider optimizing your strategies further.",
+        "specificActions": [
+          "Leverage CRM tools to manage customer relationships.",
+          "Explore niche market opportunities.",
+          "Track customer satisfaction regularly."
+        ],
+        "resources": [
+          {
+            "title": "CRM Strategy Guide",
+            "url": "https://example.com/crm-strategy-guide"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 82,
+      "maxScore": 100,
+      "tier": "Excellent",
+      "advice": {
+        "message": "You have an excellent understanding of your market and customers. Focus on innovation and growth.",
+        "specificActions": [
+          "Implement advanced customer segmentation strategies.",
+          "Explore global market opportunities.",
+          "Invest in predictive analytics for customer trends."
+        ],
+        "resources": [
+          {
+            "title": "Advanced Market Strategies",
+            "url": "https://example.com/advanced-market-strategies"
+          }
+        ]
+      }
+    }
+  ]
+}
+
+]
