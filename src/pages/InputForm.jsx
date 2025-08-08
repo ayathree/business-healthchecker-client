@@ -43,7 +43,7 @@ const handleSubmit = (e) => {
   
     return (
         <div>
-            <p className="text-4xl text-center font-bold capitalize text-blue-500">plan<span className="text-red-500">B</span> solution</p>
+            <p className="text-4xl text-center font-bold capitalize text-blue-500 mt-16">plan<span className="text-red-500">B</span> solution</p>
             <p className="text-xl text-center font-bold capitalize mt-2">business health checker</p>
             <div className="mt-16 ">
                 <p className="text-xl text-center font-bold capitalize mt-2">please fill up this form</p>
