@@ -46,9 +46,9 @@ export function calculateMarketScores(formData) {
 
   // Q7: Competitors (0-3 points, reverse scaled)
   const competitorsNum = parseInt(formData.competitors) || 0;
-  if (competitorsNum <= 2) scores.competitors = 3;
+  if (competitorsNum <= 2) scores.competitors = 1;
   else if (competitorsNum <= 5) scores.competitors = 2;
-  else if (competitorsNum <= 10) scores.competitors = 1;
+  else if (competitorsNum <= 10) scores.competitors = 3;
 
   // Calculate total points (max 21)
   scores.totalPoints = 
