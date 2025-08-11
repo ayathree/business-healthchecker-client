@@ -84,6 +84,92 @@
       }
     }
   ]
-}
+},
+{
+    "category": "Goal And Vision",
+    "description": "Evaluates the clarity, documentation, and execution plan for your organization's long-term goals and vision.",
+    "scoreTiers": [
+      {
+        "minScore": 0,
+        "maxScore": 38,
+        "tier": "Critical",
+        "advice": {
+          "message": "Your organization lacks a clear or documented vision for the future. This can severely limit growth potential.",
+          "specificActions": [
+            "Define a clear 5-year vision or SMART goal for your organization.",
+            "Document your vision in writing and share it with your team.",
+            "Conduct strategy workshops to align stakeholders on long-term objectives."
+          ],
+          "resources": [
+            {
+              "title": "SMART Goals Guide",
+              "url": "https://example.com/smart-goals-guide"
+            },
+            {
+              "title": "Vision Statement Worksheet",
+              "url": "https://example.com/vision-statement-template"
+            }
+          ]
+        }
+      },
+      {
+        "minScore": 39,
+        "maxScore": 62,
+        "tier": "Developing",
+        "advice": {
+          "message": "You have some ideas for your vision or goals, but they are not fully documented or actionable.",
+          "specificActions": [
+            "Refine your long-term vision into measurable SMART goals.",
+            "Develop an actionable roadmap with milestones.",
+            "Ensure your goals are communicated to all team members."
+          ],
+          "resources": [
+            {
+              "title": "Business Vision Planning Toolkit",
+              "url": "https://example.com/business-vision-toolkit"
+            }
+          ]
+        }
+      },
+      {
+        "minScore": 63,
+        "maxScore": 81,
+        "tier": "Good",
+        "advice": {
+          "message": "Your vision and goals are clear and documented, but there is room to strengthen execution.",
+          "specificActions": [
+            "Review your action plan quarterly and adjust as needed.",
+            "Allocate resources to priority projects that align with your vision.",
+            "Monitor key performance indicators linked to your goals."
+          ],
+          "resources": [
+            {
+              "title": "Strategic Planning Guide",
+              "url": "https://example.com/strategic-planning-guide"
+            }
+          ]
+        }
+      },
+      {
+        "minScore": 82,
+        "maxScore": 100,
+        "tier": "Excellent",
+        "advice": {
+          "message": "You have a well-defined and documented vision with a strong execution plan. Focus on innovation to stay ahead.",
+          "specificActions": [
+            "Explore expansion opportunities aligned with your vision.",
+            "Invest in leadership development to support long-term growth.",
+            "Regularly revisit and update your vision to adapt to market changes."
+          ],
+          "resources": [
+            {
+              "title": "Advanced Strategic Visioning",
+              "url": "https://example.com/advanced-strategic-visioning"
+            }
+          ]
+        }
+      }
+    ]
+  }
 
 ]

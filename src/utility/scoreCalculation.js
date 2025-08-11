@@ -46,12 +46,12 @@ export function calculateMarketScores(formData) {
 
   // Q7: Competitors (0-3 points, reverse scaled)
   const competitorsNum = parseInt(formData.competitors) || 0;
-  if (competitorsNum <= 2) scores.competitors = 1;
-  else if (competitorsNum <= 5) scores.competitors = 2;
-  else if (competitorsNum <= 10) scores.competitors = 3;
+  if (competitorsNum <= 10) scores.competitors = 1;
+  else if (competitorsNum <= 1000) scores.competitors = 2;
+  else if (competitorsNum >= 1000) scores.competitors = 3;
 
   // Calculate total points (max 21)
-  scores.totalPoints = 
+  const totalPoints = 
     scores.marketScope +
     scores.marketSize +
     scores.marketTrend +
@@ -61,7 +61,7 @@ export function calculateMarketScores(formData) {
     scores.competitors;
 
   // Convert to percentage
-  scores.percentage = Math.round((scores.totalPoints / 21) * 100);
+  scores.percentage = Math.round((totalPoints / 21) * 100);
 
-  return scores;
+  return {...scores,totalPoints} ;
 }

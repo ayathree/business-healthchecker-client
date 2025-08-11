@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { calculateMarketScores } from "../utility/scoreCalculation";
 import { Link, useNavigate } from "react-router-dom";
+import { calculateVisionScores } from "../utility/goalAndVision";
+
 
 
 const InputForm = () => {
@@ -13,12 +15,33 @@ const[formData,setFormData]=useState({
     targetCustomer: "",    // Multiple choice (0-3)
     monthlyCustomers: "",  // Numeric input
     repeatCustomers: "",   // Percentage input
-    competitors: ""        // Numeric input
+    competitors: "",        // Numeric input
 })  
+
+const [goalVisionData,setGoalVisionData]=useState({
+    hasVision: '',
+    visionText: '',
+    hasActionPlan: '',
+    resourcePercentage: '',
+    hasSkilledManpower: ''
+  });
+
+
+ 
+
+
+  // const [results, setResults] = useState(null)
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setGoalVisionData(prev => ({ ...prev, [name]: value }));
+  // };
 
 const handleSubmit = (e) => {
     e.preventDefault();
     const scores = calculateMarketScores(formData);
+    const goalScore = calculateVisionScores(goalVisionData);
+   
+     const totalPoints = scores.totalPoints + goalScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
     const organization = form.organization.value;
@@ -31,13 +54,17 @@ const handleSubmit = (e) => {
     // Save to localStorage
   localStorage.setItem('businessHealthReport', JSON.stringify({ 
     scores, 
+    goalScore,
+    totalPoints,
     info,
     timestamp: new Date().toISOString() // Optional: add timestamp
   }));
-   navigate('/adviceReport');
+  //  navigate('/adviceReport');
     
     console.log(scores);
+    console.log(goalScore);
     console.log(info);
+    console.log(totalPoints);
     
   };
   
@@ -49,9 +76,10 @@ const handleSubmit = (e) => {
                 <p className="text-xl text-center font-bold capitalize mt-2">please fill up this form</p>
                 <div className="flex justify-center items-center mt-2">
                         <form onSubmit={handleSubmit} action="" className="">
-                      <div className=" border-2 border-blue-500 w-[70vw] h-100% py-10 px-20 flex flex-col items-start justify-center gap-4 mt-2 ">
+                      <div className=" border-2 border-blue-500 w-[70vw] h-100% py-10 px-20  mt-2 ">
                             {/* part 1 */}
-                        <p className="text-xl font-semibold text-blue-500">1. Basic Information:</p>
+                        <div className="flex flex-col items-start justify-center gap-4">
+                          <p className="text-xl font-semibold text-blue-500">1. Basic Information:</p>
                         <p className="text-lg text-blue-500">Please provide detailed information about your business.</p>
                             <label htmlFor="" className="font-semibold">1.1 Your Name:</label>
                             <input type="text" name="name" id="" className="outline-2 p-2 w-1/2"  />
@@ -67,8 +95,10 @@ const handleSubmit = (e) => {
                             <input type="text" name="number" id="" className="outline-2 p-2 w-1/2"  />
                             <label htmlFor="" className="font-semibold">1.7 Business Start Date or Year:</label>
                             <input type="text" name="year" id="" className="outline-2 p-2 w-1/2"  />
+                        </div>
                             {/* part 2 */}
-                            <p className="text-xl font-semibold text-blue-500 mt-10">2. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>
+                            <div className="flex flex-col items-start justify-center gap-4">
+                              <p className="text-xl font-semibold text-blue-500 mt-10">2. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>
                         <p className="text-lg font-semibold text-blue-500">Who is your ideal customer? Which market is ideal for you?</p>
                         <p  className="text-lg text-blue-500">Keep in mind that someone who tries to make a product for everyone, ends up making it for no one.Identify and understand your ideal customer.</p>
                             <label className="font-semibold">2.1 Where is your product's potential market?</label>
@@ -187,8 +217,73 @@ const handleSubmit = (e) => {
                             <input type="text" value={formData.repeatCustomers} onChange={(e) => setFormData({...formData, repeatCustomers: e.target.value})} name="" id="" className="outline-2 p-2 w-1/2"  />
                             <label htmlFor="" className="font-semibold">2.7 How many competitors operate in your potential market?(Enter number of businesses selling similar products)</label>
                             <input type="number" value={formData.competitors} onChange={(e) => setFormData({...formData, competitors: e.target.value})} name="" id="" className="outline-2 p-2 w-1/2"  />
-                        
-
+                            </div>
+                            {/* part 3 */}
+                            <div className="flex flex-col items-start justify-center gap-4">
+                              <p className="text-xl font-semibold text-blue-500 mt-10">3. Organization Brain Checkup (Vision or Goal)</p>
+                        <p className="text-lg font-semibold text-blue-500">Without a clear vision, a company cannot grow well. You should clearly write down where you want to see your organization in the next 3/5 years.</p>
+                        <label className="font-semibold">3.1 Do you have a written vision or SMART goal for the next 5 years?</label>
+                         {['written', 'inMind', 'noUnderstanding'].map((option) => (
+                         <label key={option} className="flex items-center gap-2">
+                           <input
+                             type="radio"
+                             name="hasVision"
+                             value={option}
+                             checked={goalVisionData.hasVision === option}
+                             onChange={(e) => setGoalVisionData({...goalVisionData, hasVision: e.target.value})}
+                             required
+                           />
+                           {option === 'written' && 'Yes, written form'}
+                           {option === 'inMind' && 'In mind but not written'}
+                           {option === 'noUnderstanding' && "Don't understand SMART goals"}
+                         </label>
+                       ))}
+                        <label className="font-semibold">3.2 Briefly write your vision or SMART goal for the next 5 years:</label>
+                        <textarea type="text" name="visionText" value={goalVisionData.visionText} onChange={(e) => setGoalVisionData({...goalVisionData, visionText: e.target.value})} rows={4} id="" className="outline-2 p-2 w-1/2 h-[180px]"  />
+                        <label className="font-semibold">3.3 Do you have an actionable plan to achieve your vision or goal?</label>
+                        {['yes', 'no'].map((option) => (
+                          <label key={option} className="flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="hasActionPlan"
+                              value={option}
+                              checked={goalVisionData.hasActionPlan === option}
+                              onChange={(e) => setGoalVisionData({...goalVisionData, hasActionPlan: e.target.value})}
+                              required
+                            />
+                            {option === 'yes' ? 'Yes, prepared plan' : 'No plan'}
+                          </label>
+                        ))}
+                        <label className="font-semibold">3.4 What percentage of the required resources to achieve your vision or goal do you currently have?</label>
+                         <div className="flex items-center gap-2">
+                          <span>0%</span>
+                          <input
+                            type="range"
+                            name="resourcePercentage"
+                            min="0"
+                            max="10"
+                            value={goalVisionData.resourcePercentage}
+                           onChange={(e) => setGoalVisionData({...goalVisionData, resourcePercentage: e.target.value})}
+                            className="flex-1"
+                            required
+                          />
+                          <span>100% ({goalVisionData.resourcePercentage || 0}/10)</span>
+                         </div>
+                         <label className="font-semibold">3.5 Do you have the skilled manpower required to achieve your vision or goal?</label>
+                         {['yes', 'no'].map((option) => (
+                          <label key={option} className="flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="hasSkilledManpower"
+                              value={option}
+                              checked={goalVisionData.hasSkilledManpower === option}
+                              onChange={(e) => setGoalVisionData({...goalVisionData, hasSkilledManpower: e.target.value})}
+                              required
+                            />
+                            {option === 'yes' ? 'Yes' : 'No'}
+                          </label>
+                        ))}
+                      </div>
                       </div>
                         <div className="mt-10 flex justify-center items-center mb-10">
                             <button className="bg-blue-500 text-white font-bold text-lg cursor-pointer btn hover:bg-slate-500 hover:text-black capitalize p-2 w-1/2 outline-2">submit</button>
