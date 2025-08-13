@@ -92,6 +92,7 @@
       {
         "minScore": 0,
         "maxScore": 38,
+        "name":"Goal And Vision",
         "tier": "Critical",
         "advice": {
           "message": "Your organization lacks a clear or documented vision for the future. This can severely limit growth potential.",
