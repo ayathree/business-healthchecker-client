@@ -388,6 +388,35 @@ const handleSubmit = (e) => {
                                   ))}
                                 </div>
                               </div>
+                            {/* part 5 */}
+                            <div className="flex flex-col items-start justify-center gap-4">
+                              <p className="text-xl font-semibold text-blue-500 mt-10">5. Blood Test (Finance / Productivity / Growth)</p>
+                        <p className="text-lg font-semibold text-blue-500">Profit in business is like blood. If you keep making a loss every month, your business will suffer from “anemia.” If this situation continues for a long time, the business will eventually weaken and shut down.</p>
+                        <label className="font-semibold">5.1 What is your average monthly sales revenue?(Please provide the average of your total sales for the last three months.)</label>
+                        <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                        <label className="font-semibold">5.2 What is your gross profit margin on sold products?(Selling Price − (Purchase Price + Packaging + Shipping). Write as a percentage.)</label>
+                        <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                        <label className="font-semibold">5.3 What is your organization’s monthly fixed cost? (excluding your own salary)(Office rent + utilities + staff salaries, etc. — expenses that must be paid every month.)</label>
+                         <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                         <label className="font-semibold">5.4 Do you have any loans? If yes, what is the monthly installment amount?</label>
+                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                          <label className="font-semibold">5.5 How much salary or honorarium do you take?</label>
+                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                          <label className="font-semibold">5.6 What is your organization’s daily production capacity for your main product?(How much of the product can you produce per day?)</label>
+                           <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                          <label className="font-semibold">5.7 Total amount of your investment:(How much capital have you invested so far? (Do not include reinvested profit from the business.))</label> 
+                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                          <label className="font-semibold">5.8 What is the current total value of your organization’s assets?(Include machinery, technology, goodwill, etc.)</label>
+                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                          <label className="font-semibold">5.9 In 2021 (Q4) (Oct'21 - Dec'21), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
+                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+                          <label className="font-semibold">5.10 In 2025 (Q1) (Jan'22 - Mar'22), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
+                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
+
+
+
+
+                            </div>
                         
                       </div>
                         <div className="mt-10 flex justify-center items-center mb-10">
