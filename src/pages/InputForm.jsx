@@ -2,6 +2,7 @@ import { useState } from "react";
 import { calculateMarketScores } from "../utility/scoreCalculation";
 import { Link, useNavigate } from "react-router-dom";
 import { calculateVisionScores } from "../utility/goalAndVision";
+import { calculateStrengthScores } from "../utility/strength";
 
 
 
@@ -27,21 +28,31 @@ const [goalVisionData,setGoalVisionData]=useState({
   });
 
 
- 
+  const [strengthFormData, setStrengthFormData] = useState({
+    employeeCount: '',
+    skillLevel: 5, // Default to middle value
+    operationalResilience: '',
+    marketingPlan: '',
+    usesSoftware: ''
+  });
+
+const handleChange = (e) => {
+    const { name, value } = e.target;
+    setStrengthFormData(prev => ({
+      ...prev,
+      [name]: name === 'skillLevel' ? parseInt(value) : value
+    }));
+  };
 
 
-  // const [results, setResults] = useState(null)
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setGoalVisionData(prev => ({ ...prev, [name]: value }));
-  // };
 
 const handleSubmit = (e) => {
     e.preventDefault();
     const scores = calculateMarketScores(formData);
     const goalScore = calculateVisionScores(goalVisionData);
+    const strengthScore = calculateStrengthScores(strengthFormData)
    
-     const totalPoints = scores.totalPoints + goalScore.totalPoints;
+     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
     const organization = form.organization.value;
@@ -55,6 +66,7 @@ const handleSubmit = (e) => {
   localStorage.setItem('businessHealthReport', JSON.stringify({ 
     scores, 
     goalScore,
+    strengthScore,
     totalPoints,
     info,
     timestamp: new Date().toISOString() // Optional: add timestamp
@@ -63,6 +75,7 @@ const handleSubmit = (e) => {
     
     console.log(scores);
     console.log(goalScore);
+    console.log(strengthScore);
     console.log(info);
     console.log(totalPoints);
     
@@ -231,7 +244,7 @@ const handleSubmit = (e) => {
                              value={option}
                              checked={goalVisionData.hasVision === option}
                              onChange={(e) => setGoalVisionData({...goalVisionData, hasVision: e.target.value})}
-                             required
+                            //  required
                            />
                            {option === 'written' && 'Yes, written form'}
                            {option === 'inMind' && 'In mind but not written'}
@@ -249,7 +262,7 @@ const handleSubmit = (e) => {
                               value={option}
                               checked={goalVisionData.hasActionPlan === option}
                               onChange={(e) => setGoalVisionData({...goalVisionData, hasActionPlan: e.target.value})}
-                              required
+                              // required
                             />
                             {option === 'yes' ? 'Yes, prepared plan' : 'No plan'}
                           </label>
@@ -278,12 +291,104 @@ const handleSubmit = (e) => {
                               value={option}
                               checked={goalVisionData.hasSkilledManpower === option}
                               onChange={(e) => setGoalVisionData({...goalVisionData, hasSkilledManpower: e.target.value})}
-                              required
+                              // required
                             />
                             {option === 'yes' ? 'Yes' : 'No'}
                           </label>
                         ))}
-                      </div>
+                             </div>
+                             {/* part 4 */}
+                             <div className="flex flex-col items-start justify-center gap-4">
+                              <p className="text-xl font-semibold text-blue-500 mt-10">4. Strength (Employees / System / Strategy)</p>
+                        <p className="text-lg font-semibold text-blue-500">For any organization to achieve its goals, the first requirement is the right strategy, and skilled manpower to execute it. Tell us about your organization’s strategy and workforce.</p>
+                        <label className="font-semibold">4.1 How many employees do you have in your organization? (excluding yourself)</label>
+                         <input 
+                          type="number" 
+                          name="employeeCount"
+                          value={strengthFormData.employeeCount}
+                          onChange={handleChange}
+                          className="border rounded-lg p-2 w-full md:w-1/2"
+                          min="0"
+                        />
+                         <label className="font-semibold">4.2 Rate the skill level of your employees.</label>
+                             <div className="flex items-center gap-4 w-full md:w-1/2">
+                              <span className="text-sm text-gray-500">1 (Low)</span>
+                              <input
+                                type="range"
+                                name="skillLevel"
+                                min="1"
+                                max="10"
+                                value={strengthFormData.skillLevel}
+                                onChange={handleChange}
+                                className="flex-1"
+                              />
+                              <span className="text-sm text-gray-500">10 (High)</span>
+                            </div>
+                            <div className="text-center mt-1 text-blue-600 font-medium">
+                              Current: {strengthFormData.skillLevel}/10
+                            </div>
+                         <label className="font-semibold">4.3 In your absence, can your organization operate without any disruption?</label>
+                         <div className="space-y-2">
+                           {[
+                             { value: "yes", label: "Yes, it can run without any problem", score: 3 },
+                             { value: "somewhat", label: "It can run to some extent, but not for long", score: 1 },
+                             { value: "no", label: "No, without me the organization would shut down", score: 0 }
+                           ].map((option) => (
+                             <label key={option.value} className="flex items-center gap-2">
+                               <input
+                                 type="radio"
+                                 name="operationalResilience"
+                                 value={option.value}
+                                 checked={strengthFormData.operationalResilience === option.value}
+                                 onChange={handleChange}
+                                 className="h-4 w-4"
+                               />
+                               {option.label}
+                             </label>
+                           ))}
+                         </div>
+                         <label className="font-semibold">4.4 Does your organization follow any strategic marketing plan?</label> 
+                         <div className="space-y-2">
+                            {[
+                              { value: "yes", label: "Yes, everything is done according to the plan", score: 3 },
+                              { value: "no", label: "No, we do not follow any strategic planning in that way", score: 1 },
+                              { value: "none", label: "No strategic marketing plan has been created", score: 0 }
+                            ].map((option) => (
+                              <label key={option.value} className="flex items-center gap-2">
+                                <input
+                                  type="radio"
+                                  name="marketingPlan"
+                                  value={option.value}
+                                  checked={strengthFormData.marketingPlan === option.value}
+                                  onChange={handleChange}
+                                  className="h-4 w-4"
+                                />
+                                {option.label}
+                              </label>
+                            ))}
+                          </div>
+
+                         <label className="font-semibold">4.5 Do you use any software to manage your organization?</label>
+                        <div className="space-y-2">
+                                  {[
+                                    { value: "yes", label: "Yes, we use software", score: 3 },
+                                    { value: "no", label: "No, we do not use any software", score: 0 }
+                                  ].map((option) => (
+                                    <label key={option.value} className="flex items-center gap-2">
+                                      <input
+                                        type="radio"
+                                        name="usesSoftware"
+                                        value={option.value}
+                                        checked={strengthFormData.usesSoftware === option.value}
+                                        onChange={handleChange}
+                                        className="h-4 w-4"
+                                      />
+                                      {option.label}
+                                    </label>
+                                  ))}
+                                </div>
+                              </div>
+                        
                       </div>
                         <div className="mt-10 flex justify-center items-center mb-10">
                             <button className="bg-blue-500 text-white font-bold text-lg cursor-pointer btn hover:bg-slate-500 hover:text-black capitalize p-2 w-1/2 outline-2">submit</button>

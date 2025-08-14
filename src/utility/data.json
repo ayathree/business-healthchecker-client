@@ -171,6 +171,93 @@
         }
       }
     ]
-  }
+  },
+  {
+  "category": "Strength (Employees / System / Strategy)",
+  "description": "Assesses the organization's manpower, operational systems, and strategic planning effectiveness.",
+  "scoreTiers": [
+    {
+      "minScore": 0,
+      "maxScore": 38,
+      "tier": "Critical",
+      "advice": {
+        "message": "Your organization lacks the necessary manpower, systems, or strategy to operate effectively.",
+        "specificActions": [
+          "Recruit and train employees to fill key skill gaps.",
+          "Implement basic operational systems to ensure smooth workflow.",
+          "Develop a foundational strategic marketing plan."
+        ],
+        "resources": [
+          {
+            "title": "Team Building Guide",
+            "url": "https://example.com/team-building-guide"
+          },
+          {
+            "title": "Basic Operations Toolkit",
+            "url": "https://example.com/basic-operations-toolkit"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 39,
+      "maxScore": 62,
+      "tier": "Developing",
+      "advice": {
+        "message": "You have some manpower and systems in place, but they are not yet optimal for growth.",
+        "specificActions": [
+          "Enhance employee skill development programs.",
+          "Refine operational processes for better efficiency.",
+          "Create a detailed strategic marketing plan with timelines."
+        ],
+        "resources": [
+          {
+            "title": "Operational Efficiency Playbook",
+            "url": "https://example.com/operational-efficiency"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 63,
+      "maxScore": 81,
+      "tier": "Good",
+      "advice": {
+        "message": "Your organization has solid manpower, systems, and strategies. Focus on optimization.",
+        "specificActions": [
+          "Introduce automation tools to streamline operations.",
+          "Implement leadership training for mid-level managers.",
+          "Regularly update your strategic marketing plan to reflect market changes."
+        ],
+        "resources": [
+          {
+            "title": "Automation Tools Guide",
+            "url": "https://example.com/automation-tools"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 82,
+      "maxScore": 100,
+      "tier": "Excellent",
+      "advice": {
+        "message": "You have excellent manpower, systems, and strategies in place. Focus on innovation and scaling.",
+        "specificActions": [
+          "Expand into new markets leveraging your existing strengths.",
+          "Invest in advanced technologies to further enhance productivity.",
+          "Mentor other businesses or participate in industry leadership initiatives."
+        ],
+        "resources": [
+          {
+            "title": "Scaling Strategies Guide",
+            "url": "https://example.com/scaling-strategies"
+          }
+        ]
+      }
+    }
+  ]
+}
+
 
 ]

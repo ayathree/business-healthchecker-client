@@ -26,7 +26,7 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore,  totalPoints } = reportData;
+  const { scores, info, goalScore, strengthScore, totalPoints } = reportData;
 
   const getAdviceForScore = (category, percentage) => {
     const categoryData = adviceData.find(item => item.category === category);
@@ -42,6 +42,9 @@ const AdviceReport = () => {
 
     const visionAdvice = getAdviceForScore("Goal And Vision", goalScore.percentage);
   console.log("Vision Advice:", visionAdvice); // helpful debug
+
+  const strengthAdvice = getAdviceForScore("Strength (Employees / System / Strategy)", strengthScore.percentage);
+  console.log("Strength Advice:", strengthAdvice); // helpful debug
 
   const generatePDF = async () => {
     const element = document.getElementById('report-content');
@@ -149,6 +152,14 @@ const AdviceReport = () => {
                 style={{ width: `${goalScore.percentage}%` }}
               ></div>
             </div>
+            <h3 className="text-lg font-medium text-blue-600 mt-4">Strength (Employees / System / Strategy)</h3>
+            <p>Score: {strengthScore.percentage}%</p>
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+              <div
+                className="bg-blue-600 h-4 rounded-full"
+                style={{ width: `${strengthScore.percentage}%` }}
+              ></div>
+            </div>
           </div>
 
           
@@ -235,6 +246,52 @@ const AdviceReport = () => {
                 <h4 className="font-medium mb-2">Helpful Resources:</h4>
                 <div className="space-y-2">
                   {visionAdvice.advice.resources.map((resource, index) => (
+                    <a
+                      key={index}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: '#1d4ed8', textDecoration: 'underline' }}
+                    >
+                      {resource.title}
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500">No advice available for this score range.</p>
+        )}
+        {strengthAdvice ? (
+          <div
+            className="p-4 rounded-lg"
+            style={{
+              backgroundColor: getTierBackgroundColor(strengthAdvice.tier),
+              color: getTierTextColor(strengthAdvice.tier),
+              border: '1px solid #ccc'
+            }}
+          >
+             <h3 className="text-2xl font-bold mb-2">Strength (Employees / System / Strategy)</h3>
+            <h3 className="text-lg font-medium mb-2">{strengthAdvice.tier} Status</h3>
+            <p className="mb-4">{strengthAdvice.advice.message}</p>
+
+            {strengthAdvice.advice.specificActions?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Recommended Actions:</h4>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  {strengthAdvice.advice.specificActions.map((action, index) => (
+                    <li key={index}>{action}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {strengthAdvice.advice.resources?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Helpful Resources:</h4>
+                <div className="space-y-2">
+                  {strengthAdvice.advice.resources.map((resource, index) => (
                     <a
                       key={index}
                       href={resource.url}
