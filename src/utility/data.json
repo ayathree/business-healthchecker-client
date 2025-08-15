@@ -257,7 +257,94 @@
       }
     }
   ]
+},
+{
+  "category": "Blood Test (Finance / Productivity / Growth)",
+  "description": "Evaluates the financial health, productivity levels, and growth potential of your business.",
+  "scoreTiers": [
+    {
+      "minScore": 0,
+      "maxScore": 38,
+      "tier": "Critical",
+      "advice": {
+        "message": "Your financial stability and productivity are at a critical level, putting your business at high risk.",
+        "specificActions": [
+          "Reduce unnecessary expenses and optimize your cost structure.",
+          "Focus on increasing sales through targeted marketing campaigns.",
+          "Improve cash flow management to cover monthly fixed costs."
+        ],
+        "resources": [
+          {
+            "title": "Cash Flow Management Guide",
+            "url": "https://example.com/cash-flow-management"
+          },
+          {
+            "title": "Sales Growth Strategies",
+            "url": "https://example.com/sales-growth-strategies"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 39,
+      "maxScore": 62,
+      "tier": "Developing",
+      "advice": {
+        "message": "Your finances and productivity are functional but leave room for improvement in profitability and growth.",
+        "specificActions": [
+          "Increase profit margins by renegotiating supplier costs.",
+          "Boost production efficiency with better planning and resource allocation.",
+          "Set quarterly financial and productivity targets."
+        ],
+        "resources": [
+          {
+            "title": "Profit Margin Improvement Toolkit",
+            "url": "https://example.com/profit-margin-toolkit"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 63,
+      "maxScore": 81,
+      "tier": "Good",
+      "advice": {
+        "message": "Your business shows solid financial and productivity performance. Focus on scaling and sustained growth.",
+        "specificActions": [
+          "Reinvest profits into technology and skilled manpower.",
+          "Expand production capacity to meet growing demand.",
+          "Track customer acquisition and retention costs to maximize ROI."
+        ],
+        "resources": [
+          {
+            "title": "Scaling Your Business Guide",
+            "url": "https://example.com/scaling-guide"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 82,
+      "maxScore": 100,
+      "tier": "Excellent",
+      "advice": {
+        "message": "Your financial performance and productivity are excellent. Focus on innovation and market leadership.",
+        "specificActions": [
+          "Diversify your product or service portfolio.",
+          "Enter new markets to expand customer base.",
+          "Invest in advanced productivity tools and data analytics."
+        ],
+        "resources": [
+          {
+            "title": "Advanced Growth Strategies",
+            "url": "https://example.com/advanced-growth-strategies"
+          }
+        ]
+      }
+    }
+  ]
 }
+
 
 
 ]

@@ -96,7 +96,7 @@ const handleSubmit = (e) => {
     info,
     timestamp: new Date().toISOString() // Optional: add timestamp
   }));
-  //  navigate('/adviceReport');
+   navigate('/adviceReport');
     
     console.log(scores);
     console.log(goalScore);

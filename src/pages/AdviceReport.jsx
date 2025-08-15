@@ -26,7 +26,7 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore, strengthScore, totalPoints } = reportData;
+  const { scores, info, goalScore, strengthScore, bloodTestScore, totalPoints } = reportData;
 
   const getAdviceForScore = (category, percentage) => {
     const categoryData = adviceData.find(item => item.category === category);
@@ -45,6 +45,9 @@ const AdviceReport = () => {
 
   const strengthAdvice = getAdviceForScore("Strength (Employees / System / Strategy)", strengthScore.percentage);
   console.log("Strength Advice:", strengthAdvice); // helpful debug
+
+  const bloodTestAdvice = getAdviceForScore("Blood Test (Finance / Productivity / Growth)", bloodTestScore.percentage);
+  console.log("Strength Advice:", bloodTestAdvice); // helpful debug
 
   const generatePDF = async () => {
     const element = document.getElementById('report-content');
@@ -136,7 +139,7 @@ const AdviceReport = () => {
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="mb-4">
             <p className="text-xl font-semibold mb-4">Total Score: {totalPoints}</p>
-            <h3 className="text-lg font-medium text-blue-600">Market & Customers</h3>
+            <h3 className="text-lg font-medium text-blue-600 capitalize">Institutional eye, mouth and ear examination</h3>
             <p>Score: {scores.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
@@ -144,7 +147,7 @@ const AdviceReport = () => {
                 style={{ width: `${scores.percentage}%` }}
               ></div>
             </div>
-            <h3 className="text-lg font-medium text-blue-600 mt-4">Vision and Goals</h3>
+            <h3 className="text-lg font-medium text-blue-600 mt-4">Brain Checkup</h3>
             <p>Score: {goalScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
@@ -152,12 +155,20 @@ const AdviceReport = () => {
                 style={{ width: `${goalScore.percentage}%` }}
               ></div>
             </div>
-            <h3 className="text-lg font-medium text-blue-600 mt-4">Strength (Employees / System / Strategy)</h3>
+            <h3 className="text-lg font-medium text-blue-600 mt-4">Strength</h3>
             <p>Score: {strengthScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
                 style={{ width: `${strengthScore.percentage}%` }}
+              ></div>
+            </div>
+             <h3 className="text-lg font-medium text-blue-600 mt-4">Blood Test</h3>
+            <p>Score: {bloodTestScore.percentage}%</p>
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+              <div
+                className="bg-blue-600 h-4 rounded-full"
+                style={{ width: `${bloodTestScore.percentage}%` }}
               ></div>
             </div>
           </div>
@@ -179,7 +190,7 @@ const AdviceReport = () => {
               border: '1px solid #ccc'
             }}
           >
-             <h3 className="text-2xl font-bold mb-2">Market and Customer</h3>
+             <h3 className="text-2xl font-bold mb-2 capitalize">Institutional eye, mouth and ear examination</h3>
             <h3 className="text-lg font-medium mb-2">{marketAdvice.tier} Status</h3>
             <p className="mb-4">{marketAdvice.advice.message}</p>
 
@@ -226,7 +237,7 @@ const AdviceReport = () => {
               border: '1px solid #ccc'
             }}
           >
-             <h3 className="text-2xl font-bold mb-2">Vision and Goal</h3>
+             <h3 className="text-2xl font-bold mb-2">Brain Checkup</h3>
             <h3 className="text-lg font-medium mb-2">{visionAdvice.tier} Status</h3>
             <p className="mb-4">{visionAdvice.advice.message}</p>
 
@@ -272,7 +283,7 @@ const AdviceReport = () => {
               border: '1px solid #ccc'
             }}
           >
-             <h3 className="text-2xl font-bold mb-2">Strength (Employees / System / Strategy)</h3>
+             <h3 className="text-2xl font-bold mb-2">Strength</h3>
             <h3 className="text-lg font-medium mb-2">{strengthAdvice.tier} Status</h3>
             <p className="mb-4">{strengthAdvice.advice.message}</p>
 
@@ -292,6 +303,52 @@ const AdviceReport = () => {
                 <h4 className="font-medium mb-2">Helpful Resources:</h4>
                 <div className="space-y-2">
                   {strengthAdvice.advice.resources.map((resource, index) => (
+                    <a
+                      key={index}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: '#1d4ed8', textDecoration: 'underline' }}
+                    >
+                      {resource.title}
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500">No advice available for this score range.</p>
+        )}
+        {bloodTestAdvice ? (
+          <div
+            className="p-4 rounded-lg"
+            style={{
+              backgroundColor: getTierBackgroundColor(bloodTestAdvice.tier),
+              color: getTierTextColor(bloodTestAdvice.tier),
+              border: '1px solid #ccc'
+            }}
+          >
+             <h3 className="text-2xl font-bold mb-2">Blood Test</h3>
+            <h3 className="text-lg font-medium mb-2">{bloodTestAdvice.tier} Status</h3>
+            <p className="mb-4">{bloodTestAdvice.advice.message}</p>
+
+            {bloodTestAdvice.advice.specificActions?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Recommended Actions:</h4>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  {bloodTestAdvice.advice.specificActions.map((action, index) => (
+                    <li key={index}>{action}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {bloodTestAdvice.advice.resources?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Helpful Resources:</h4>
+                <div className="space-y-2">
+                  {bloodTestAdvice.advice.resources.map((resource, index) => (
                     <a
                       key={index}
                       href={resource.url}
