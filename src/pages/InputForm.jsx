@@ -3,11 +3,14 @@ import { calculateMarketScores } from "../utility/scoreCalculation";
 import { Link, useNavigate } from "react-router-dom";
 import { calculateVisionScores } from "../utility/goalAndVision";
 import { calculateStrengthScores } from "../utility/strength";
+import { calculateBloodTestScores } from "../utility/bloodTest";
 
 
 
 const InputForm = () => {
     const navigate=useNavigate()
+    const currentYear = new Date().getFullYear();
+    const previousYear = currentYear - 1;
 
 const[formData,setFormData]=useState({
     marketScope: "",       // Multiple choice (1-3)
@@ -36,6 +39,20 @@ const [goalVisionData,setGoalVisionData]=useState({
     usesSoftware: ''
   });
 
+  const [bloodTestFormData, setBloodTestFormData] = useState({
+    avgMonthlyRevenue: '',
+    grossProfitMargin: '',
+    monthlyFixedCost: '',
+    hasLoan: '',
+    loanInstallment: '',
+    ownerSalary: '',
+    dailyProduction: '',
+    totalInvestment: '',
+    totalAssets: '',
+    customersQ4_2021: '',
+    customersQ1_2025: ''
+  });
+
 const handleChange = (e) => {
     const { name, value } = e.target;
     setStrengthFormData(prev => ({
@@ -44,15 +61,22 @@ const handleChange = (e) => {
     }));
   };
 
+  const handleBloodTestInputChange = (e) => {
+    const { name, value } = e.target;
+    setBloodTestFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+
 
 
 const handleSubmit = (e) => {
     e.preventDefault();
     const scores = calculateMarketScores(formData);
     const goalScore = calculateVisionScores(goalVisionData);
-    const strengthScore = calculateStrengthScores(strengthFormData)
+    const strengthScore = calculateStrengthScores(strengthFormData);
+    const bloodTestScore= calculateBloodTestScores(bloodTestFormData)
    
-     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints;
+     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
     const organization = form.organization.value;
@@ -67,15 +91,17 @@ const handleSubmit = (e) => {
     scores, 
     goalScore,
     strengthScore,
+    bloodTestScore,
     totalPoints,
     info,
     timestamp: new Date().toISOString() // Optional: add timestamp
   }));
-   navigate('/adviceReport');
+  //  navigate('/adviceReport');
     
     console.log(scores);
     console.log(goalScore);
     console.log(strengthScore);
+    console.log(bloodTestScore);
     console.log(info);
     console.log(totalPoints);
     
@@ -389,34 +415,116 @@ const handleSubmit = (e) => {
                                 </div>
                               </div>
                             {/* part 5 */}
-                            <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">5. Blood Test (Finance / Productivity / Growth)</p>
-                        <p className="text-lg font-semibold text-blue-500">Profit in business is like blood. If you keep making a loss every month, your business will suffer from “anemia.” If this situation continues for a long time, the business will eventually weaken and shut down.</p>
-                        <label className="font-semibold">5.1 What is your average monthly sales revenue?(Please provide the average of your total sales for the last three months.)</label>
-                        <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                        <label className="font-semibold">5.2 What is your gross profit margin on sold products?(Selling Price − (Purchase Price + Packaging + Shipping). Write as a percentage.)</label>
-                        <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                        <label className="font-semibold">5.3 What is your organization’s monthly fixed cost? (excluding your own salary)(Office rent + utilities + staff salaries, etc. — expenses that must be paid every month.)</label>
-                         <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                         <label className="font-semibold">5.4 Do you have any loans? If yes, what is the monthly installment amount?</label>
-                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                          <label className="font-semibold">5.5 How much salary or honorarium do you take?</label>
-                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                          <label className="font-semibold">5.6 What is your organization’s daily production capacity for your main product?(How much of the product can you produce per day?)</label>
-                           <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                          <label className="font-semibold">5.7 Total amount of your investment:(How much capital have you invested so far? (Do not include reinvested profit from the business.))</label> 
-                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                          <label className="font-semibold">5.8 What is the current total value of your organization’s assets?(Include machinery, technology, goodwill, etc.)</label>
-                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                          <label className="font-semibold">5.9 In 2021 (Q4) (Oct'21 - Dec'21), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
-                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-                          <label className="font-semibold">5.10 In 2025 (Q1) (Jan'22 - Mar'22), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
-                          <input type="number" value={''} onChange={''} name="" id="" className="outline-2 p-2 w-1/2"  />
-
-
-
-
-                            </div>
+                             <div className="flex flex-col items-start justify-center gap-4">
+                       <p className="text-xl font-semibold text-blue-500 mt-10">5. Blood Test (Finance / Productivity / Growth)</p>
+                       <p className="text-lg font-semibold text-blue-500">Profit in business is like blood. If you keep making a loss every month, your business will suffer from "anemia." If this situation continues for a long time, the business will eventually weaken and shut down.</p>
+                       
+                       <label className="font-semibold">5.1 What is your average monthly sales revenue?(Please provide the average of your total sales for the last three months.)</label>
+                       <input 
+                         type="number" 
+                         value={formData.avgMonthlyRevenue} 
+                         onChange={handleBloodTestInputChange} 
+                         name="avgMonthlyRevenue" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.2 What is your gross profit margin on sold products?(Selling Price − (Purchase Price + Packaging + Shipping). Write as a percentage.)</label>
+                       <input 
+                         type="number" 
+                         value={formData.grossProfitMargin} 
+                         onChange={handleBloodTestInputChange} 
+                         name="grossProfitMargin" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.3 What is your organization's monthly fixed cost? (excluding your own salary)(Office rent + utilities + staff salaries, etc. — expenses that must be paid every month.)</label>
+                       <input 
+                         type="number" 
+                         value={formData.monthlyFixedCost} 
+                         onChange={handleBloodTestInputChange} 
+                         name="monthlyFixedCost" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.4 Do you have any loans?</label>
+                       <select 
+                         value={formData.hasLoan} 
+                         onChange={handleBloodTestInputChange} 
+                         name="hasLoan" 
+                         className="outline-2 p-2 w-1/2"
+                       >
+                         <option value="">Select</option>
+                         <option value="yes">Yes</option>
+                         <option value="no">No</option>
+                       </select>
+                       
+                       {formData.hasLoan === 'yes' && (
+                         <>
+                           <label className="font-semibold">If yes, what is the monthly installment amount?</label>
+                           <input 
+                             type="number" 
+                             value={formData.loanInstallment} 
+                             onChange={handleBloodTestInputChange} 
+                             name="loanInstallment" 
+                             className="outline-2 p-2 w-1/2" 
+                           />
+                         </>
+                       )}
+                       
+                       <label className="font-semibold">5.5 How much salary or honorarium do you take?</label>
+                       <input 
+                         type="number" 
+                         value={formData.ownerSalary} 
+                         onChange={handleBloodTestInputChange} 
+                         name="ownerSalary" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.6 What is your organization's daily production capacity for your main product?(How much of the product can you produce per day?)</label>
+                       <input 
+                         type="number" 
+                         value={formData.dailyProduction} 
+                         onChange={handleBloodTestInputChange} 
+                         name="dailyProduction" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.7 Total amount of your investment:(How much capital have you invested so far? (Do not include reinvested profit from the business.))</label> 
+                       <input 
+                         type="number" 
+                         value={formData.totalInvestment} 
+                         onChange={handleBloodTestInputChange} 
+                         name="totalInvestment" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.8 What is the current total value of your organization's assets?(Include machinery, technology, goodwill, etc.)</label>
+                       <input 
+                         type="number" 
+                         value={formData.totalAssets} 
+                         onChange={handleBloodTestInputChange} 
+                         name="totalAssets" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.9 In 2021 (Q4) (Oct'21 - Dec'21), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
+                       <input 
+                         type="number" 
+                         value={formData.customersQ4_2021} 
+                         onChange={handleBloodTestInputChange} 
+                         name="customersQ4_2021" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                       
+                       <label className="font-semibold">5.10 In {currentYear} (Q1) (Jan'{currentYear.toString().slice(-2)} - Mar'{currentYear.toString().slice(-2)}), how many total customers purchased products?  (Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
+                       <input 
+                         type="number" 
+                         value={formData.customersQ1_2025} 
+                         onChange={handleBloodTestInputChange} 
+                         name="customersQ1_2025" 
+                         className="outline-2 p-2 w-1/2" 
+                       />
+                     </div>
                         
                       </div>
                         <div className="mt-10 flex justify-center items-center mb-10">
