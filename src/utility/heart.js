@@ -43,5 +43,5 @@ const totalPoints =
     
   scores.percentage = Math.round((totalPoints / 15) * 100);
 
-  return{...scores, totalPoints};
+  return {...scores, totalPoints};
 }

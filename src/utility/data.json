@@ -429,7 +429,94 @@
       }
     }
   ]
+},
+{
+  "category": "Outlooking (Visibility)",
+  "description": "Assesses the digital presence and visibility of your organization across social media and online platforms.",
+  "scoreTiers": [
+    {
+      "minScore": 0,
+      "maxScore": 38,
+      "tier": "Critical",
+      "advice": {
+        "message": "Your business has very low online visibility. Customers may not be able to easily find or connect with you online.",
+        "specificActions": [
+          "Create or optimize your Facebook, Instagram, and YouTube pages.",
+          "Post consistently to build a minimum level of brand awareness.",
+          "Run small paid campaigns to boost reach and engagement."
+        ],
+        "resources": [
+          {
+            "title": "Beginner’s Guide to Social Media Marketing",
+            "url": "https://example.com/social-media-basics"
+          },
+          {
+            "title": "How to Create a Business Facebook Page",
+            "url": "https://example.com/facebook-page-guide"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 39,
+      "maxScore": 62,
+      "tier": "Developing",
+      "advice": {
+        "message": "Your online visibility is developing but still limited. You need stronger engagement and consistent branding.",
+        "specificActions": [
+          "Increase posting frequency with engaging and visual content.",
+          "Encourage customers to follow and review your business online.",
+          "Collaborate with influencers or partners to expand visibility."
+        ],
+        "resources": [
+          {
+            "title": "Instagram Growth Checklist",
+            "url": "https://example.com/instagram-growth"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 63,
+      "maxScore": 81,
+      "tier": "Good",
+      "advice": {
+        "message": "Your online visibility is strong, and you have an active social media presence. Focus on strategic growth.",
+        "specificActions": [
+          "Use analytics to identify which platforms bring the most engagement.",
+          "Experiment with video content to increase reach and retention.",
+          "Invest in branded content campaigns to strengthen positioning."
+        ],
+        "resources": [
+          {
+            "title": "YouTube Content Strategy Guide",
+            "url": "https://example.com/youtube-strategy"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 82,
+      "maxScore": 100,
+      "tier": "Excellent",
+      "advice": {
+        "message": "Your online visibility is excellent. You have a strong digital footprint across platforms. Leverage it for leadership and scaling.",
+        "specificActions": [
+          "Expand into new platforms such as LinkedIn or TikTok to diversify reach.",
+          "Run advanced ad campaigns with retargeting to maximize ROI.",
+          "Position your brand as an industry leader through thought leadership content."
+        ],
+        "resources": [
+          {
+            "title": "Advanced Digital Marketing Playbook",
+            "url": "https://example.com/advanced-digital-marketing"
+          }
+        ]
+      }
+    }
+  ]
 }
+
 
 
 

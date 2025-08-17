@@ -5,6 +5,7 @@ import { calculateVisionScores } from "../utility/goalAndVision";
 import { calculateStrengthScores } from "../utility/strength";
 import { calculateBloodTestScores } from "../utility/bloodTest";
 import { calculateHeartScores } from "../utility/heart";
+import { calculateVisibilityScores } from "../utility/visibility";
 
 
 
@@ -62,6 +63,13 @@ const [goalVisionData,setGoalVisionData]=useState({
     dateLabeling: '',
   });
 
+  const [visibilityData, setVisibilityData] = useState({
+    facebookLikes: '',
+    instagramFollowers: '',
+    youtubeSubscribers: '',
+    postReach: ''
+  });
+
 const handleChange = (e) => {
     const { name, value } = e.target;
     setStrengthFormData(prev => ({
@@ -83,6 +91,14 @@ const handleChange = (e) => {
     }));
   }
 
+   const handleVisibilityInputChange = (e) => {
+    const { name, value } = e.target;
+    setVisibilityData(prev => ({
+      ...prev,
+      [name]: value.replace(/\D/g, '') // Allow only numbers
+    }));
+  };
+
 
 
 
@@ -93,8 +109,9 @@ const handleSubmit = (e) => {
     const strengthScore = calculateStrengthScores(strengthFormData);
     const bloodTestScore= calculateBloodTestScores(bloodTestFormData);
     const heartScore=calculateHeartScores(heartData)
+    const visibilityScore=calculateVisibilityScores(visibilityData)
    
-     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints + heartScore.totalPoints;
+     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints + heartScore.totalPoints + visibilityScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
     const organization = form.organization.value;
@@ -111,6 +128,7 @@ const handleSubmit = (e) => {
     strengthScore,
     bloodTestScore,
     heartScore,
+    visibilityScore,
     totalPoints,
     info,
     timestamp: new Date().toISOString() // Optional: add timestamp
@@ -122,6 +140,7 @@ const handleSubmit = (e) => {
     console.log(strengthScore);
     console.log(bloodTestScore);
     console.log(heartScore);
+    console.log(visibilityScore);
     console.log(info);
     console.log(totalPoints);
     
@@ -155,12 +174,12 @@ const handleSubmit = (e) => {
                             <label htmlFor="" className="font-semibold">1.7 Business Start Date or Year:</label>
                             <input type="text" name="year" id="" className="outline-2 p-2 w-1/2"  />
                         </div>
-                            {/* part 2 */}
+                            {/* part 3 */}
                             <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">2. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>
+                              <p className="text-xl font-semibold text-blue-500 mt-10">3. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>
                         <p className="text-lg font-semibold text-blue-500">Who is your ideal customer? Which market is ideal for you?</p>
                         <p  className="text-lg text-blue-500">Keep in mind that someone who tries to make a product for everyone, ends up making it for no one.Identify and understand your ideal customer.</p>
-                            <label className="font-semibold">2.1 Where is your product's potential market?</label>
+                            <label className="font-semibold">3.1 Where is your product's potential market?</label>
                            <div className="flex flex-col gap-2">
                               <label>
                                 <input
@@ -196,9 +215,9 @@ const handleSubmit = (e) => {
                                 International market
                               </label>
                             </div>
-                            <label htmlFor="" className="font-semibold">2.2 Approximately how many customers exist in your potential market?(Enter estimated number in thousands/lakhs)</label>
+                            <label htmlFor="" className="font-semibold">3.2 Approximately how many customers exist in your potential market?(Enter estimated number in thousands/lakhs)</label>
                             <input type="number" value={formData.marketSize} onChange={(e) => setFormData({...formData, marketSize: e.target.value})} name="" id="" className="outline-2 p-2 w-1/2"  />
-                            <label className="font-semibold">2.3 Is your market expanding or contracting?</label>
+                            <label className="font-semibold">3.3 Is your market expanding or contracting?</label>
                             <div className="flex flex-col gap-2">
                               <label>
                                 <input
@@ -234,7 +253,7 @@ const handleSubmit = (e) => {
                                 Contracting market
                               </label>
                             </div>
-                            <label className="font-semibold">2.4 Have you identified your target customer profile?</label>
+                            <label className="font-semibold">3.4 Have you identified your target customer profile?</label>
                             <div className="flex flex-col gap-2">
                               <label>
                                 <input
@@ -270,18 +289,18 @@ const handleSubmit = (e) => {
                                 Don't know how to identify customers
                               </label>
                             </div>
-                            <label htmlFor="" className="font-semibold">2.5 Average number of customers purchasing your product monthly?(Enter approximate number)</label>
+                            <label htmlFor="" className="font-semibold">3.5 Average number of customers purchasing your product monthly?(Enter approximate number)</label>
                             <input type="number" value={formData.monthlyCustomers} onChange={(e) => setFormData({...formData, monthlyCustomers: e.target.value})} name="" id="" className="outline-2 p-2 w-1/2"  />
-                            <label htmlFor="" className="font-semibold">2.6 What percentage of your monthly customers are repeat buyers?</label>
+                            <label htmlFor="" className="font-semibold">3.6 What percentage of your monthly customers are repeat buyers?</label>
                             <input type="text" value={formData.repeatCustomers} onChange={(e) => setFormData({...formData, repeatCustomers: e.target.value})} name="" id="" className="outline-2 p-2 w-1/2"  />
-                            <label htmlFor="" className="font-semibold">2.7 How many competitors operate in your potential market?(Enter number of businesses selling similar products)</label>
+                            <label htmlFor="" className="font-semibold">3.7 How many competitors operate in your potential market?(Enter number of businesses selling similar products)</label>
                             <input type="number" value={formData.competitors} onChange={(e) => setFormData({...formData, competitors: e.target.value})} name="" id="" className="outline-2 p-2 w-1/2"  />
                             </div>
-                            {/* part 3 */}
+                            {/* part 4 */}
                             <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">3. Organization Brain Checkup (Vision or Goal)</p>
+                              <p className="text-xl font-semibold text-blue-500 mt-10">4. Organization Brain Checkup (Vision or Goal)</p>
                         <p className="text-lg font-semibold text-blue-500">Without a clear vision, a company cannot grow well. You should clearly write down where you want to see your organization in the next 3/5 years.</p>
-                        <label className="font-semibold">3.1 Do you have a written vision or SMART goal for the next 5 years?</label>
+                        <label className="font-semibold">4.1 Do you have a written vision or SMART goal for the next 5 years?</label>
                          {['written', 'inMind', 'noUnderstanding'].map((option) => (
                          <label key={option} className="flex items-center gap-2">
                            <input
@@ -297,9 +316,9 @@ const handleSubmit = (e) => {
                            {option === 'noUnderstanding' && "Don't understand SMART goals"}
                          </label>
                        ))}
-                        <label className="font-semibold">3.2 Briefly write your vision or SMART goal for the next 5 years:</label>
+                        <label className="font-semibold">4.2 Briefly write your vision or SMART goal for the next 5 years:</label>
                         <textarea type="text" name="visionText" value={goalVisionData.visionText} onChange={(e) => setGoalVisionData({...goalVisionData, visionText: e.target.value})} rows={4} id="" className="outline-2 p-2 w-1/2 h-[180px]"  />
-                        <label className="font-semibold">3.3 Do you have an actionable plan to achieve your vision or goal?</label>
+                        <label className="font-semibold">4.3 Do you have an actionable plan to achieve your vision or goal?</label>
                         {['yes', 'no'].map((option) => (
                           <label key={option} className="flex items-center gap-2">
                             <input
@@ -313,7 +332,7 @@ const handleSubmit = (e) => {
                             {option === 'yes' ? 'Yes, prepared plan' : 'No plan'}
                           </label>
                         ))}
-                        <label className="font-semibold">3.4 What percentage of the required resources to achieve your vision or goal do you currently have?</label>
+                        <label className="font-semibold">4.4 What percentage of the required resources to achieve your vision or goal do you currently have?</label>
                          <div className="flex items-center gap-2">
                           <span>0%</span>
                           <input
@@ -328,7 +347,7 @@ const handleSubmit = (e) => {
                           />
                           <span>100% ({goalVisionData.resourcePercentage || 0}/10)</span>
                          </div>
-                         <label className="font-semibold">3.5 Do you have the skilled manpower required to achieve your vision or goal?</label>
+                         <label className="font-semibold">4.5 Do you have the skilled manpower required to achieve your vision or goal?</label>
                          {['yes', 'no'].map((option) => (
                           <label key={option} className="flex items-center gap-2">
                             <input
@@ -343,11 +362,11 @@ const handleSubmit = (e) => {
                           </label>
                         ))}
                              </div>
-                             {/* part 4 */}
+                             {/* part 5 */}
                              <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">4. Strength (Employees / System / Strategy)</p>
+                              <p className="text-xl font-semibold text-blue-500 mt-10">5. Strength (Employees / System / Strategy)</p>
                         <p className="text-lg font-semibold text-blue-500">For any organization to achieve its goals, the first requirement is the right strategy, and skilled manpower to execute it. Tell us about your organization’s strategy and workforce.</p>
-                        <label className="font-semibold">4.1 How many employees do you have in your organization? (excluding yourself)</label>
+                        <label className="font-semibold">5.1 How many employees do you have in your organization? (excluding yourself)</label>
                          <input 
                           type="number" 
                           name="employeeCount"
@@ -356,7 +375,7 @@ const handleSubmit = (e) => {
                           className="border rounded-lg p-2 w-full md:w-1/2"
                           min="0"
                         />
-                         <label className="font-semibold">4.2 Rate the skill level of your employees.</label>
+                         <label className="font-semibold">5.2 Rate the skill level of your employees.</label>
                              <div className="flex items-center gap-4 w-full md:w-1/2">
                               <span className="text-sm text-gray-500">1 (Low)</span>
                               <input
@@ -373,7 +392,7 @@ const handleSubmit = (e) => {
                             <div className="text-center mt-1 text-blue-600 font-medium">
                               Current: {strengthFormData.skillLevel}/10
                             </div>
-                         <label className="font-semibold">4.3 In your absence, can your organization operate without any disruption?</label>
+                         <label className="font-semibold">5.3 In your absence, can your organization operate without any disruption?</label>
                          <div className="space-y-2">
                            {[
                              { value: "yes", label: "Yes, it can run without any problem", score: 3 },
@@ -393,7 +412,7 @@ const handleSubmit = (e) => {
                              </label>
                            ))}
                          </div>
-                         <label className="font-semibold">4.4 Does your organization follow any strategic marketing plan?</label> 
+                         <label className="font-semibold">5.4 Does your organization follow any strategic marketing plan?</label> 
                          <div className="space-y-2">
                             {[
                               { value: "yes", label: "Yes, everything is done according to the plan", score: 3 },
@@ -414,7 +433,7 @@ const handleSubmit = (e) => {
                             ))}
                           </div>
 
-                         <label className="font-semibold">4.5 Do you use any software to manage your organization?</label>
+                         <label className="font-semibold">5.5 Do you use any software to manage your organization?</label>
                         <div className="space-y-2">
                                   {[
                                     { value: "yes", label: "Yes, we use software", score: 3 },
@@ -434,12 +453,12 @@ const handleSubmit = (e) => {
                                   ))}
                                 </div>
                               </div>
-                            {/* part 5 */}
+                            {/* part 6 */}
                              <div className="flex flex-col items-start justify-center gap-4">
-                       <p className="text-xl font-semibold text-blue-500 mt-10">5. Blood Test (Finance / Productivity / Growth)</p>
+                       <p className="text-xl font-semibold text-blue-500 mt-10">6. Blood Test (Finance / Productivity / Growth)</p>
                        <p className="text-lg font-semibold text-blue-500">Profit in business is like blood. If you keep making a loss every month, your business will suffer from "anemia." If this situation continues for a long time, the business will eventually weaken and shut down.</p>
                        
-                       <label className="font-semibold">5.1 What is your average monthly sales revenue?(Please provide the average of your total sales for the last three months.)</label>
+                       <label className="font-semibold">6.1 What is your average monthly sales revenue?(Please provide the average of your total sales for the last three months.)</label>
                        <input 
                          type="number" 
                          value={formData.avgMonthlyRevenue} 
@@ -448,7 +467,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.2 What is your gross profit margin on sold products?(Selling Price − (Purchase Price + Packaging + Shipping). Write as a percentage.)</label>
+                       <label className="font-semibold">6.2 What is your gross profit margin on sold products?(Selling Price − (Purchase Price + Packaging + Shipping). Write as a percentage.)</label>
                        <input 
                          type="number" 
                          value={formData.grossProfitMargin} 
@@ -457,7 +476,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.3 What is your organization's monthly fixed cost? (excluding your own salary)(Office rent + utilities + staff salaries, etc. — expenses that must be paid every month.)</label>
+                       <label className="font-semibold">6.3 What is your organization's monthly fixed cost? (excluding your own salary)(Office rent + utilities + staff salaries, etc. — expenses that must be paid every month.)</label>
                        <input 
                          type="number" 
                          value={formData.monthlyFixedCost} 
@@ -466,7 +485,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.4 Do you have any loans?</label>
+                       <label className="font-semibold">6.4 Do you have any loans?</label>
                        <select 
                          value={formData.hasLoan} 
                          onChange={handleBloodTestInputChange} 
@@ -491,7 +510,7 @@ const handleSubmit = (e) => {
                          </>
                        )}
                        
-                       <label className="font-semibold">5.5 How much salary or honorarium do you take?</label>
+                       <label className="font-semibold">6.5 How much salary or honorarium do you take?</label>
                        <input 
                          type="number" 
                          value={formData.ownerSalary} 
@@ -500,7 +519,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.6 What is your organization's daily production capacity for your main product?(How much of the product can you produce per day?)</label>
+                       <label className="font-semibold">6.6 What is your organization's daily production capacity for your main product?(How much of the product can you produce per day?)</label>
                        <input 
                          type="number" 
                          value={formData.dailyProduction} 
@@ -509,7 +528,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.7 Total amount of your investment:(How much capital have you invested so far? (Do not include reinvested profit from the business.))</label> 
+                       <label className="font-semibold">6.7 Total amount of your investment:(How much capital have you invested so far? (Do not include reinvested profit from the business.))</label> 
                        <input 
                          type="number" 
                          value={formData.totalInvestment} 
@@ -518,7 +537,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.8 What is the current total value of your organization's assets?(Include machinery, technology, goodwill, etc.)</label>
+                       <label className="font-semibold">6.8 What is the current total value of your organization's assets?(Include machinery, technology, goodwill, etc.)</label>
                        <input 
                          type="number" 
                          value={formData.totalAssets} 
@@ -527,7 +546,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.9 In 2021 (Q4) (Oct'21 - Dec'21), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
+                       <label className="font-semibold">6.9 In 2021 (Q4) (Oct'21 - Dec'21), how many total customers purchased products?(Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
                        <input 
                          type="number" 
                          value={formData.customersQ4_2021} 
@@ -536,7 +555,7 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                        
-                       <label className="font-semibold">5.10 In {currentYear} (Q1) (Jan'{currentYear.toString().slice(-2)} - Mar'{currentYear.toString().slice(-2)}), how many total customers purchased products?  (Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
+                       <label className="font-semibold">6.10 In {currentYear} (Q1) (Jan'{currentYear.toString().slice(-2)} - Mar'{currentYear.toString().slice(-2)}), how many total customers purchased products?  (Total number of customers over 3 months. If the same customer bought multiple times, count each purchase separately.)</label>
                        <input 
                          type="number" 
                          value={formData.customersQ1_2025} 
@@ -545,14 +564,14 @@ const handleSubmit = (e) => {
                          className="outline-2 p-2 w-1/2" 
                        />
                              </div>
-                             {/* part 6 */}
+                             {/* part 7 */}
                              <div className="flex flex-col items-start justify-center gap-4">
-                       <p className="text-xl font-semibold text-blue-500 mt-10">6. Product (Heart)</p>
+                       <p className="text-xl font-semibold text-blue-500 mt-10">7. Product (Heart)</p>
                        <p className="text-lg font-semibold text-blue-500">No matter what else you do, in the end, it is your product that builds a relationship with your customer. If the product is not right, all your efforts and investments can fail. Therefore, create your product in such a way that your customers can be 100% satisfied.</p>
                        
                       {/* 6.1 Unique Features */}
                             <label className="font-semibold">
-                              6.1 Does your product have any unique features that your competitors' products do not?
+                              7.1 Does your product have any unique features that your competitors' products do not?
                               (Quality, price, packaging, convenience, features — it can be anything.)
                             </label>
                             <select
@@ -568,7 +587,7 @@ const handleSubmit = (e) => {
                       
                             {/* 6.2 Customer Satisfaction */}
                             <label className="font-semibold">
-                              6.2 Do you believe your product is able to meet the needs of your target customers?
+                              7.2 Do you believe your product is able to meet the needs of your target customers?
                               (Are customers 100% satisfied?)
                             </label>
                             <select
@@ -585,7 +604,7 @@ const handleSubmit = (e) => {
                       
                             {/* 6.3 Packaging Branding */}
                             <label className="font-semibold">
-                              6.3 Does your product packaging represent your brand?
+                              7.3 Does your product packaging represent your brand?
                               (When sending the product, do you use custom-designed packets, shopping bags, etc.?)
                             </label>
                             <select
@@ -602,7 +621,7 @@ const handleSubmit = (e) => {
                       
                             {/* 6.4 Pricing Policy */}
                             <label className="font-semibold">
-                              6.4 Does your product follow a smart pricing policy?
+                              7.4 Does your product follow a smart pricing policy?
                               (Have you created a pricing strategy that supports your main action plan?)
                             </label>
                             <select
@@ -619,7 +638,7 @@ const handleSubmit = (e) => {
                       
                             {/* 6.5 Date Labeling */}
                             <label className="font-semibold">
-                              6.5 Does your product include a manufacturing date and expiration date on the label?
+                              7.5 Does your product include a manufacturing date and expiration date on the label?
                             </label>
                             <select
                               value={heartData.dateLabeling}
@@ -634,16 +653,69 @@ const handleSubmit = (e) => {
                             </select>
                        
                              </div>
-
+                             {/* part 8 */}
+                             <div className="flex flex-col items-start justify-center gap-4">
+                               <p className="text-xl font-semibold text-blue-500 mt-10">8. Out Looking (Visibility)</p>
+                              {/* 8.1 Facebook Likes */}
+                              <label className="font-semibold">
+                                8.1 Number of Facebook Page Likes of your organization?
+                              </label>
+                              <input
+                                type="text"
+                                name="facebookLikes"
+                                value={visibilityData.facebookLikes}
+                                onChange={handleVisibilityInputChange}
+                                placeholder="Enter number"
+                                className="outline-2 p-2 w-1/2"
+                              />
+                              
                         
+                              {/* 8.2 Instagram Followers */}
+                              <label className="font-semibold">
+                                8.2 Number of Instagram Followers of your organization?
+                              </label>
+                              <input
+                                type="text"
+                                name="instagramFollowers"
+                                value={visibilityData.instagramFollowers}
+                                onChange={handleVisibilityInputChange}
+                                placeholder="Enter number"
+                                className="outline-2 p-2 w-1/2"
+                              />
+                              
+                        
+                              {/* 8.3 YouTube Subscribers */}
+                              <label className="font-semibold">
+                                8.3 Number of YouTube Subscribers of your organization?
+                              </label>
+                              <input
+                                type="text"
+                                name="youtubeSubscribers"
+                                value={visibilityData.youtubeSubscribers}
+                                onChange={handleVisibilityInputChange}
+                                placeholder="Enter number"
+                                className="outline-2 p-2 w-1/2"
+                              />
+                        
+                              {/* 8.4 Post Reach */}
+                              <label className="font-semibold">
+                                8.4 Average number of post reach?
+                              </label>
+                              <input
+                                type="text"
+                                name="postReach"
+                                value={visibilityData.postReach}
+                                onChange={handleVisibilityInputChange}
+                                placeholder="Enter number"
+                                className="outline-2 p-2 w-1/2"
+                              />
+                             </div>                        
                       </div>
                         <div className="mt-10 flex justify-center items-center mb-10">
                             <button className="bg-blue-500 text-white font-bold text-lg cursor-pointer btn hover:bg-slate-500 hover:text-black capitalize p-2 w-1/2 outline-2">submit</button>
                         </div>
                         </form>
                 </div>
-              
-
             </div>
         </div>
     );
