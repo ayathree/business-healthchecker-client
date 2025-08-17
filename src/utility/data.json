@@ -343,7 +343,94 @@
       }
     }
   ]
+},
+{
+  "category": "Product (Heart)",
+  "description": "Assesses the uniqueness, quality, branding, and pricing strategy of your product to ensure strong customer satisfaction.",
+  "scoreTiers": [
+    {
+      "minScore": 0,
+      "maxScore": 38,
+      "tier": "Critical",
+      "advice": {
+        "message": "Your product lacks uniqueness, proper branding, or smart pricing. This puts customer satisfaction and long-term growth at serious risk.",
+        "specificActions": [
+          "Identify at least one unique feature that differentiates your product from competitors.",
+          "Improve basic quality and packaging standards.",
+          "Develop a clear pricing strategy aligned with your business plan."
+        ],
+        "resources": [
+          {
+            "title": "Product Differentiation Guide",
+            "url": "https://example.com/product-differentiation"
+          },
+          {
+            "title": "Smart Pricing Basics",
+            "url": "https://example.com/smart-pricing"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 39,
+      "maxScore": 62,
+      "tier": "Developing",
+      "advice": {
+        "message": "Your product meets basic needs but lacks strong differentiation or brand representation.",
+        "specificActions": [
+          "Enhance packaging to represent your brand more clearly.",
+          "Collect customer feedback to identify areas for product improvement.",
+          "Refine pricing policies to balance affordability and profitability."
+        ],
+        "resources": [
+          {
+            "title": "Customer Feedback Toolkit",
+            "url": "https://example.com/customer-feedback"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 63,
+      "maxScore": 81,
+      "tier": "Good",
+      "advice": {
+        "message": "Your product satisfies customer needs and shows clear branding. Focus now on optimization and innovation.",
+        "specificActions": [
+          "Introduce new features or upgrades to maintain competitiveness.",
+          "Explore eco-friendly or premium packaging options.",
+          "Monitor pricing strategies against market trends."
+        ],
+        "resources": [
+          {
+            "title": "Product Innovation Playbook",
+            "url": "https://example.com/product-innovation"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 82,
+      "maxScore": 100,
+      "tier": "Excellent",
+      "advice": {
+        "message": "Your product is highly unique, well-branded, and follows a smart pricing policy. Customers are highly satisfied — leverage this for growth.",
+        "specificActions": [
+          "Expand product lines or introduce premium versions.",
+          "Leverage strong branding to enter new markets.",
+          "Invest in R&D to stay ahead of competitors."
+        ],
+        "resources": [
+          {
+            "title": "Advanced Branding & Product Strategy",
+            "url": "https://example.com/advanced-branding"
+          }
+        ]
+      }
+    }
+  ]
 }
+
 
 
 

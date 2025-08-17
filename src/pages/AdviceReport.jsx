@@ -26,7 +26,7 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore, strengthScore, bloodTestScore, totalPoints } = reportData;
+  const { scores, info, goalScore, strengthScore, bloodTestScore,heartScore, totalPoints } = reportData;
 
   const getAdviceForScore = (category, percentage) => {
     const categoryData = adviceData.find(item => item.category === category);
@@ -47,7 +47,10 @@ const AdviceReport = () => {
   console.log("Strength Advice:", strengthAdvice); // helpful debug
 
   const bloodTestAdvice = getAdviceForScore("Blood Test (Finance / Productivity / Growth)", bloodTestScore.percentage);
-  console.log("Strength Advice:", bloodTestAdvice); // helpful debug
+  console.log("blood test Advice:", bloodTestAdvice); // helpful debug
+
+   const heartAdvice = getAdviceForScore("Product (Heart)", heartScore.percentage);
+  console.log("heart Advice:", heartAdvice); // helpful debug
 
   const generatePDF = async () => {
     const element = document.getElementById('report-content');
@@ -169,6 +172,14 @@ const AdviceReport = () => {
               <div
                 className="bg-blue-600 h-4 rounded-full"
                 style={{ width: `${bloodTestScore.percentage}%` }}
+              ></div>
+            </div>
+            <h3 className="text-lg font-medium text-blue-600 mt-4">Heart(Product)</h3>
+            <p>Score: {heartScore.percentage}%</p>
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+              <div
+                className="bg-blue-600 h-4 rounded-full"
+                style={{ width: `${heartScore.percentage}%` }}
               ></div>
             </div>
           </div>
@@ -349,6 +360,52 @@ const AdviceReport = () => {
                 <h4 className="font-medium mb-2">Helpful Resources:</h4>
                 <div className="space-y-2">
                   {bloodTestAdvice.advice.resources.map((resource, index) => (
+                    <a
+                      key={index}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: '#1d4ed8', textDecoration: 'underline' }}
+                    >
+                      {resource.title}
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500">No advice available for this score range.</p>
+        )}
+        {heartAdvice ? (
+          <div
+            className="p-4 rounded-lg"
+            style={{
+              backgroundColor: getTierBackgroundColor(heartAdvice.tier),
+              color: getTierTextColor(heartAdvice.tier),
+              border: '1px solid #ccc'
+            }}
+          >
+             <h3 className="text-2xl font-bold mb-2">Heart(Product)</h3>
+            <h3 className="text-lg font-medium mb-2">{heartAdvice.tier} Status</h3>
+            <p className="mb-4">{heartAdvice.advice.message}</p>
+
+            {heartAdvice.advice.specificActions?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Recommended Actions:</h4>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  {heartAdvice.advice.specificActions.map((action, index) => (
+                    <li key={index}>{action}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {heartAdvice.advice.resources?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Helpful Resources:</h4>
+                <div className="space-y-2">
+                  {heartAdvice.advice.resources.map((resource, index) => (
                     <a
                       key={index}
                       href={resource.url}
