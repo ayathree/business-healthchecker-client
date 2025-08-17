@@ -6,6 +6,7 @@ import { calculateStrengthScores } from "../utility/strength";
 import { calculateBloodTestScores } from "../utility/bloodTest";
 import { calculateHeartScores } from "../utility/heart";
 import { calculateVisibilityScores } from "../utility/visibility";
+import { calculateInfrastructureScores } from "../utility/status";
 
 
 
@@ -70,6 +71,15 @@ const [goalVisionData,setGoalVisionData]=useState({
     postReach: ''
   });
 
+  const [statusData, setStatusData] = useState({
+    tradeLicense: '',
+    bankAccount: '',
+    officeShowroom: '',
+    website: '',
+    socialMedia: [],
+    marketplace: ''
+  });
+
 const handleChange = (e) => {
     const { name, value } = e.target;
     setStrengthFormData(prev => ({
@@ -99,19 +109,41 @@ const handleChange = (e) => {
     }));
   };
 
+  const socialMediaOptions = [
+    'Facebook', 'Instagram', 'WhatsApp', 'TikTok',
+    'YouTube', 'Twitter', 'LinkedIn', 'Pinterest'
+  ];
+
+  const handleStatusChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    
+    if (type === 'checkbox') {
+      setStatusData(prev => ({
+        ...prev,
+        socialMedia: checked
+          ? [...prev.socialMedia, value]
+          : prev.socialMedia.filter(item => item !== value)
+      }));
+    } else {
+      setStatusData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
 
 
 
 const handleSubmit = (e) => {
     e.preventDefault();
+    const statusScore = calculateInfrastructureScores(statusData)
     const scores = calculateMarketScores(formData);
     const goalScore = calculateVisionScores(goalVisionData);
     const strengthScore = calculateStrengthScores(strengthFormData);
     const bloodTestScore= calculateBloodTestScores(bloodTestFormData);
     const heartScore=calculateHeartScores(heartData)
     const visibilityScore=calculateVisibilityScores(visibilityData)
+    
    
-     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints + heartScore.totalPoints + visibilityScore.totalPoints;
+     const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints + heartScore.totalPoints + visibilityScore.totalPoints + statusScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
     const organization = form.organization.value;
@@ -123,6 +155,7 @@ const handleSubmit = (e) => {
     const info={name,position,organization,service,address,number,year}
     // Save to localStorage
   localStorage.setItem('businessHealthReport', JSON.stringify({ 
+    statusScore,
     scores, 
     goalScore,
     strengthScore,
@@ -135,6 +168,7 @@ const handleSubmit = (e) => {
   }));
    navigate('/adviceReport');
     
+   console.log(statusScore);
     console.log(scores);
     console.log(goalScore);
     console.log(strengthScore);
@@ -174,6 +208,117 @@ const handleSubmit = (e) => {
                             <label htmlFor="" className="font-semibold">1.7 Business Start Date or Year:</label>
                             <input type="text" name="year" id="" className="outline-2 p-2 w-1/2"  />
                         </div>
+                        {/* part 2 */}
+                        <div className="flex flex-col items-start justify-center gap-4 mt-6">
+                           <p className="text-xl font-semibold text-blue-500">2. Business Position/Status:</p>
+                        <p className="text-lg text-blue-500">Business legal documents, positioning, and related information.</p>
+                              {/* 2.1 Trade License */}
+      <label className="font-semibold">2.1 Do you have a trade license?</label>
+      <div className="flex flex-col gap-4">
+        {['Yes', 'No', 'Yes, but it is not updated'].map(option => (
+          <label key={option} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="tradeLicense"
+              value={option}
+              checked={statusData.tradeLicense === option}
+              onChange={handleStatusChange}
+            />
+            {option}
+          </label>
+        ))}
+      </div>
+
+      {/* 2.2 Bank Account */}
+      <label className="font-semibold">2.2 Do you have a bank account in the name of the organization?</label>
+      <div className="flex flex-col gap-4">
+        {['Yes', 'No'].map(option => (
+          <label key={option} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="bankAccount"
+              value={option}
+              checked={statusData.bankAccount === option}
+              onChange={handleStatusChange}
+            />
+            {option}
+          </label>
+        ))}
+      </div>
+
+      {/* 2.3 Office/Showroom */}
+      <label className="font-semibold">2.3 Do you have an offline office or showroom?</label>
+      <div className="flex flex-col gap-4">
+        {['Yes', 'No'].map(option => (
+          <label key={option} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="officeShowroom"
+              value={option}
+              checked={statusData.officeShowroom === option}
+              onChange={handleStatusChange}
+            />
+            {option}
+          </label>
+        ))}
+      </div>
+
+      {/* 2.4 Website */}
+      <label className="font-semibold">2.4 Do you have a website?</label>
+      <div className="flex fle-col gap-4">
+        {['Yes', 'No'].map(option => (
+          <label key={option} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="website"
+              value={option}
+              checked={statusData.website === option}
+              onChange={handleStatusChange}
+            />
+            {option}
+          </label>
+        ))}
+      </div>
+
+      {/* 2.5 Social Media (Checkbox) */}
+      <label className="font-semibold">2.5 On which social media platforms does your business have an account?</label>
+      <div className="grid grid-cols-2 gap-2">
+        {socialMediaOptions.map(platform => (
+          <label key={platform} className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="socialMedia"
+              value={platform}
+              checked={statusData.socialMedia.includes(platform)}
+              onChange={handleStatusChange}
+            />
+            {platform}
+          </label>
+        ))}
+      </div>
+
+      {/* 2.6 Marketplace */}
+      <label className="font-semibold">2.6 Do you have an account on Daraz or similar marketplaces?</label>
+      <div className="flex flex-col gap-4">
+        {['Yes', 'No'].map(option => (
+          <label key={option} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="marketplace"
+              value={option}
+              checked={statusData.marketplace === option}
+              onChange={handleStatusChange}
+            />
+            {option}
+          </label>
+        ))}
+      </div>
+
+
+
+
+                        </div>
+
                             {/* part 3 */}
                             <div className="flex flex-col items-start justify-center gap-4">
                               <p className="text-xl font-semibold text-blue-500 mt-10">3. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>

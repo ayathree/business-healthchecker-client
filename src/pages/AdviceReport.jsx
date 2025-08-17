@@ -26,7 +26,7 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore, strengthScore, bloodTestScore,heartScore, visibilityScore, totalPoints } = reportData;
+  const { scores, info, goalScore, strengthScore, bloodTestScore,heartScore, visibilityScore, statusScore, totalPoints } = reportData;
 
   const getAdviceForScore = (category, percentage) => {
     const categoryData = adviceData.find(item => item.category === category);
@@ -54,6 +54,9 @@ const AdviceReport = () => {
 
   const visibilityAdvice = getAdviceForScore("Outlooking (Visibility)", visibilityScore.percentage);
   console.log("visibility Advice:", visibilityAdvice); // helpful debug
+
+  const statusAdvice = getAdviceForScore("Business Position/Status", statusScore.percentage);
+  console.log("visibility Advice:", statusAdvice); // helpful debug
 
 
   const generatePDF = async () => {
@@ -146,8 +149,16 @@ const AdviceReport = () => {
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="mb-4">
             <p className="text-xl font-semibold mb-4">Total Score: {totalPoints}</p>
-            <h3 className="text-lg font-medium text-blue-600 capitalize">Institutional eye, mouth and ear examination</h3>
-            <p>Score: {scores.percentage}%</p>
+            <h3 className="text-lg font-medium text-blue-600 capitalize">Business Position/Status</h3>
+            <p>Business Position/Status Score: {statusScore.percentage}%</p>
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+              <div
+                className="bg-blue-600 h-4 rounded-full"
+                style={{ width: `${statusScore.percentage}%` }}
+              ></div>
+            </div>
+            <h3 className="text-lg font-medium text-blue-600 capitalize mt-4">Institutional eye, mouth and ear examination</h3>
+            <p>Institutional eye, mouth and ear examination Score: {scores.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
@@ -155,7 +166,7 @@ const AdviceReport = () => {
               ></div>
             </div>
             <h3 className="text-lg font-medium text-blue-600 mt-4">Brain Checkup</h3>
-            <p>Score: {goalScore.percentage}%</p>
+            <p>Brain Checkup Score: {goalScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
@@ -163,7 +174,7 @@ const AdviceReport = () => {
               ></div>
             </div>
             <h3 className="text-lg font-medium text-blue-600 mt-4">Strength</h3>
-            <p>Score: {strengthScore.percentage}%</p>
+            <p>Strength Score: {strengthScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
@@ -171,7 +182,7 @@ const AdviceReport = () => {
               ></div>
             </div>
              <h3 className="text-lg font-medium text-blue-600 mt-4">Blood Test</h3>
-            <p>Score: {bloodTestScore.percentage}%</p>
+            <p>Blood Test Score: {bloodTestScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
@@ -179,7 +190,7 @@ const AdviceReport = () => {
               ></div>
             </div>
             <h3 className="text-lg font-medium text-blue-600 mt-4">Heart(Product)</h3>
-            <p>Score: {heartScore.percentage}%</p>
+            <p>Heart(Product) Score: {heartScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
@@ -187,7 +198,7 @@ const AdviceReport = () => {
               ></div>
             </div>
             <h3 className="text-lg font-medium text-blue-600 mt-4">Outlooking (Visibility)</h3>
-            <p>Score: {visibilityScore.percentage}%</p>
+            <p>Outlooking (Visibility) Score: {visibilityScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
               <div
                 className="bg-blue-600 h-4 rounded-full"
@@ -203,6 +214,53 @@ const AdviceReport = () => {
       {/* Recommendations */}
       <section className="p-6 rounded-lg mb-8 space-y-10" style={{ backgroundColor: '#eff6ff' }}>
         <h2 className="text-xl font-semibold mb-4">Recommendations</h2>
+         
+        {statusAdvice ? (
+          <div
+            className="p-4 rounded-lg"
+            style={{
+              backgroundColor: getTierBackgroundColor(statusAdvice.tier),
+              color: getTierTextColor(statusAdvice.tier),
+              border: '1px solid #ccc'
+            }}
+          >
+             <h3 className="text-2xl font-bold mb-2 capitalize">Business Position/Status</h3>
+            <h3 className="text-lg font-medium mb-2">{statusAdvice.tier} Status</h3>
+            <p className="mb-4">{statusAdvice.advice.message}</p>
+
+            {statusAdvice.advice.specificActions?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Recommended Actions:</h4>
+                <ul className="list-disc pl-6 space-y-2 mb-4">
+                  {statusAdvice.advice.specificActions.map((action, index) => (
+                    <li key={index}>{action}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {statusAdvice.advice.resources?.length > 0 && (
+              <>
+                <h4 className="font-medium mb-2">Helpful Resources:</h4>
+                <div className="space-y-2">
+                  {statusAdvice.advice.resources.map((resource, index) => (
+                    <a
+                      key={index}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ color: '#1d4ed8', textDecoration: 'underline' }}
+                    >
+                      {resource.title}
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <p className="text-gray-500">No advice available for this score range.</p>
+        )}
 
         {marketAdvice ? (
           <div
@@ -489,7 +547,7 @@ const AdviceReport = () => {
       <button
         onClick={generatePDF}
         disabled={generatingPDF}
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2"
+        className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 cursor-pointer"
       >
         {generatingPDF ? (
           <>

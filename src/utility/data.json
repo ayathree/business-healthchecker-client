@@ -1,4 +1,91 @@
 [
+  {
+  "category": "Business Position/Status",
+  "description": "Assesses the legal foundation, infrastructure, and formal setup of your business, including licenses, bank accounts, and online/offline presence.",
+  "scoreTiers": [
+    {
+      "minScore": 0,
+      "maxScore": 38,
+      "tier": "Critical",
+      "advice": {
+        "message": "Your business lacks essential legal and operational foundations, which puts it at high risk.",
+        "specificActions": [
+          "Obtain or update your trade license immediately.",
+          "Open a business bank account in your organization’s name.",
+          "Set up a basic online presence through a website or marketplace profile."
+        ],
+        "resources": [
+          {
+            "title": "How to Register a Business License",
+            "url": "https://example.com/register-business-license"
+          },
+          {
+            "title": "Small Business Banking Guide",
+            "url": "https://example.com/business-banking-guide"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 39,
+      "maxScore": 62,
+      "tier": "Developing",
+      "advice": {
+        "message": "Your business has some foundations in place but is missing key elements for credibility and growth.",
+        "specificActions": [
+          "Update outdated legal documents such as your trade license.",
+          "Open or strengthen your presence on multiple social media platforms.",
+          "Consider establishing an offline office or showroom for customer trust."
+        ],
+        "resources": [
+          {
+            "title": "SME Compliance Checklist",
+            "url": "https://example.com/sme-compliance"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 63,
+      "maxScore": 81,
+      "tier": "Good",
+      "advice": {
+        "message": "Your business has a solid legal and operational foundation. Focus on strengthening visibility and credibility.",
+        "specificActions": [
+          "Invest in a professional website that reflects your brand identity.",
+          "Register your business on leading marketplaces such as Daraz.",
+          "Leverage social media platforms to enhance brand authority."
+        ],
+        "resources": [
+          {
+            "title": "Business Website Starter Kit",
+            "url": "https://example.com/website-starter-kit"
+          }
+        ]
+      }
+    },
+    {
+      "minScore": 82,
+      "maxScore": 100,
+      "tier": "Excellent",
+      "advice": {
+        "message": "Your business has strong legal standing, infrastructure, and presence across multiple channels. Focus on scaling and advanced compliance.",
+        "specificActions": [
+          "Expand into international marketplaces to increase reach.",
+          "Adopt advanced compliance and governance practices.",
+          "Showcase certifications and awards to build stronger brand trust."
+        ],
+        "resources": [
+          {
+            "title": "Advanced Compliance & Governance Guide",
+            "url": "https://example.com/advanced-compliance"
+          }
+        ]
+      }
+    }
+  ]
+},
+
     {
   "category": "Market and Customer",
   "description": "Assesses your understanding of your market, customer base, and competitive landscape.",
