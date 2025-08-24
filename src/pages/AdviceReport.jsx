@@ -58,37 +58,59 @@ const AdviceReport = () => {
   const statusAdvice = getAdviceForScore("Business Position/Status", statusScore.percentage);
   console.log("visibility Advice:", statusAdvice); // helpful debug
 
+  
 
-  const generatePDF = async () => {
-    const element = document.getElementById('report-content');
-    await new Promise(resolve => setTimeout(resolve, 500)); // wait for rendering
 
-    const opt = {
-      margin: 10,
-      filename: `business_report_${Date.now()}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        scrollY: 0,
-        useCORS: true,
-        ignoreElements: (element) => {
-          const styles = window.getComputedStyle(element);
-          return styles.color.includes('oklch') ||
-            styles.backgroundColor.includes('oklch');
-        }
-      },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: {
-      avoid: ['.avoid-break'],
-      mode: ['css', 'legacy']  // handles both tailwind/flex layouts and normal HTML
+const generatePDF = async () => {
+  const element = document.getElementById('report-content');
+  
+  // Add a class to indicate PDF generation (for any special styling)
+  element.classList.add('generating-pdf');
+  
+  await new Promise(resolve => setTimeout(resolve, 1000)); // Increased timeout for better rendering
+
+  const opt = {
+    margin: 15, // Increased margin for better readability
+    filename: `business_health_report_${Date.now()}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      scrollY: 0,
+      useCORS: true,
+      ignoreElements: (element) => {
+        // Skip interactive elements that might cause issues
+        const styles = window.getComputedStyle(element);
+        return styles.color.includes('oklch') ||
+               styles.backgroundColor.includes('oklch');
+        // if (element.tagName === 'BUTTON' || element.tagName === 'A') {
+        //   return true;
+        // }
+        
+      }
+    },
+    jsPDF: { 
+      unit: 'mm', 
+      format: 'a4', 
+      orientation: 'portrait',
+      compress: true // Compress PDF for smaller file size
+    },
+    pagebreak: {
+      avoid: ['.advice-item', '.sentiment-item'], // Avoid breaking individual advice items
+      mode: ['css', 'legacy']
     }
-    };
-
-    setGeneratingPDF(true);
-    html2pdf().set(opt).from(element).save().finally(() => {
-      setGeneratingPDF(false);
-    });
   };
+
+  setGeneratingPDF(true);
+  try {
+    await html2pdf().set(opt).from(element).save();
+  } catch (error) {
+    console.error('PDF generation failed:', error);
+    alert('Failed to generate PDF. Please try again.');
+  } finally {
+    setGeneratingPDF(false);
+    element.classList.remove('generating-pdf');
+  }
+};
 
   // Background color
   const getTierBackgroundColor = (tier) => {
@@ -540,6 +562,65 @@ const AdviceReport = () => {
           <p className="text-gray-500">No advice available for this score range.</p>
         )}
       </section>
+
+{/* Sentiment-Based Advice Section */}
+// In AdviceReport.jsx
+<section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: '#e0f2fe', 
+  marginBottom: '32px',
+  border: '1px solid #93c5fd'
+}}>
+  
+<h1 className="text-2xl font-bold mb-6">Vision & Goals Analysis</h1>
+      
+      {/* Sentiment Summary */}
+      <div className="mb-6 p-4 bg-gray-100 rounded">
+        <h2 className="text-xl font-semibold mb-2">Sentiment Analysis</h2>
+        <p>Overall Sentiment: <span className="capitalize font-medium">{goalScore.sentiment?.sentiment || 'neutral'}</span></p>
+        <p>Sentiment Score: {goalScore.sentiment?.score ? goalScore.sentiment.score.toFixed(2) : '0.00'}</p>
+        <p>Word Count: {goalScore.sentiment?.wordCount || 0}</p>
+      </div>
+      
+      {/* Detailed Advice */}
+      <div className="space-y-4">
+        <h2 className="text-xl font-semibold">Detailed Recommendations</h2>
+        
+        <div className="p-4 border rounded">
+          <h3 className="font-medium text-lg">Vision Documentation</h3>
+          <p>{goalScore.advice?.hasVision}</p>
+        </div>
+        
+        <div className="p-4 border rounded">
+          <h3 className="font-medium text-lg">Vision Content</h3>
+          <p>{goalScore.advice?.visionText}</p>
+          {goalScore.sentiment && (
+            <div className="mt-2 text-sm text-gray-600">
+              <p>Positive words: {goalScore.sentiment.positiveWords}</p>
+              <p>Negative words: {goalScore.sentiment.negativeWords}</p>
+              <p>Future-oriented: {goalScore.sentiment.hasFutureWords ? 'Yes' : 'No'}</p>
+              <p>Specific metrics: {goalScore.sentiment.hasSpecificWords ? 'Yes' : 'No'}</p>
+            </div>
+          )}
+        </div>
+        
+        <div className="p-4 border rounded">
+          <h3 className="font-medium text-lg">Action Plan</h3>
+          <p>{goalScore.advice?.hasActionPlan}</p>
+        </div>
+        
+        <div className="p-4 border rounded">
+          <h3 className="font-medium text-lg">Resources</h3>
+          <p>{goalScore.advice?.resourcePercentage}</p>
+        </div>
+        
+        <div className="p-4 border rounded">
+          <h3 className="font-medium text-lg">Skilled Manpower</h3>
+          <p>{goalScore.advice?.hasSkilledManpower}</p>
+        </div>
+      </div>
+</section>
 
       {/* PDF Button */}
       <div>

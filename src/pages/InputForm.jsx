@@ -7,6 +7,8 @@ import { calculateBloodTestScores } from "../utility/bloodTest";
 import { calculateHeartScores } from "../utility/heart";
 import { calculateVisibilityScores } from "../utility/visibility";
 import { calculateInfrastructureScores } from "../utility/status";
+import { VisionSentimentAdvisor } from "../utility/visionSentimentAdvisor";
+
 
 
 
@@ -14,6 +16,8 @@ const InputForm = () => {
     const navigate=useNavigate()
     const currentYear = new Date().getFullYear();
     const previousYear = currentYear - 1;
+
+   const [visionAdvisor] = useState(() => new VisionSentimentAdvisor());
 
 const[formData,setFormData]=useState({
     marketScope: "",       // Multiple choice (1-3)
@@ -142,7 +146,7 @@ const handleSubmit = (e) => {
     const heartScore=calculateHeartScores(heartData)
     const visibilityScore=calculateVisibilityScores(visibilityData)
     
-   
+  
      const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints + heartScore.totalPoints + visibilityScore.totalPoints + statusScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
@@ -164,6 +168,7 @@ const handleSubmit = (e) => {
     visibilityScore,
     totalPoints,
     info,
+    
     timestamp: new Date().toISOString() // Optional: add timestamp
   }));
    navigate('/adviceReport');
