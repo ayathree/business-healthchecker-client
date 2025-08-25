@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { calculateMarketScores } from "../utility/scoreCalculation";
 import { Link, useNavigate } from "react-router-dom";
-import { calculateVisionScores } from "../utility/goalAndVision";
+
 import { calculateStrengthScores } from "../utility/strength";
 import { calculateBloodTestScores } from "../utility/bloodTest";
 import { calculateHeartScores } from "../utility/heart";
 import { calculateVisibilityScores } from "../utility/visibility";
 import { calculateInfrastructureScores } from "../utility/status";
 import { VisionSentimentAdvisor } from "../utility/visionSentimentAdvisor";
+import { calculateVisionScores } from "../utility/goalAndVision";
 
 
 

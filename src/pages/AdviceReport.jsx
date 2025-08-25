@@ -234,7 +234,7 @@ const generatePDF = async () => {
       </section>
 
       {/* Recommendations */}
-      <section className="p-6 rounded-lg mb-8 space-y-10" style={{ backgroundColor: '#eff6ff' }}>
+      <section className="p-6 rounded-lg mb-8 space-y-10" style={{ backgroundColor: '#D3D3D3' }}>
         <h2 className="text-xl font-semibold mb-4">Recommendations</h2>
          
         {statusAdvice ? (
@@ -346,12 +346,65 @@ const generatePDF = async () => {
 
             {visionAdvice.advice.specificActions?.length > 0 && (
               <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {visionAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
+                {/* Sentiment-Based Advice Section */}
+
+<section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #93c5fd'
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Vision & Goals Analysis</h1>
+      
+  {/* Sentiment Summary */}
+  <div className="mb-6 p-4 bg-gray-100 rounded">
+    <h2 className="text-xl font-semibold mb-2">Sentiment Analysis</h2>
+    <p>Overall Sentiment: <span className="capitalize font-medium">{goalScore.sentimentAnalysis?.sentiment || 'neutral'}</span></p>
+    <p>Sentiment Score: {goalScore.sentimentAnalysis?.score?.toFixed(2) || '0.00'}</p>
+    <p>Comparative Score: {goalScore.sentimentAnalysis?.comparative?.toFixed(3) || '0.000'}</p>
+    <p>Word Count: {goalScore.sentimentAnalysis?.tokenCount || 0}</p>
+  </div>
+      
+  {/* Detailed Advice */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Detailed Recommendations</h2>
+        
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Vision Documentation</h3>
+      <p>{goalScore.advice?.hasVision?.message}</p>
+    </div>
+        
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Vision Content</h3>
+      <p>{goalScore.advice?.visionText?.message}</p>
+      {goalScore.sentimentAnalysis && (
+        <div className="mt-2 text-sm text-gray-600">
+          <p>Positive words: {goalScore.sentimentAnalysis.positiveWords?.length || 0}</p>
+          <p>Negative words: {goalScore.sentimentAnalysis.negativeWords?.length || 0}</p>
+          <p>Tokens: {goalScore.sentimentAnalysis.tokens?.join(", ") || "None"}</p>
+        </div>
+      )}
+    </div>
+        
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Action Plan</h3>
+      <p>{goalScore.advice?.hasActionPlan?.message}</p>
+    </div>
+        
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Resources</h3>
+      <p>{goalScore.advice?.resourcePercentage?.message}</p>
+    </div>
+        
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Skilled Manpower</h3>
+      <p>{goalScore.advice?.hasSkilledManpower?.message}</p>
+    </div>
+  </div>
+</section>
+
               </>
             )}
 
@@ -563,64 +616,7 @@ const generatePDF = async () => {
         )}
       </section>
 
-{/* Sentiment-Based Advice Section */}
-// In AdviceReport.jsx
-<section style={{ 
-  padding: '24px', 
-  borderRadius: '8px', 
-  backgroundColor: '#e0f2fe', 
-  marginBottom: '32px',
-  border: '1px solid #93c5fd'
-}}>
-  
-<h1 className="text-2xl font-bold mb-6">Vision & Goals Analysis</h1>
-      
-      {/* Sentiment Summary */}
-      <div className="mb-6 p-4 bg-gray-100 rounded">
-        <h2 className="text-xl font-semibold mb-2">Sentiment Analysis</h2>
-        <p>Overall Sentiment: <span className="capitalize font-medium">{goalScore.sentiment?.sentiment || 'neutral'}</span></p>
-        <p>Sentiment Score: {goalScore.sentiment?.score ? goalScore.sentiment.score.toFixed(2) : '0.00'}</p>
-        <p>Word Count: {goalScore.sentiment?.wordCount || 0}</p>
-      </div>
-      
-      {/* Detailed Advice */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Detailed Recommendations</h2>
-        
-        <div className="p-4 border rounded">
-          <h3 className="font-medium text-lg">Vision Documentation</h3>
-          <p>{goalScore.advice?.hasVision}</p>
-        </div>
-        
-        <div className="p-4 border rounded">
-          <h3 className="font-medium text-lg">Vision Content</h3>
-          <p>{goalScore.advice?.visionText}</p>
-          {goalScore.sentiment && (
-            <div className="mt-2 text-sm text-gray-600">
-              <p>Positive words: {goalScore.sentiment.positiveWords}</p>
-              <p>Negative words: {goalScore.sentiment.negativeWords}</p>
-              <p>Future-oriented: {goalScore.sentiment.hasFutureWords ? 'Yes' : 'No'}</p>
-              <p>Specific metrics: {goalScore.sentiment.hasSpecificWords ? 'Yes' : 'No'}</p>
-            </div>
-          )}
-        </div>
-        
-        <div className="p-4 border rounded">
-          <h3 className="font-medium text-lg">Action Plan</h3>
-          <p>{goalScore.advice?.hasActionPlan}</p>
-        </div>
-        
-        <div className="p-4 border rounded">
-          <h3 className="font-medium text-lg">Resources</h3>
-          <p>{goalScore.advice?.resourcePercentage}</p>
-        </div>
-        
-        <div className="p-4 border rounded">
-          <h3 className="font-medium text-lg">Skilled Manpower</h3>
-          <p>{goalScore.advice?.hasSkilledManpower}</p>
-        </div>
-      </div>
-</section>
+
 
       {/* PDF Button */}
       <div>
