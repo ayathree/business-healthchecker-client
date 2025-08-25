@@ -297,22 +297,183 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{marketAdvice.tier} Status</h3>
             <p className="mb-4">{marketAdvice.advice.message}</p>
 
-            {marketAdvice.advice.specificActions?.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {marketAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #10b981' // Green border for market section
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Market & Customers Analysis</h1>
+      
+  {/* Market Health Summary */}
+  <div className="mb-6 p-4 bg-green-50 rounded">
+    <h2 className="text-xl font-semibold mb-2">Market Position Overview</h2>
+    <p>Overall Score: <span className="font-medium">{scores?.percentage || 0}%</span></p>
+    <p>Total Points: <span className="font-medium">{scores?.totalPoints || 0}/21</span></p>
+    <p>Market Understanding: <span className="capitalize font-medium">{
+      scores?.percentage >= 80 ? 'Excellent' :
+      scores?.percentage >= 60 ? 'Strong' :
+      scores?.percentage >= 40 ? 'Developing' : 'Limited'
+    }</span></p>
+  </div>
+      
+  {/* Detailed Market Metrics */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Market Intelligence Analysis</h2>
+        
+    {/* Market Scope */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Market Scope Definition</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.marketScope?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Scope Level: {scores?.marketScope || 0}/3</p>
+        <p>Performance: <span className="capitalize">{scores?.advice?.marketScope?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{scores?.advice?.marketScope?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Market Size */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Market Size Potential</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.marketSize?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Size Score: {scores?.marketSize || 0}/3</p>
+        <p>Estimated Size: {scores?.advice?.marketSize?.value?.toLocaleString() || 'Unknown'}</p>
+        <p>Performance: <span className="capitalize">{scores?.advice?.marketSize?.performance || 'none'}</span></p>
+      </div>
+    </div>
+        
+    {/* Market Trend */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Market Trends</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.marketTrend?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Trend Score: {scores?.marketTrend || 0}/3</p>
+        <p>Market Direction: <span className="capitalize">{scores?.advice?.marketTrend?.performance || 'unknown'}</span></p>
+        <p>Sentiment: <span className="capitalize">{scores?.advice?.marketTrend?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Target Customer */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Target Customer Clarity</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.targetCustomer?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Targeting Score: {scores?.targetCustomer || 0}/3</p>
+        <p>Approach: <span className="capitalize">{scores?.advice?.targetCustomer?.performance || 'undefined'}</span></p>
+        <p>Sentiment: <span className="capitalize">{scores?.advice?.targetCustomer?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Monthly Customers */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Customer Volume</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.monthlyCustomers?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Volume Score: {scores?.monthlyCustomers || 0}/3</p>
+        <p>Monthly Customers: {scores?.advice?.monthlyCustomers?.value?.toLocaleString() || 0}</p>
+        <p>Performance: <span className="capitalize">{scores?.advice?.monthlyCustomers?.performance || 'none'}</span></p>
+      </div>
+    </div>
 
-            {marketAdvice.advice.resources?.length > 0 && (
+    {/* Repeat Customers */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Customer Loyalty</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.repeatCustomers?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Loyalty Score: {scores?.repeatCustomers || 0}/3</p>
+        <p>Repeat Rate: {scores?.advice?.repeatCustomers?.value || 0}%</p>
+        <p>Performance: <span className="capitalize">{scores?.advice?.repeatCustomers?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{scores?.advice?.repeatCustomers?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+
+    {/* Competitors */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Competitive Landscape</h3>
+      <p className="text-gray-700 mb-2">{scores?.advice?.competitors?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Competition Score: {scores?.competitors || 0}/3</p>
+        <p>Competitors: {scores?.advice?.competitors?.value?.toLocaleString() || 0}</p>
+        <p>Intensity: <span className="capitalize">{scores?.advice?.competitors?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{scores?.advice?.competitors?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {/* Overall Market Recommendation */}
+  {scores?.percentage !== undefined && (
+    <div className="mt-8 p-4 border rounded" style={{
+      backgroundColor: scores.percentage >= 80 ? '#ecfdf5' : 
+                       scores.percentage >= 60 ? '#f0fdf4' : '#fffbeb',
+      borderColor: scores.percentage >= 80 ? '#a7f3d0' : 
+                   scores.percentage >= 60 ? '#bbf7d0' : '#fde68a'
+    }}>
+      <h3 className="font-semibold text-lg mb-2">Overall Market Strategy</h3>
+      <p className="text-gray-700">
+        {scores.percentage >= 80 ? 
+          "Exceptional market understanding! Strong positioning with clear customer focus and competitive awareness." :
+         scores.percentage >= 60 ? 
+          "Solid market knowledge! Good foundation with opportunities for deeper market penetration." :
+         scores.percentage >= 40 ?
+          "Developing market awareness. Focus on customer research and competitive analysis." :
+          "Limited market understanding. Prioritize market research and customer definition."
+        }
+      </p>
+      <p className="text-sm text-gray-600 mt-2">
+        Based on your overall score of {scores.percentage}%
+      </p>
+      
+      {/* Priority recommendations */}
+      <div className="mt-4 text-sm">
+        <p className="font-medium">Key Focus Areas:</p>
+        <ul className="list-disc list-inside mt-1 space-y-1">
+          {scores.marketScope < 2 && <li>Define market scope and segments more precisely</li>}
+          {scores.marketSize < 2 && <li>Conduct thorough market size analysis</li>}
+          {scores.targetCustomer < 2 && <li>Develop detailed customer profiles</li>}
+          {scores.monthlyCustomers < 2 && <li>Increase customer acquisition efforts</li>}
+          {scores.repeatCustomers < 2 && <li>Implement customer retention strategies</li>}
+          {scores.competitors < 2 && <li>Analyze competitive landscape thoroughly</li>}
+        </ul>
+      </div>
+    </div>
+  )}
+
+  {/* Market Success Tips */}
+  <div className="mt-6 p-4 bg-green-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">📊 Market Intelligence Tips</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Conduct regular market research and competitor analysis</li>
+      <li>Develop detailed customer personas and journey maps</li>
+      <li>Monitor market trends and adapt strategies accordingly</li>
+      <li>Track customer acquisition costs and lifetime value</li>
+      <li>Implement customer feedback systems continuously</li>
+      <li>Analyze win/loss reasons for better positioning</li>
+      <li>Stay updated on industry developments and regulations</li>
+    </ul>
+  </div>
+
+  {/* Sentiment Insights */}
+  {Object.values(scores?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
+    <div className="mt-6 p-4 bg-emerald-50 rounded">
+      <h3 className="font-semibold text-lg mb-2">🎯 Market Sentiment Insights</h3>
+      <p className="text-sm text-gray-700">
+        {Object.values(scores?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
+          "Positive market sentiment detected - leverage favorable conditions for growth!"}
+        {Object.values(scores?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
+          " Some cautious market signals noted - monitor conditions and adapt strategies."}
+      </p>
+    </div>
+  )}
+</section>
+
+            {scores.advice.resources?.length > 0 && (
               <>
                 <h4 className="font-medium mb-2">Helpful Resources:</h4>
                 <div className="space-y-2">
-                  {marketAdvice.advice.resources.map((resource, index) => (
+                  {scores.advice.resources.map((resource, index) => (
                     <a
                       key={index}
                       href={resource.url}
