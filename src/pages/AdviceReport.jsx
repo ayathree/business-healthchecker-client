@@ -828,16 +828,157 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{visibilityAdvice.tier} Status</h3>
             <p className="mb-4">{visibilityAdvice.advice.message}</p>
 
-            {visibilityAdvice.advice.specificActions?.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {visibilityAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #6366f1' // Purple border for visibility section
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Visibility & Social Media Analysis</h1>
+      
+  {/* Visibility Summary */}
+  <div className="mb-6 p-4 bg-indigo-50 rounded">
+    <h2 className="text-xl font-semibold mb-2">Online Presence Overview</h2>
+    <p>Overall Score: <span className="font-medium">{visibilityScore?.percentage || 0}%</span></p>
+    <p>Total Points: <span className="font-medium">{visibilityScore?.totalPoints || 0}/15</span></p>
+    <p>Digital Presence: <span className="capitalize font-medium">{
+      visibilityScore?.percentage >= 80 ? 'Excellent' :
+      visibilityScore?.percentage >= 60 ? 'Strong' :
+      visibilityScore?.percentage >= 40 ? 'Developing' : 'Limited'
+    }</span></p>
+  </div>
+      
+  {/* Detailed Visibility Metrics */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Platform Performance Analysis</h2>
+        
+    {/* Facebook Likes */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Facebook Presence</h3>
+      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.facebookLikes?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Likes: {visibilityScore?.advice?.facebookLikes?.value?.toLocaleString() || 0}</p>
+        <p>Score: {visibilityScore?.facebookLikes || 0}/3</p>
+        <p>Performance: <span className="capitalize">{visibilityScore?.advice?.facebookLikes?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{visibilityScore?.advice?.facebookLikes?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Instagram Followers */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Instagram Reach</h3>
+      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.instagramFollowers?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Followers: {visibilityScore?.advice?.instagramFollowers?.value?.toLocaleString() || 0}</p>
+        <p>Score: {visibilityScore?.instagramFollowers || 0}/3</p>
+        <p>Performance: <span className="capitalize">{visibilityScore?.advice?.instagramFollowers?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{visibilityScore?.advice?.instagramFollowers?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* YouTube Subscribers */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">YouTube Channel</h3>
+      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.youtubeSubscribers?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Subscribers: {visibilityScore?.advice?.youtubeSubscribers?.value?.toLocaleString() || 0}</p>
+        <p>Score: {visibilityScore?.youtubeSubscribers || 0}/3</p>
+        <p>Performance: <span className="capitalize">{visibilityScore?.advice?.youtubeSubscribers?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{visibilityScore?.advice?.youtubeSubscribers?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Post Reach */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Content Reach</h3>
+      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.postReach?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Average Reach: {visibilityScore?.advice?.postReach?.value?.toLocaleString() || 0}</p>
+        <p>Score: {visibilityScore?.postReach || 0}/3</p>
+        <p>Performance: <span className="capitalize">{visibilityScore?.advice?.postReach?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{visibilityScore?.advice?.postReach?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+
+    {/* Engagement Rate */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Audience Engagement</h3>
+      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.engagementRate?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Engagement Rate: {visibilityScore?.advice?.engagementRate?.value || 0}%</p>
+        <p>Score: {visibilityScore?.engagementRate || 0}/3</p>
+        <p>Performance: <span className="capitalize">{visibilityScore?.advice?.engagementRate?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{visibilityScore?.advice?.engagementRate?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {/* Overall Visibility Recommendation */}
+  {visibilityScore?.percentage !== undefined && (
+    <div className="mt-8 p-4 border rounded" style={{
+      backgroundColor: visibilityScore.percentage >= 80 ? '#eef2ff' : 
+                       visibilityScore.percentage >= 60 ? '#f5f3ff' : '#faf5ff',
+      borderColor: visibilityScore.percentage >= 80 ? '#c7d2fe' : 
+                   visibilityScore.percentage >= 60 ? '#ddd6fe' : '#e9d5ff'
+    }}>
+      <h3 className="font-semibold text-lg mb-2">Overall Visibility Strategy</h3>
+      <p className="text-gray-700">
+        {visibilityScore.percentage >= 80 ? 
+          "Exceptional online presence! Strong across all platforms with great engagement." :
+         visibilityScore.percentage >= 60 ? 
+          "Solid digital footprint! Focus on consistency and engagement to reach next level." :
+         visibilityScore.percentage >= 40 ?
+          "Developing online presence. Prioritize platform selection and content consistency." :
+          "Limited digital visibility. Start with 1-2 platforms and build consistent presence."
+        }
+      </p>
+      <p className="text-sm text-gray-600 mt-2">
+        Based on your overall score of {visibilityScore.percentage}%
+      </p>
+      
+      {/* Platform-specific recommendations */}
+      <div className="mt-4 text-sm">
+        <p className="font-medium">Platform Focus Areas:</p>
+        <ul className="list-disc list-inside mt-1 space-y-1">
+          {visibilityScore.facebookLikes < 2 && <li>Boost Facebook engagement with regular content</li>}
+          {visibilityScore.instagramFollowers < 2 && <li>Grow Instagram with visual storytelling</li>}
+          {visibilityScore.youtubeSubscribers < 2 && <li>Develop YouTube content strategy</li>}
+          {visibilityScore.postReach < 2 && <li>Improve content reach through optimization</li>}
+          {visibilityScore.engagementRate < 2 && <li>Increase audience interaction and engagement</li>}
+        </ul>
+      </div>
+    </div>
+  )}
+
+  {/* Social Media Success Tips */}
+  <div className="mt-6 p-4 bg-indigo-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">📱 Social Media Success Tips</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Post consistently (3-5 times per week per platform)</li>
+      <li>Use high-quality visuals and engaging captions</li>
+      <li>Respond to comments and messages promptly</li>
+      <li>Use relevant hashtags and trending topics</li>
+      <li>Analyze performance metrics regularly</li>
+      <li>Collaborate with influencers in your niche</li>
+      <li>Run targeted ads to boost visibility</li>
+    </ul>
+  </div>
+
+  {/* Sentiment Insights */}
+  {Object.values(visibilityScore?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
+    <div className="mt-6 p-4 bg-purple-50 rounded">
+      <h3 className="font-semibold text-lg mb-2">🎯 Audience Sentiment Insights</h3>
+      <p className="text-sm text-gray-700">
+        {Object.values(visibilityScore?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
+          "Positive audience sentiment detected on some platforms - leverage this engagement!"}
+        {Object.values(visibilityScore?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
+          " Some negative sentiment noted - monitor feedback and address concerns proactively."}
+      </p>
+    </div>
+  )}
+</section>
 
             {visibilityAdvice.advice.resources?.length > 0 && (
               <>
