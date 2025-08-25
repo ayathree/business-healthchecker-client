@@ -489,16 +489,146 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{bloodTestAdvice.tier} Status</h3>
             <p className="mb-4">{bloodTestAdvice.advice.message}</p>
 
-            {bloodTestAdvice.advice.specificActions?.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {bloodTestAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+             <section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #93c5fd'
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Financial Health Analysis (Blood Test)</h1>
+      
+  {/* Financial Health Summary */}
+  <div className="mb-6 p-4 bg-blue-50 rounded">
+    <h2 className="text-xl font-semibold mb-2">Financial Health Overview</h2>
+    <p>Overall Score: <span className="font-medium">{bloodTestScore?.percentage || 0}%</span></p>
+    <p>Total Points: <span className="font-medium">{bloodTestScore?.totalPoints || 0}/30</span></p>
+    <p>Financial Awareness Level: <span className="capitalize font-medium">{
+      bloodTestScore?.percentage >= 80 ? 'Excellent' :
+      bloodTestScore?.percentage >= 60 ? 'Good' :
+      bloodTestScore?.percentage >= 40 ? 'Fair' : 'Needs Improvement'
+    }</span></p>
+  </div>
+      
+  {/* Detailed Financial Metrics */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Financial Metrics Analysis</h2>
+        
+    {/* Monthly Revenue */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Average Monthly Revenue</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.avgMonthlyRevenue?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.avgMonthlyRevenue || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.avgMonthlyRevenue?.sentiment || 'neutral'}</span></p>
+        <p>Confidence: {(bloodTestScore?.advice?.avgMonthlyRevenue?.confidence * 100 || 0).toFixed(0)}%</p>
+      </div>
+    </div>
+        
+    {/* Profit Margin */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Gross Profit Margin</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.grossProfitMargin?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.grossProfitMargin || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.grossProfitMargin?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Fixed Costs */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Monthly Fixed Costs</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.monthlyFixedCosts?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.monthlyFixedCosts || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.monthlyFixedCosts?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Loan Information */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Loan Management</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.loanInstallment?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.loanInstallment || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.loanInstallment?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Production Capacity */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Daily Production Capacity</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.dailyProduction?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.dailyProduction || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.dailyProduction?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Investment */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Total Investment</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.totalInvestment?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.totalInvestment || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.totalInvestment?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Assets */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Total Assets</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.totalAssets?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.totalAssets || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.totalAssets?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Customer Metrics */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Customer Base (Q4 2021)</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.customersQ4_2021?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.customersQ4_2021 || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.customersQ4_2021?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Customer Base (Q1 2022)</h3>
+      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.customersQ1_2022?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {bloodTestScore?.customersQ1_2022 || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.customersQ1_2022?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {/* Overall Financial Health Recommendation */}
+  {bloodTestScore?.percentage !== undefined && (
+    <div className="mt-8 p-4 border rounded" style={{
+      backgroundColor: bloodTestScore.percentage >= 70 ? '#f0fdf4' : 
+                       bloodTestScore.percentage >= 40 ? '#fffbeb' : '#fef2f2',
+      borderColor: bloodTestScore.percentage >= 70 ? '#bbf7d0' : 
+                   bloodTestScore.percentage >= 40 ? '#fde68a' : '#fecaca'
+    }}>
+      <h3 className="font-semibold text-lg mb-2">Overall Financial Health Recommendation</h3>
+      <p className="text-gray-700">
+        {bloodTestScore.percentage >= 70 ? 
+          "Your financial health appears strong! Maintain regular tracking and consider strategic investments for growth." :
+         bloodTestScore.percentage >= 40 ? 
+          "Your financial awareness is developing. Focus on improving data tracking and financial planning." :
+          "Immediate attention needed for financial management. Consider professional financial consultation."
+        }
+      </p>
+      <p className="text-sm text-gray-600 mt-2">
+        Based on your overall score of {bloodTestScore.percentage}%
+      </p>
+    </div>
+  )}
+</section>
 
             {bloodTestAdvice.advice.resources?.length > 0 && (
               <>

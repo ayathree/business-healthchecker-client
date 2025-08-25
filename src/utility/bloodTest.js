@@ -1,6 +1,125 @@
+// Import the sentiment library
+import Sentiment from 'sentiment';
+
+// Initialize sentiment analyzer once
+const sentimentAnalyzer = new Sentiment();
+
+// Helper function to analyze sentiment for financial/business text
+function analyzeFinancialSentiment(text) {
+  if (!text || typeof text !== 'string' || text.trim().length === 0) {
+    return {
+      score: 0,
+      comparative: 0,
+      sentiment: 'neutral',
+      confidence: 0,
+      tokenCount: 0
+    };
+  }
+  
+  // Use the sentiment library for analysis
+  const result = sentimentAnalyzer.analyze(text);
+  
+  // Determine sentiment category
+  let sentimentCategory = 'neutral';
+  if (result.comparative > 0.1) sentimentCategory = 'positive';
+  else if (result.comparative < -0.1) sentimentCategory = 'negative';
+  
+  // Calculate confidence based on score strength
+  const confidence = Math.min(1, Math.abs(result.comparative) * 10);
+  
+  return {
+    score: result.score,
+    comparative: result.comparative,
+    sentiment: sentimentCategory,
+    confidence: confidence,
+    tokenCount: result.words.length,
+    tokens: result.words
+  };
+}
+
+// Generate financial advice based on sentiment and content analysis
+function generateFinancialAdvice(question, answer, value = null) {
+  // Analyze sentiment of the answer
+  const sentiment = analyzeFinancialSentiment(answer);
+  
+  const adviceTemplates = {
+    // Revenue and financial metrics
+    'avgMonthlyRevenue': {
+      positive: "Strong revenue reporting! Clear financial tracking shows good business awareness.",
+      neutral: "Revenue data provided. Consider more precise tracking for better insights.",
+      negative: "Revenue reporting needs improvement. Accurate financial data is crucial for decision-making."
+    },
+    'grossProfitMargin': {
+      positive: "Excellent profit margin awareness! Understanding margins is key to profitability.",
+      neutral: "Margin information provided. Regular margin analysis can drive better pricing strategies.",
+      negative: "Profit margin clarity needed. Focus on understanding your true costs and pricing."
+    },
+    'monthlyFixedCosts': {
+      positive: "Great cost awareness! Knowing fixed costs helps with financial planning and stability.",
+      neutral: "Cost information noted. Detailed cost tracking can reveal optimization opportunities.",
+      negative: "Cost understanding needs improvement. Fixed costs significantly impact cash flow."
+    },
+    
+    // Loans and financial obligations
+    'loanInstallment': {
+      positive: "Good loan management awareness! Understanding debt obligations is crucial for financial health.",
+      neutral: "Loan information provided. Regular debt review helps maintain financial stability.",
+      negative: "Loan clarity needed. Debt management is essential for business sustainability."
+    },
+    
+    // Operational metrics
+    'dailyProduction': {
+      positive: "Excellent production awareness! Capacity understanding drives operational efficiency.",
+      neutral: "Production data provided. Detailed capacity tracking can improve resource allocation.",
+      negative: "Production clarity needed. Understanding capacity constraints is key to growth."
+    },
+    
+    // Investment and assets
+    'totalInvestment': {
+      positive: "Strong investment tracking! Good awareness of capital deployment and business value.",
+      neutral: "Investment information provided. Regular investment review supports strategic decisions.",
+      negative: "Investment clarity needed. Understanding capital structure is vital for growth planning."
+    },
+    'totalAssets': {
+      positive: "Excellent asset awareness! Good understanding of business valuation and resource allocation.",
+      neutral: "Asset information provided. Comprehensive asset tracking supports financial management.",
+      negative: "Asset clarity needed. Understanding your asset base is crucial for financial health."
+    },
+    
+    // Customer metrics
+    'customersQ4_2021': {
+      positive: "Great customer tracking! Understanding historical trends informs future strategies.",
+      neutral: "Customer data provided. Detailed customer analytics can reveal growth opportunities.",
+      negative: "Customer clarity needed. Tracking customer metrics is essential for business development."
+    },
+    'customersQ1_2022': {
+      positive: "Excellent recent customer awareness! Current data drives immediate business decisions.",
+      neutral: "Customer information provided. Regular customer tracking supports adaptive strategies.",
+      negative: "Recent customer clarity needed. Up-to-date metrics are crucial for responsive management."
+    }
+  };
+
+  // Get the appropriate advice based on question and sentiment
+  const template = adviceTemplates[question];
+  if (template) {
+    return {
+      message: template[sentiment.sentiment],
+      sentiment: sentiment.sentiment,
+      confidence: sentiment.confidence,
+      score: sentiment.comparative
+    };
+  }
+  
+  return {
+    message: "Thank you for the financial information. Regular tracking of this metric supports better business decisions.",
+    sentiment: 'neutral',
+    confidence: 0.5,
+    score: 0
+  };
+}
+
 // Score calculation logic for Business Metrics section (6.1-6.10)
 export function calculateBloodTestScores(formData) {
-  // Initialize all scores to 0
   const scores = {
     avgMonthlyRevenue: 0,
     grossProfitMargin: 0,
@@ -16,81 +135,55 @@ export function calculateBloodTestScores(formData) {
     percentage: 0
   };
 
-  // 6.1: Average Monthly Sales Revenue (0-3 points)
-  if (formData.avgMonthlyRevenue) {
-    if (/^\d+$/.test(formData.avgMonthlyRevenue)) scores.avgMonthlyRevenue = 3;
-    else if (formData.avgMonthlyRevenue.includes("-") || formData.avgMonthlyRevenue.includes("~")) scores.avgMonthlyRevenue = 2;
-    else scores.avgMonthlyRevenue = 1;
-  }
+  const advice = {};
 
-  // 6.2: Gross Profit Margin % (0-3 points)
-  const profitMargin = parseInt(formData.grossProfitMargin) || 0;
-  if (profitMargin > 0 && formData.grossProfitMargin.includes("=")) scores.grossProfitMargin = 3;
-  else if (profitMargin > 0) scores.grossProfitMargin = 2;
-  else if (formData.grossProfitMargin) scores.grossProfitMargin = 1;
+  // Helper function to calculate score based on sentiment and content quality
+  const calculateScore = (answer, question) => {
+    if (!answer || answer.trim().length === 0) return 0;
+    
+    const sentiment = analyzeFinancialSentiment(answer);
+    const lengthScore = Math.min(3, Math.floor(answer.length / 10)); // Reward detailed answers
+    const numericScore = /\d/.test(answer) ? 2 : 0; // Reward numeric data
+    
+    // Base score on sentiment strength and content quality
+    let score = 0;
+    
+    if (sentiment.sentiment === 'positive') score = 2 + lengthScore + numericScore;
+    else if (sentiment.sentiment === 'neutral') score = 1 + lengthScore + numericScore;
+    else score = lengthScore; // Negative sentiment gets minimal points
+    
+    // Generate advice
+    advice[question] = generateFinancialAdvice(question, answer);
+    
+    return Math.min(3, Math.max(0, score));
+  };
 
-  // 6.3: Monthly Fixed Costs (0-3 points)
-  if (formData.monthlyFixedCosts) {
-    if (formData.monthlyFixedCosts.includes(",") || formData.monthlyFixedCosts.includes("+")) scores.monthlyFixedCosts = 3;
-    else if (/^\d+$/.test(formData.monthlyFixedCosts)) scores.monthlyFixedCosts = 2;
-    else scores.monthlyFixedCosts = 1;
-  }
-
-  // 6.4: Loan Installment (0-3 points)
-  if (formData.hasLoan === "yes" && formData.loanInstallment) {
-    if (/^\d+$/.test(formData.loanInstallment)) scores.loanInstallment = 3;
-    else scores.loanInstallment = 2;
-  } else if (formData.hasLoan === "no") {
-    scores.loanInstallment = 1;
-  }
-
-  // 6.5: Owner Salary (0-3 points)
-  const salary = parseInt(formData.ownerSalary) || 0;
-  if (salary > 0) scores.ownerSalary = 3;
-  else if (formData.ownerSalary) scores.ownerSalary = 1;
-
-  // 6.6: Daily Production Capacity (0-3 points)
-  const production = parseInt(formData.dailyProduction) || 0;
-  if (production > 0) scores.dailyProduction = 3;
-  else if (formData.dailyProduction) scores.dailyProduction = 1;
-
-  // 6.7: Total Investment (0-3 points)
-  const investment = parseInt(formData.totalInvestment) || 0;
-  if (investment > 0) scores.totalInvestment = 3;
-  else if (formData.totalInvestment) scores.totalInvestment = 1;
-
-  // 6.8: Total Assets Value (0-3 points)
-  if (formData.totalAssets) {
-    if (formData.totalAssets.includes(",") || formData.totalAssets.includes("+")) scores.totalAssets = 3;
-    else if (/^\d+$/.test(formData.totalAssets)) scores.totalAssets = 2;
-    else scores.totalAssets = 1;
-  }
-
-  // 6.9: Customers Q4 2021 (0-3 points)
-  const customersQ4 = parseInt(formData.customersQ4_2021) || 0;
-  if (customersQ4 > 0) scores.customersQ4_2021 = 3;
-  else if (formData.customersQ4_2021) scores.customersQ4_2021 = 1;
-
-  // 6.10: Customers Q1 2022 (0-3 points)
-  const customersQ1 = parseInt(formData.customersQ1_2022) || 0;
-  if (customersQ1 > 0) scores.customersQ1_2022 = 3;
-  else if (formData.customersQ1_2022) scores.customersQ1_2022 = 1;
+  // Calculate scores using sentiment analysis
+  scores.avgMonthlyRevenue = calculateScore(formData.avgMonthlyRevenue, 'avgMonthlyRevenue');
+  scores.grossProfitMargin = calculateScore(formData.grossProfitMargin, 'grossProfitMargin');
+  scores.monthlyFixedCosts = calculateScore(formData.monthlyFixedCosts, 'monthlyFixedCosts');
+  scores.loanInstallment = calculateScore(formData.loanInstallment, 'loanInstallment');
+  scores.ownerSalary = calculateScore(formData.ownerSalary, 'ownerSalary');
+  scores.dailyProduction = calculateScore(formData.dailyProduction, 'dailyProduction');
+  scores.totalInvestment = calculateScore(formData.totalInvestment, 'totalInvestment');
+  scores.totalAssets = calculateScore(formData.totalAssets, 'totalAssets');
+  scores.customersQ4_2021 = calculateScore(formData.customersQ4_2021, 'customersQ4_2021');
+  scores.customersQ1_2022 = calculateScore(formData.customersQ1_2022, 'customersQ1_2022');
 
   // Calculate total points (max 30)
-  const totalPoints = 
-    scores.avgMonthlyRevenue +
-    scores.grossProfitMargin +
-    scores.monthlyFixedCosts +
-    scores.loanInstallment +
-    scores.ownerSalary +
-    scores.dailyProduction +
-    scores.totalInvestment +
-    scores.totalAssets +
-    scores.customersQ4_2021 +
-    scores.customersQ1_2022;
+  const totalPoints = Object.values(scores)
+    .filter(val => typeof val === 'number')
+    .reduce((sum, score) => sum + score, 0);
 
   // Convert to percentage
   scores.percentage = Math.round((totalPoints / 30) * 100);
+  scores.totalPoints = totalPoints;
+  scores.advice = advice;
 
-  return {...scores,totalPoints};
+  return scores;
+}
+
+// Simple function to get financial advice for any metric
+export function getFinancialAdvice(metricName, answer) {
+  return generateFinancialAdvice(metricName, answer);
 }
