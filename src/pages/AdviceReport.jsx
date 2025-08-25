@@ -665,16 +665,133 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{heartAdvice.tier} Status</h3>
             <p className="mb-4">{heartAdvice.advice.message}</p>
 
-            {heartAdvice.advice.specificActions?.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {heartAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #fecaca' // Red border for heart section
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Product Analysis (Heart)</h1>
+      
+  {/* Product Health Summary */}
+  <div className="mb-6 p-4 bg-red-50 rounded">
+    <h2 className="text-xl font-semibold mb-2">Product Health Overview</h2>
+    <p>Overall Score: <span className="font-medium">{heartScore?.percentage || 0}%</span></p>
+    <p>Total Points: <span className="font-medium">{heartScore?.totalPoints || 0}/15</span></p>
+    <p>Product Strength: <span className="capitalize font-medium">{
+      heartScore?.percentage >= 80 ? 'Excellent' :
+      heartScore?.percentage >= 60 ? 'Strong' :
+      heartScore?.percentage >= 40 ? 'Adequate' : 'Needs Improvement'
+    }</span></p>
+  </div>
+      
+  {/* Detailed Product Metrics */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Product Features Analysis</h2>
+        
+    {/* Unique Features */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Unique Features</h3>
+      <p className="text-gray-700 mb-2">{heartScore?.advice?.uniqueFeatures?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {heartScore?.uniqueFeatures || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{heartScore?.advice?.uniqueFeatures?.sentiment || 'neutral'}</span></p>
+        <p>Confidence: {(heartScore?.advice?.uniqueFeatures?.confidence * 100 || 0).toFixed(0)}%</p>
+      </div>
+    </div>
+        
+    {/* Customer Satisfaction */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Customer Satisfaction</h3>
+      <p className="text-gray-700 mb-2">{heartScore?.advice?.customerSatisfaction?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {heartScore?.customerSatisfaction || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{heartScore?.advice?.customerSatisfaction?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Packaging & Branding */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Packaging & Branding</h3>
+      <p className="text-gray-700 mb-2">{heartScore?.advice?.packagingBranding?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {heartScore?.packagingBranding || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{heartScore?.advice?.packagingBranding?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Pricing Policy */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Pricing Policy</h3>
+      <p className="text-gray-700 mb-2">{heartScore?.advice?.pricingPolicy?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {heartScore?.pricingPolicy || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{heartScore?.advice?.pricingPolicy?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Date Labeling */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Date Labeling & Quality Control</h3>
+      <p className="text-gray-700 mb-2">{heartScore?.advice?.dateLabeling?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600">
+        <p>Score: {heartScore?.dateLabeling || 0}/3</p>
+        <p>Sentiment: <span className="capitalize">{heartScore?.advice?.dateLabeling?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {/* Overall Product Health Recommendation */}
+  {heartScore?.percentage !== undefined && (
+    <div className="mt-8 p-4 border rounded" style={{
+      backgroundColor: heartScore.percentage >= 80 ? '#fef2f2' : 
+                       heartScore.percentage >= 60 ? '#fefce8' : '#f0fdf4',
+      borderColor: heartScore.percentage >= 80 ? '#fecaca' : 
+                   heartScore.percentage >= 60 ? '#fde68a' : '#bbf7d0'
+    }}>
+      <h3 className="font-semibold text-lg mb-2">Overall Product Health Recommendation</h3>
+      <p className="text-gray-700">
+        {heartScore.percentage >= 80 ? 
+          "Your product heart is strong! Excellent features, satisfaction, and positioning in the market." :
+         heartScore.percentage >= 60 ? 
+          "Good product foundation! Focus on enhancing unique features and customer experience." :
+         heartScore.percentage >= 40 ?
+          "Adequate product performance. Consider strategic improvements in differentiation and quality." :
+          "Product needs immediate attention. Focus on core features, quality control, and customer satisfaction."
+        }
+      </p>
+      <p className="text-sm text-gray-600 mt-2">
+        Based on your overall score of {heartScore.percentage}%
+      </p>
+      {heartScore.percentage < 60 && (
+        <div className="mt-3 text-sm">
+          <p className="font-medium">Priority Areas:</p>
+          <ul className="list-disc list-inside mt-1">
+            {heartScore.uniqueFeatures < 2 && <li>Develop unique selling propositions</li>}
+            {heartScore.customerSatisfaction < 2 && <li>Improve customer satisfaction</li>}
+            {heartScore.packagingBranding < 2 && <li>Enhance branding and packaging</li>}
+            {heartScore.pricingPolicy < 2 && <li>Optimize pricing strategy</li>}
+            {heartScore.dateLabeling < 2 && <li>Strengthen quality control</li>}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+
+  {/* Product Success Tips */}
+  <div className="mt-6 p-4 bg-blue-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">💡 Product Success Tips</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Regularly gather and act on customer feedback</li>
+      <li>Continuously innovate and improve your product features</li>
+      <li>Invest in professional packaging and consistent branding</li>
+      <li>Monitor competitors and adjust pricing strategically</li>
+      <li>Maintain strict quality control standards</li>
+    </ul>
+  </div>
+</section>
 
             {heartAdvice.advice.resources?.length > 0 && (
               <>
