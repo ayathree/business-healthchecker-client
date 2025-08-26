@@ -250,17 +250,177 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{statusAdvice.tier} Status</h3>
             <p className="mb-4">{statusAdvice.advice.message}</p>
 
-            {statusAdvice.advice.specificActions?.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {statusAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #8b5cf6' // Purple border for infrastructure section
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Infrastructure & Setup Analysis</h1>
+      
+  {/* Infrastructure Summary */}
+  <div className="mb-6 p-4 bg-purple-50 rounded">
+    <h2 className="text-xl font-semibold mb-2">Business Foundation Overview</h2>
+    <p>Overall Score: <span className="font-medium">{statusScore?.percentage || 0}%</span></p>
+    <p>Total Points: <span className="font-medium">{statusScore?.totalPoints || 0}/18</span></p>
+    <p>Infrastructure Status: <span className="capitalize font-medium">{
+      statusScore?.percentage >= 80 ? 'Excellent' :
+      statusScore?.percentage >= 60 ? 'Strong' :
+      statusScore?.percentage >= 40 ? 'Adequate' : 'Developing'
+    }</span></p>
+  </div>
+      
+  {/* Detailed Infrastructure Metrics */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Infrastructure Components Analysis</h2>
+        
+    {/* Trade License */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Legal Compliance</h3>
+      <p className="text-gray-700 mb-2">{statusScore?.advice?.tradeLicense?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {statusScore?.tradeLicense || 0}/3</p>
+        <p>Status: <span className="capitalize">{statusScore?.advice?.tradeLicense?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{statusScore?.advice?.tradeLicense?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Bank Account */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Financial Setup</h3>
+      <p className="text-gray-700 mb-2">{statusScore?.advice?.bankAccount?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {statusScore?.bankAccount || 0}/3</p>
+        <p>Status: <span className="capitalize">{statusScore?.advice?.bankAccount?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{statusScore?.advice?.bankAccount?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Office/Showroom */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Physical Presence</h3>
+      <p className="text-gray-700 mb-2">{statusScore?.advice?.officeShowroom?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {statusScore?.officeShowroom || 0}/3</p>
+        <p>Status: <span className="capitalize">{statusScore?.advice?.officeShowroom?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{statusScore?.advice?.officeShowroom?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Website */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Digital Presence</h3>
+      <p className="text-gray-700 mb-2">{statusScore?.advice?.website?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {statusScore?.website || 0}/3</p>
+        <p>Status: <span className="capitalize">{statusScore?.advice?.website?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{statusScore?.advice?.website?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Social Media */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Social Media Engagement</h3>
+      <p className="text-gray-700 mb-2">{statusScore?.advice?.socialMedia?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {statusScore?.socialMedia || 0}/3</p>
+        <p>Platforms: {statusScore?.advice?.socialMedia?.count || 0}</p>
+        <p>Performance: <span className="capitalize">{statusScore?.advice?.socialMedia?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{statusScore?.advice?.socialMedia?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
 
+    {/* Marketplace */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Marketplace Presence</h3>
+      <p className="text-gray-700 mb-2">{statusScore?.advice?.marketplace?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {statusScore?.marketplace || 0}/3</p>
+        <p>Status: <span className="capitalize">{statusScore?.advice?.marketplace?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{statusScore?.advice?.marketplace?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {/* Overall Infrastructure Recommendation */}
+  {statusScore?.percentage !== undefined && (
+    <div className="mt-8 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
+      <h3 className="font-semibold text-lg mb-2">Overall Infrastructure Assessment</h3>
+      <p className="text-gray-700">
+        {statusScore.percentage >= 80 ? 
+          "Exceptional infrastructure foundation! Comprehensive setup across all business essentials." :
+         statusScore.percentage >= 60 ? 
+          "Strong infrastructure base! Good foundation with opportunities for enhancement." :
+         statusScore.percentage >= 40 ?
+          "Adequate infrastructure setup. Focus on strengthening key business foundations." :
+          "Developing infrastructure. Prioritize essential business setup and compliance."
+        }
+      </p>
+      <p className="text-sm text-gray-600 mt-2">
+        Based on your overall score of {statusScore.percentage}%
+      </p>
+      
+      {/* Priority recommendations */}
+      <div className="mt-4 text-sm">
+        <p className="font-medium">Key Infrastructure Priorities:</p>
+        <ul className="list-disc list-inside mt-1 space-y-1">
+          {statusScore.tradeLicense < 2 && <li>Ensure legal compliance and license validity</li>}
+          {statusScore.bankAccount < 3 && <li>Establish professional banking setup</li>}
+          {statusScore.officeShowroom < 3 && <li>Consider physical business presence</li>}
+          {statusScore.website < 3 && <li>Develop online website presence</li>}
+          {statusScore.socialMedia < 2 && <li>Expand social media engagement</li>}
+          {statusScore.marketplace < 3 && <li>Explore marketplace opportunities</li>}
+        </ul>
+      </div>
+    </div>
+  )}
+
+  {/* Infrastructure Development Tips */}
+  <div className="mt-6 p-4 bg-purple-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">🏗️ Infrastructure Development Tips</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Maintain updated legal documentation and compliance</li>
+      <li>Separate business and personal finances completely</li>
+      <li>Consider professional business premises for credibility</li>
+      <li>Develop responsive and professional website</li>
+      <li>Maintain active social media presence across platforms</li>
+      <li>Explore multiple sales channels and marketplaces</li>
+      <li>Regularly review and upgrade business infrastructure</li>
+    </ul>
+  </div>
+
+  {/* Compliance & Legal Resources */}
+  <div className="mt-6 p-4 bg-blue-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">⚖️ Compliance Resources</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Business registration and licensing guides</li>
+      <li>Financial compliance requirements</li>
+      <li>Tax registration and documentation</li>
+      <li>Industry-specific regulations</li>
+      <li>Digital compliance and data protection</li>
+    </ul>
+  </div>
+
+  {/* Sentiment Insights */}
+  {Object.values(statusScore?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
+    <div className="mt-6 p-4 bg-indigo-50 rounded">
+      <h3 className="font-semibold text-lg mb-2">🎯 Infrastructure Sentiment Insights</h3>
+      <p className="text-sm text-gray-700">
+        {Object.values(statusScore?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
+          "Positive infrastructure assessment - strong foundation detected!"}
+        {Object.values(statusScore?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
+          " Infrastructure gaps identified - focus on essential setup improvements."}
+      </p>
+    </div>
+  )}
+</section>
             {statusAdvice.advice.resources?.length > 0 && (
               <>
                 <h4 className="font-medium mb-2">Helpful Resources:</h4>
@@ -604,16 +764,166 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{strengthAdvice.tier} Status</h3>
             <p className="mb-4">{strengthAdvice.advice.message}</p>
 
-            {strengthAdvice.advice.specificActions?.length > 0 && (
-              <>
-                <h4 className="font-medium mb-2">Recommended Actions:</h4>
-                <ul className="list-disc pl-6 space-y-2 mb-4">
-                  {strengthAdvice.advice.specificActions.map((action, index) => (
-                    <li key={index}>{action}</li>
-                  ))}
-                </ul>
-              </>
-            )}
+            <section style={{ 
+  padding: '24px', 
+  borderRadius: '8px', 
+  backgroundColor: "white", 
+  marginBottom: '32px',
+  border: '1px solid #f59e0b' // Amber border for strength section
+}}>
+  
+  <h1 className="text-2xl font-bold mb-6">Organizational Strength Analysis</h1>
+      
+  {/* Strength Summary */}
+  <div className="mb-6 p-4 bg-amber-50 rounded">
+    <h2 className="text-xl font-semibold mb-2">Organizational Capacity Overview</h2>
+    <p>Overall Score: <span className="font-medium">{strengthScore?.percentage || 0}%</span></p>
+    <p>Total Points: <span className="font-medium">{strengthScore?.totalPoints || 0}/15</span></p>
+    <p>Organizational Health: <span className="capitalize font-medium">{
+      strengthScore?.percentage >= 80 ? 'Excellent' :
+      strengthScore?.percentage >= 60 ? 'Strong' :
+      strengthScore?.percentage >= 40 ? 'Adequate' : 'Developing'
+    }</span></p>
+  </div>
+      
+  {/* Detailed Strength Metrics */}
+  <div className="space-y-4">
+    <h2 className="text-xl font-semibold">Organizational Capabilities Analysis</h2>
+        
+    {/* Employee Count */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Team Size & Structure</h3>
+      <p className="text-gray-700 mb-2">{strengthScore?.advice?.employeeCount?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {strengthScore?.employeeCount || 0}/3</p>
+        <p>Employee Count: {strengthScore?.advice?.employeeCount?.numericValue || 0}</p>
+        <p>Performance: <span className="capitalize">{strengthScore?.advice?.employeeCount?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.employeeCount?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Employee Skills */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Employee Skills & Capabilities</h3>
+      <p className="text-gray-700 mb-2">{strengthScore?.advice?.employeeSkills?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {strengthScore?.employeeSkills || 0}/3</p>
+        <p>Skill Level: {strengthScore?.advice?.employeeSkills?.numericValue || 0}/10</p>
+        <p>Performance: <span className="capitalize">{strengthScore?.advice?.employeeSkills?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.employeeSkills?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Operational Resilience */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Operational Resilience</h3>
+      <p className="text-gray-700 mb-2">{strengthScore?.advice?.operationalResilience?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {strengthScore?.operationalResilience || 0}/3</p>
+        <p>Performance: <span className="capitalize">{strengthScore?.advice?.operationalResilience?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.operationalResilience?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Marketing Plan */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Marketing Strategy</h3>
+      <p className="text-gray-700 mb-2">{strengthScore?.advice?.marketingPlan?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {strengthScore?.marketingPlan || 0}/3</p>
+        <p>Performance: <span className="capitalize">{strengthScore?.advice?.marketingPlan?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.marketingPlan?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+        
+    {/* Software Usage */}
+    <div className="p-4 border rounded">
+      <h3 className="font-medium text-lg">Technology Adoption</h3>
+      <p className="text-gray-700 mb-2">{strengthScore?.advice?.softwareUsage?.message || 'No analysis available'}</p>
+      <div className="text-sm text-gray-600 space-y-1">
+        <p>Score: {strengthScore?.softwareUsage || 0}/3</p>
+        <p>Performance: <span className="capitalize">{strengthScore?.advice?.softwareUsage?.performance || 'none'}</span></p>
+        <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.softwareUsage?.sentiment || 'neutral'}</span></p>
+      </div>
+    </div>
+  </div>
+
+  {/* Overall Strength Recommendation */}
+  {strengthScore?.percentage !== undefined && (
+    <div className="mt-8 p-4 border rounded" style={{
+      backgroundColor: strengthScore.percentage >= 80 ? '#fffbeb' : 
+                       strengthScore.percentage >= 60 ? '#fefce8' : '#f0fdf4',
+      borderColor: strengthScore.percentage >= 80 ? '#fde68a' : 
+                   strengthScore.percentage >= 60 ? '#fde68a' : '#bbf7d0'
+    }}>
+      <h3 className="font-semibold text-lg mb-2">Overall Organizational Strength</h3>
+      <p className="text-gray-700">
+        {strengthScore.percentage >= 80 ? 
+          "Exceptional organizational strength! Robust team, strong capabilities, and excellent operational foundation." :
+         strengthScore.percentage >= 60 ? 
+          "Strong organizational foundation! Good capabilities with opportunities for optimization and growth." :
+         strengthScore.percentage >= 40 ?
+          "Adequate organizational capacity. Focus on developing key strengths and addressing gaps." :
+          "Developing organizational capabilities. Prioritize building core strengths and foundational systems."
+        }
+      </p>
+      <p className="text-sm text-gray-600 mt-2">
+        Based on your overall score of {strengthScore.percentage}%
+      </p>
+      
+      {/* Priority recommendations */}
+      <div className="mt-4 text-sm">
+        <p className="font-medium">Key Development Areas:</p>
+        <ul className="list-disc list-inside mt-1 space-y-1">
+          {strengthScore.employeeCount < 2 && <li>Optimize team size and structure</li>}
+          {strengthScore.employeeSkills < 2 && <li>Invest in employee training and development</li>}
+          {strengthScore.operationalResilience < 2 && <li>Strengthen operational systems and backup plans</li>}
+          {strengthScore.marketingPlan < 2 && <li>Develop comprehensive marketing strategy</li>}
+          {strengthScore.softwareUsage < 2 && <li>Enhance technology adoption and digital tools</li>}
+        </ul>
+      </div>
+    </div>
+  )}
+
+  {/* Organizational Development Tips */}
+  <div className="mt-6 p-4 bg-amber-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">🏢 Organizational Development Tips</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Invest in continuous employee training and skill development</li>
+      <li>Develop clear career progression and retention strategies</li>
+      <li>Implement robust operational processes and contingency plans</li>
+      <li>Create comprehensive marketing and growth strategies</li>
+      <li>Leverage technology for efficiency and scalability</li>
+      <li>Foster strong company culture and employee engagement</li>
+      <li>Regularly review and optimize organizational structure</li>
+    </ul>
+  </div>
+
+  {/* Sentiment Insights */}
+  {Object.values(strengthScore?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
+    <div className="mt-6 p-4 bg-orange-50 rounded">
+      <h3 className="font-semibold text-lg mb-2">🎯 Organizational Sentiment Insights</h3>
+      <p className="text-sm text-gray-700">
+        {Object.values(strengthScore?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
+          "Positive organizational capabilities detected - leverage these strengths for growth!"}
+        {Object.values(strengthScore?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
+          " Some capability gaps identified - focus on developing these areas strategically."}
+      </p>
+    </div>
+  )}
+
+  {/* Capacity Building Resources */}
+  <div className="mt-6 p-4 bg-blue-50 rounded">
+    <h3 className="font-semibold text-lg mb-2">📚 Capacity Building Resources</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+      <li>Employee training programs and professional development</li>
+      <li>Operational excellence frameworks and best practices</li>
+      <li>Marketing strategy templates and planning tools</li>
+      <li>Technology adoption guides and software recommendations</li>
+      <li>Leadership development and management training resources</li>
+    </ul>
+  </div>
+</section>
 
             {strengthAdvice.advice.resources?.length > 0 && (
               <>
