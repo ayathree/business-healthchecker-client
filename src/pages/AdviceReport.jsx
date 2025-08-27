@@ -155,7 +155,12 @@ const generatePDF = async () => {
       </div>
 
       {/* Company Info */}
-      <section className="mb-8 p-6 rounded-lg" style={{ backgroundColor: '#f9fafb' }}>
+      <section className="mb-8 p-6 border rounded-lg" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
         <h2 className="text-xl font-semibold mb-4">Company Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <p><span className="font-medium">Name:</span> {info.name}</p>
@@ -166,10 +171,15 @@ const generatePDF = async () => {
       </section>
 
       {/* Scores */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">Assessment Results</h2>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="mb-4">
+      <section className="mb-8" >
+        <h2 className="text-5xl font-semibold m-10 text-center ">Assessment Results</h2>
+        <div className="bg-white p-6 border rounded-lg shadow " style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
+          <div className="mb-4" >
             <p className="text-xl font-semibold mb-4">Total Score: {totalPoints}</p>
             <h3 className="text-lg font-medium text-blue-600 capitalize">Business Position/Status</h3>
             <p>Business Position/Status Score: {statusScore.percentage}%</p>
@@ -234,8 +244,8 @@ const generatePDF = async () => {
       </section>
 
       {/* Recommendations */}
-      <section className="p-6 rounded-lg mb-8 space-y-10" style={{ backgroundColor: '#D3D3D3' }}>
-        <h2 className="text-xl font-semibold mb-4">Recommendations</h2>
+      <section className="p-6 rounded-lg  mb-8 space-y-10" >
+        <h2 className="text-5xl font-semibold m-10 text-center ">Recommendations</h2>
          
         {statusAdvice ? (
           <div
@@ -261,7 +271,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Infrastructure & Setup Analysis</h1>
       
   {/* Infrastructure Summary */}
-  <div className="mb-6 p-4 bg-purple-50 rounded">
+  <div className="mb-6 p-4  border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Business Foundation Overview</h2>
     <p>Overall Score: <span className="font-medium">{statusScore?.percentage || 0}%</span></p>
     <p>Total Points: <span className="font-medium">{statusScore?.totalPoints || 0}/18</span></p>
@@ -279,8 +294,8 @@ const generatePDF = async () => {
     {/* Trade License */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Legal Compliance</h3>
-      <p className="text-gray-700 mb-2">{statusScore?.advice?.tradeLicense?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{statusScore?.advice?.tradeLicense?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {statusScore?.tradeLicense || 0}/3</p>
         <p>Status: <span className="capitalize">{statusScore?.advice?.tradeLicense?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{statusScore?.advice?.tradeLicense?.sentiment || 'neutral'}</span></p>
@@ -290,8 +305,8 @@ const generatePDF = async () => {
     {/* Bank Account */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Financial Setup</h3>
-      <p className="text-gray-700 mb-2">{statusScore?.advice?.bankAccount?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{statusScore?.advice?.bankAccount?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {statusScore?.bankAccount || 0}/3</p>
         <p>Status: <span className="capitalize">{statusScore?.advice?.bankAccount?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{statusScore?.advice?.bankAccount?.sentiment || 'neutral'}</span></p>
@@ -301,8 +316,8 @@ const generatePDF = async () => {
     {/* Office/Showroom */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Physical Presence</h3>
-      <p className="text-gray-700 mb-2">{statusScore?.advice?.officeShowroom?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{statusScore?.advice?.officeShowroom?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {statusScore?.officeShowroom || 0}/3</p>
         <p>Status: <span className="capitalize">{statusScore?.advice?.officeShowroom?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{statusScore?.advice?.officeShowroom?.sentiment || 'neutral'}</span></p>
@@ -312,8 +327,8 @@ const generatePDF = async () => {
     {/* Website */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Digital Presence</h3>
-      <p className="text-gray-700 mb-2">{statusScore?.advice?.website?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{statusScore?.advice?.website?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {statusScore?.website || 0}/3</p>
         <p>Status: <span className="capitalize">{statusScore?.advice?.website?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{statusScore?.advice?.website?.sentiment || 'neutral'}</span></p>
@@ -323,8 +338,8 @@ const generatePDF = async () => {
     {/* Social Media */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Social Media Engagement</h3>
-      <p className="text-gray-700 mb-2">{statusScore?.advice?.socialMedia?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{statusScore?.advice?.socialMedia?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {statusScore?.socialMedia || 0}/3</p>
         <p>Platforms: {statusScore?.advice?.socialMedia?.count || 0}</p>
         <p>Performance: <span className="capitalize">{statusScore?.advice?.socialMedia?.performance || 'none'}</span></p>
@@ -335,8 +350,8 @@ const generatePDF = async () => {
     {/* Marketplace */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Marketplace Presence</h3>
-      <p className="text-gray-700 mb-2">{statusScore?.advice?.marketplace?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{statusScore?.advice?.marketplace?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {statusScore?.marketplace || 0}/3</p>
         <p>Status: <span className="capitalize">{statusScore?.advice?.marketplace?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{statusScore?.advice?.marketplace?.sentiment || 'neutral'}</span></p>
@@ -353,7 +368,7 @@ const generatePDF = async () => {
                    statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
       <h3 className="font-semibold text-lg mb-2">Overall Infrastructure Assessment</h3>
-      <p className="text-gray-700">
+      <p className="">
         {statusScore.percentage >= 80 ? 
           "Exceptional infrastructure foundation! Comprehensive setup across all business essentials." :
          statusScore.percentage >= 60 ? 
@@ -363,12 +378,17 @@ const generatePDF = async () => {
           "Developing infrastructure. Prioritize essential business setup and compliance."
         }
       </p>
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm  mt-2">
         Based on your overall score of {statusScore.percentage}%
       </p>
       
       {/* Priority recommendations */}
-      <div className="mt-4 text-sm">
+      <div className="mt-4 text-sm " style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
         <p className="font-medium">Key Infrastructure Priorities:</p>
         <ul className="list-disc list-inside mt-1 space-y-1">
           {statusScore.tradeLicense < 2 && <li>Ensure legal compliance and license validity</li>}
@@ -383,9 +403,14 @@ const generatePDF = async () => {
   )}
 
   {/* Infrastructure Development Tips */}
-  <div className="mt-6 p-4 bg-purple-50 rounded">
+  <div className="mt-6 p-4 border  rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h3 className="font-semibold text-lg mb-2">🏗️ Infrastructure Development Tips</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Maintain updated legal documentation and compliance</li>
       <li>Separate business and personal finances completely</li>
       <li>Consider professional business premises for credibility</li>
@@ -397,9 +422,14 @@ const generatePDF = async () => {
   </div>
 
   {/* Compliance & Legal Resources */}
-  <div className="mt-6 p-4 bg-blue-50 rounded">
-    <h3 className="font-semibold text-lg mb-2">⚖️ Compliance Resources</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+  <div className="mt-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
+    <h3 className="font-semibold text-lg mb-2" >⚖️ Compliance Resources</h3>
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Business registration and licensing guides</li>
       <li>Financial compliance requirements</li>
       <li>Tax registration and documentation</li>
@@ -410,9 +440,14 @@ const generatePDF = async () => {
 
   {/* Sentiment Insights */}
   {Object.values(statusScore?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
-    <div className="mt-6 p-4 bg-indigo-50 rounded">
+    <div className="mt-6 p-4  rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
       <h3 className="font-semibold text-lg mb-2">🎯 Infrastructure Sentiment Insights</h3>
-      <p className="text-sm text-gray-700">
+      <p className="text-sm ">
         {Object.values(statusScore?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
           "Positive infrastructure assessment - strong foundation detected!"}
         {Object.values(statusScore?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
@@ -468,7 +503,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Market & Customers Analysis</h1>
       
   {/* Market Health Summary */}
-  <div className="mb-6 p-4 bg-green-50 rounded">
+  <div className="mb-6 p-4  border  rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Market Position Overview</h2>
     <p>Overall Score: <span className="font-medium">{scores?.percentage || 0}%</span></p>
     <p>Total Points: <span className="font-medium">{scores?.totalPoints || 0}/21</span></p>
@@ -486,8 +526,8 @@ const generatePDF = async () => {
     {/* Market Scope */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Market Scope Definition</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.marketScope?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.marketScope?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Scope Level: {scores?.marketScope || 0}/3</p>
         <p>Performance: <span className="capitalize">{scores?.advice?.marketScope?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{scores?.advice?.marketScope?.sentiment || 'neutral'}</span></p>
@@ -497,8 +537,8 @@ const generatePDF = async () => {
     {/* Market Size */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Market Size Potential</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.marketSize?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.marketSize?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Size Score: {scores?.marketSize || 0}/3</p>
         <p>Estimated Size: {scores?.advice?.marketSize?.value?.toLocaleString() || 'Unknown'}</p>
         <p>Performance: <span className="capitalize">{scores?.advice?.marketSize?.performance || 'none'}</span></p>
@@ -508,8 +548,8 @@ const generatePDF = async () => {
     {/* Market Trend */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Market Trends</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.marketTrend?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.marketTrend?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Trend Score: {scores?.marketTrend || 0}/3</p>
         <p>Market Direction: <span className="capitalize">{scores?.advice?.marketTrend?.performance || 'unknown'}</span></p>
         <p>Sentiment: <span className="capitalize">{scores?.advice?.marketTrend?.sentiment || 'neutral'}</span></p>
@@ -519,8 +559,8 @@ const generatePDF = async () => {
     {/* Target Customer */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Target Customer Clarity</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.targetCustomer?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.targetCustomer?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Targeting Score: {scores?.targetCustomer || 0}/3</p>
         <p>Approach: <span className="capitalize">{scores?.advice?.targetCustomer?.performance || 'undefined'}</span></p>
         <p>Sentiment: <span className="capitalize">{scores?.advice?.targetCustomer?.sentiment || 'neutral'}</span></p>
@@ -530,8 +570,8 @@ const generatePDF = async () => {
     {/* Monthly Customers */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Customer Volume</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.monthlyCustomers?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.monthlyCustomers?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Volume Score: {scores?.monthlyCustomers || 0}/3</p>
         <p>Monthly Customers: {scores?.advice?.monthlyCustomers?.value?.toLocaleString() || 0}</p>
         <p>Performance: <span className="capitalize">{scores?.advice?.monthlyCustomers?.performance || 'none'}</span></p>
@@ -541,8 +581,8 @@ const generatePDF = async () => {
     {/* Repeat Customers */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Customer Loyalty</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.repeatCustomers?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.repeatCustomers?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Loyalty Score: {scores?.repeatCustomers || 0}/3</p>
         <p>Repeat Rate: {scores?.advice?.repeatCustomers?.value || 0}%</p>
         <p>Performance: <span className="capitalize">{scores?.advice?.repeatCustomers?.performance || 'none'}</span></p>
@@ -553,8 +593,8 @@ const generatePDF = async () => {
     {/* Competitors */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Competitive Landscape</h3>
-      <p className="text-gray-700 mb-2">{scores?.advice?.competitors?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{scores?.advice?.competitors?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Competition Score: {scores?.competitors || 0}/3</p>
         <p>Competitors: {scores?.advice?.competitors?.value?.toLocaleString() || 0}</p>
         <p>Intensity: <span className="capitalize">{scores?.advice?.competitors?.performance || 'none'}</span></p>
@@ -566,13 +606,13 @@ const generatePDF = async () => {
   {/* Overall Market Recommendation */}
   {scores?.percentage !== undefined && (
     <div className="mt-8 p-4 border rounded" style={{
-      backgroundColor: scores.percentage >= 80 ? '#ecfdf5' : 
-                       scores.percentage >= 60 ? '#f0fdf4' : '#fffbeb',
-      borderColor: scores.percentage >= 80 ? '#a7f3d0' : 
-                   scores.percentage >= 60 ? '#bbf7d0' : '#fde68a'
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
       <h3 className="font-semibold text-lg mb-2">Overall Market Strategy</h3>
-      <p className="text-gray-700">
+      <p className="">
         {scores.percentage >= 80 ? 
           "Exceptional market understanding! Strong positioning with clear customer focus and competitive awareness." :
          scores.percentage >= 60 ? 
@@ -582,7 +622,7 @@ const generatePDF = async () => {
           "Limited market understanding. Prioritize market research and customer definition."
         }
       </p>
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm  mt-2">
         Based on your overall score of {scores.percentage}%
       </p>
       
@@ -602,9 +642,14 @@ const generatePDF = async () => {
   )}
 
   {/* Market Success Tips */}
-  <div className="mt-6 p-4 bg-green-50 rounded">
+  <div className="mt-6 p-4  border  rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h3 className="font-semibold text-lg mb-2">📊 Market Intelligence Tips</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Conduct regular market research and competitor analysis</li>
       <li>Develop detailed customer personas and journey maps</li>
       <li>Monitor market trends and adapt strategies accordingly</li>
@@ -619,7 +664,7 @@ const generatePDF = async () => {
   {Object.values(scores?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
     <div className="mt-6 p-4 bg-emerald-50 rounded">
       <h3 className="font-semibold text-lg mb-2">🎯 Market Sentiment Insights</h3>
-      <p className="text-sm text-gray-700">
+      <p className="text-sm ">
         {Object.values(scores?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
           "Positive market sentiment detected - leverage favorable conditions for growth!"}
         {Object.values(scores?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
@@ -680,7 +725,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Vision & Goals Analysis</h1>
       
   {/* Sentiment Summary */}
-  <div className="mb-6 p-4 bg-gray-100 rounded">
+  <div className="mb-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Sentiment Analysis</h2>
     <p>Overall Sentiment: <span className="capitalize font-medium">{goalScore.sentimentAnalysis?.sentiment || 'neutral'}</span></p>
     <p>Sentiment Score: {goalScore.sentimentAnalysis?.score?.toFixed(2) || '0.00'}</p>
@@ -701,7 +751,7 @@ const generatePDF = async () => {
       <h3 className="font-medium text-lg">Vision Content</h3>
       <p>{goalScore.advice?.visionText?.message}</p>
       {goalScore.sentimentAnalysis && (
-        <div className="mt-2 text-sm text-gray-600">
+        <div className="mt-2 text-sm ">
           <p>Positive words: {goalScore.sentimentAnalysis.positiveWords?.length || 0}</p>
           <p>Negative words: {goalScore.sentimentAnalysis.negativeWords?.length || 0}</p>
           <p>Tokens: {goalScore.sentimentAnalysis.tokens?.join(", ") || "None"}</p>
@@ -764,7 +814,7 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{strengthAdvice.tier} Status</h3>
             <p className="mb-4">{strengthAdvice.advice.message}</p>
 
-            <section style={{ 
+  <section style={{ 
   padding: '24px', 
   borderRadius: '8px', 
   backgroundColor: "white", 
@@ -775,7 +825,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Organizational Strength Analysis</h1>
       
   {/* Strength Summary */}
-  <div className="mb-6 p-4 bg-amber-50 rounded">
+  <div className="mb-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Organizational Capacity Overview</h2>
     <p>Overall Score: <span className="font-medium">{strengthScore?.percentage || 0}%</span></p>
     <p>Total Points: <span className="font-medium">{strengthScore?.totalPoints || 0}/15</span></p>
@@ -793,8 +848,8 @@ const generatePDF = async () => {
     {/* Employee Count */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Team Size & Structure</h3>
-      <p className="text-gray-700 mb-2">{strengthScore?.advice?.employeeCount?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{strengthScore?.advice?.employeeCount?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {strengthScore?.employeeCount || 0}/3</p>
         <p>Employee Count: {strengthScore?.advice?.employeeCount?.numericValue || 0}</p>
         <p>Performance: <span className="capitalize">{strengthScore?.advice?.employeeCount?.performance || 'none'}</span></p>
@@ -805,8 +860,8 @@ const generatePDF = async () => {
     {/* Employee Skills */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Employee Skills & Capabilities</h3>
-      <p className="text-gray-700 mb-2">{strengthScore?.advice?.employeeSkills?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{strengthScore?.advice?.employeeSkills?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {strengthScore?.employeeSkills || 0}/3</p>
         <p>Skill Level: {strengthScore?.advice?.employeeSkills?.numericValue || 0}/10</p>
         <p>Performance: <span className="capitalize">{strengthScore?.advice?.employeeSkills?.performance || 'none'}</span></p>
@@ -817,8 +872,8 @@ const generatePDF = async () => {
     {/* Operational Resilience */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Operational Resilience</h3>
-      <p className="text-gray-700 mb-2">{strengthScore?.advice?.operationalResilience?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{strengthScore?.advice?.operationalResilience?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {strengthScore?.operationalResilience || 0}/3</p>
         <p>Performance: <span className="capitalize">{strengthScore?.advice?.operationalResilience?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.operationalResilience?.sentiment || 'neutral'}</span></p>
@@ -828,8 +883,8 @@ const generatePDF = async () => {
     {/* Marketing Plan */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Marketing Strategy</h3>
-      <p className="text-gray-700 mb-2">{strengthScore?.advice?.marketingPlan?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{strengthScore?.advice?.marketingPlan?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {strengthScore?.marketingPlan || 0}/3</p>
         <p>Performance: <span className="capitalize">{strengthScore?.advice?.marketingPlan?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.marketingPlan?.sentiment || 'neutral'}</span></p>
@@ -839,8 +894,8 @@ const generatePDF = async () => {
     {/* Software Usage */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Technology Adoption</h3>
-      <p className="text-gray-700 mb-2">{strengthScore?.advice?.softwareUsage?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{strengthScore?.advice?.softwareUsage?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Score: {strengthScore?.softwareUsage || 0}/3</p>
         <p>Performance: <span className="capitalize">{strengthScore?.advice?.softwareUsage?.performance || 'none'}</span></p>
         <p>Sentiment: <span className="capitalize">{strengthScore?.advice?.softwareUsage?.sentiment || 'neutral'}</span></p>
@@ -851,13 +906,13 @@ const generatePDF = async () => {
   {/* Overall Strength Recommendation */}
   {strengthScore?.percentage !== undefined && (
     <div className="mt-8 p-4 border rounded" style={{
-      backgroundColor: strengthScore.percentage >= 80 ? '#fffbeb' : 
-                       strengthScore.percentage >= 60 ? '#fefce8' : '#f0fdf4',
-      borderColor: strengthScore.percentage >= 80 ? '#fde68a' : 
-                   strengthScore.percentage >= 60 ? '#fde68a' : '#bbf7d0'
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
       <h3 className="font-semibold text-lg mb-2">Overall Organizational Strength</h3>
-      <p className="text-gray-700">
+      <p className="">
         {strengthScore.percentage >= 80 ? 
           "Exceptional organizational strength! Robust team, strong capabilities, and excellent operational foundation." :
          strengthScore.percentage >= 60 ? 
@@ -867,7 +922,7 @@ const generatePDF = async () => {
           "Developing organizational capabilities. Prioritize building core strengths and foundational systems."
         }
       </p>
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm  mt-2">
         Based on your overall score of {strengthScore.percentage}%
       </p>
       
@@ -886,9 +941,14 @@ const generatePDF = async () => {
   )}
 
   {/* Organizational Development Tips */}
-  <div className="mt-6 p-4 bg-amber-50 rounded">
+  <div className="mt-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h3 className="font-semibold text-lg mb-2">🏢 Organizational Development Tips</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Invest in continuous employee training and skill development</li>
       <li>Develop clear career progression and retention strategies</li>
       <li>Implement robust operational processes and contingency plans</li>
@@ -903,7 +963,7 @@ const generatePDF = async () => {
   {Object.values(strengthScore?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
     <div className="mt-6 p-4 bg-orange-50 rounded">
       <h3 className="font-semibold text-lg mb-2">🎯 Organizational Sentiment Insights</h3>
-      <p className="text-sm text-gray-700">
+      <p className="text-sm ">
         {Object.values(strengthScore?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
           "Positive organizational capabilities detected - leverage these strengths for growth!"}
         {Object.values(strengthScore?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
@@ -913,9 +973,14 @@ const generatePDF = async () => {
   )}
 
   {/* Capacity Building Resources */}
-  <div className="mt-6 p-4 bg-blue-50 rounded">
+  <div className="mt-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h3 className="font-semibold text-lg mb-2">📚 Capacity Building Resources</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Employee training programs and professional development</li>
       <li>Operational excellence frameworks and best practices</li>
       <li>Marketing strategy templates and planning tools</li>
@@ -971,7 +1036,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Financial Health Analysis (Blood Test)</h1>
       
   {/* Financial Health Summary */}
-  <div className="mb-6 p-4 bg-blue-50 rounded">
+  <div className="mb-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Financial Health Overview</h2>
     <p>Overall Score: <span className="font-medium">{bloodTestScore?.percentage || 0}%</span></p>
     <p>Total Points: <span className="font-medium">{bloodTestScore?.totalPoints || 0}/30</span></p>
@@ -989,8 +1059,8 @@ const generatePDF = async () => {
     {/* Monthly Revenue */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Average Monthly Revenue</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.avgMonthlyRevenue?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.avgMonthlyRevenue?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.avgMonthlyRevenue || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.avgMonthlyRevenue?.sentiment || 'neutral'}</span></p>
         <p>Confidence: {(bloodTestScore?.advice?.avgMonthlyRevenue?.confidence * 100 || 0).toFixed(0)}%</p>
@@ -1000,8 +1070,8 @@ const generatePDF = async () => {
     {/* Profit Margin */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Gross Profit Margin</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.grossProfitMargin?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.grossProfitMargin?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.grossProfitMargin || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.grossProfitMargin?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1010,8 +1080,8 @@ const generatePDF = async () => {
     {/* Fixed Costs */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Monthly Fixed Costs</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.monthlyFixedCosts?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.monthlyFixedCosts?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.monthlyFixedCosts || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.monthlyFixedCosts?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1020,8 +1090,8 @@ const generatePDF = async () => {
     {/* Loan Information */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Loan Management</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.loanInstallment?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.loanInstallment?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.loanInstallment || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.loanInstallment?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1030,8 +1100,8 @@ const generatePDF = async () => {
     {/* Production Capacity */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Daily Production Capacity</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.dailyProduction?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.dailyProduction?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.dailyProduction || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.dailyProduction?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1040,8 +1110,8 @@ const generatePDF = async () => {
     {/* Investment */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Total Investment</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.totalInvestment?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.totalInvestment?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.totalInvestment || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.totalInvestment?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1050,8 +1120,8 @@ const generatePDF = async () => {
     {/* Assets */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Total Assets</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.totalAssets?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.totalAssets?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.totalAssets || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.totalAssets?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1060,8 +1130,8 @@ const generatePDF = async () => {
     {/* Customer Metrics */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Customer Base (Q4 2021)</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.customersQ4_2021?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.customersQ4_2021?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.customersQ4_2021 || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.customersQ4_2021?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1069,8 +1139,8 @@ const generatePDF = async () => {
         
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Customer Base (Q1 2022)</h3>
-      <p className="text-gray-700 mb-2">{bloodTestScore?.advice?.customersQ1_2022?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{bloodTestScore?.advice?.customersQ1_2022?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {bloodTestScore?.customersQ1_2022 || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{bloodTestScore?.advice?.customersQ1_2022?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1080,13 +1150,13 @@ const generatePDF = async () => {
   {/* Overall Financial Health Recommendation */}
   {bloodTestScore?.percentage !== undefined && (
     <div className="mt-8 p-4 border rounded" style={{
-      backgroundColor: bloodTestScore.percentage >= 70 ? '#f0fdf4' : 
-                       bloodTestScore.percentage >= 40 ? '#fffbeb' : '#fef2f2',
-      borderColor: bloodTestScore.percentage >= 70 ? '#bbf7d0' : 
-                   bloodTestScore.percentage >= 40 ? '#fde68a' : '#fecaca'
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
       <h3 className="font-semibold text-lg mb-2">Overall Financial Health Recommendation</h3>
-      <p className="text-gray-700">
+      <p className="">
         {bloodTestScore.percentage >= 70 ? 
           "Your financial health appears strong! Maintain regular tracking and consider strategic investments for growth." :
          bloodTestScore.percentage >= 40 ? 
@@ -1094,7 +1164,7 @@ const generatePDF = async () => {
           "Immediate attention needed for financial management. Consider professional financial consultation."
         }
       </p>
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm  mt-2">
         Based on your overall score of {bloodTestScore.percentage}%
       </p>
     </div>
@@ -1136,7 +1206,7 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{heartAdvice.tier} Status</h3>
             <p className="mb-4">{heartAdvice.advice.message}</p>
 
-            <section style={{ 
+  <section style={{ 
   padding: '24px', 
   borderRadius: '8px', 
   backgroundColor: "white", 
@@ -1147,7 +1217,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Product Analysis (Heart)</h1>
       
   {/* Product Health Summary */}
-  <div className="mb-6 p-4 bg-red-50 rounded">
+  <div className="mb-6 p-4 border  rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Product Health Overview</h2>
     <p>Overall Score: <span className="font-medium">{heartScore?.percentage || 0}%</span></p>
     <p>Total Points: <span className="font-medium">{heartScore?.totalPoints || 0}/15</span></p>
@@ -1165,8 +1240,8 @@ const generatePDF = async () => {
     {/* Unique Features */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Unique Features</h3>
-      <p className="text-gray-700 mb-2">{heartScore?.advice?.uniqueFeatures?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{heartScore?.advice?.uniqueFeatures?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {heartScore?.uniqueFeatures || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{heartScore?.advice?.uniqueFeatures?.sentiment || 'neutral'}</span></p>
         <p>Confidence: {(heartScore?.advice?.uniqueFeatures?.confidence * 100 || 0).toFixed(0)}%</p>
@@ -1176,8 +1251,8 @@ const generatePDF = async () => {
     {/* Customer Satisfaction */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Customer Satisfaction</h3>
-      <p className="text-gray-700 mb-2">{heartScore?.advice?.customerSatisfaction?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{heartScore?.advice?.customerSatisfaction?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {heartScore?.customerSatisfaction || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{heartScore?.advice?.customerSatisfaction?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1186,8 +1261,8 @@ const generatePDF = async () => {
     {/* Packaging & Branding */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Packaging & Branding</h3>
-      <p className="text-gray-700 mb-2">{heartScore?.advice?.packagingBranding?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{heartScore?.advice?.packagingBranding?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {heartScore?.packagingBranding || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{heartScore?.advice?.packagingBranding?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1196,8 +1271,8 @@ const generatePDF = async () => {
     {/* Pricing Policy */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Pricing Policy</h3>
-      <p className="text-gray-700 mb-2">{heartScore?.advice?.pricingPolicy?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{heartScore?.advice?.pricingPolicy?.message || 'No analysis available'}</p>
+      <div className="text-sm">
         <p>Score: {heartScore?.pricingPolicy || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{heartScore?.advice?.pricingPolicy?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1206,8 +1281,8 @@ const generatePDF = async () => {
     {/* Date Labeling */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Date Labeling & Quality Control</h3>
-      <p className="text-gray-700 mb-2">{heartScore?.advice?.dateLabeling?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600">
+      <p className=" mb-2">{heartScore?.advice?.dateLabeling?.message || 'No analysis available'}</p>
+      <div className="text-sm ">
         <p>Score: {heartScore?.dateLabeling || 0}/3</p>
         <p>Sentiment: <span className="capitalize">{heartScore?.advice?.dateLabeling?.sentiment || 'neutral'}</span></p>
       </div>
@@ -1217,13 +1292,13 @@ const generatePDF = async () => {
   {/* Overall Product Health Recommendation */}
   {heartScore?.percentage !== undefined && (
     <div className="mt-8 p-4 border rounded" style={{
-      backgroundColor: heartScore.percentage >= 80 ? '#fef2f2' : 
-                       heartScore.percentage >= 60 ? '#fefce8' : '#f0fdf4',
-      borderColor: heartScore.percentage >= 80 ? '#fecaca' : 
-                   heartScore.percentage >= 60 ? '#fde68a' : '#bbf7d0'
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
       <h3 className="font-semibold text-lg mb-2">Overall Product Health Recommendation</h3>
-      <p className="text-gray-700">
+      <p className="">
         {heartScore.percentage >= 80 ? 
           "Your product heart is strong! Excellent features, satisfaction, and positioning in the market." :
          heartScore.percentage >= 60 ? 
@@ -1233,7 +1308,7 @@ const generatePDF = async () => {
           "Product needs immediate attention. Focus on core features, quality control, and customer satisfaction."
         }
       </p>
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm  mt-2">
         Based on your overall score of {heartScore.percentage}%
       </p>
       {heartScore.percentage < 60 && (
@@ -1252,9 +1327,14 @@ const generatePDF = async () => {
   )}
 
   {/* Product Success Tips */}
-  <div className="mt-6 p-4 bg-blue-50 rounded">
+  <div className="mt-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h3 className="font-semibold text-lg mb-2">💡 Product Success Tips</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Regularly gather and act on customer feedback</li>
       <li>Continuously innovate and improve your product features</li>
       <li>Invest in professional packaging and consistent branding</li>
@@ -1299,7 +1379,7 @@ const generatePDF = async () => {
             <h3 className="text-lg font-medium mb-2">{visibilityAdvice.tier} Status</h3>
             <p className="mb-4">{visibilityAdvice.advice.message}</p>
 
-            <section style={{ 
+  <section style={{ 
   padding: '24px', 
   borderRadius: '8px', 
   backgroundColor: "white", 
@@ -1310,7 +1390,12 @@ const generatePDF = async () => {
   <h1 className="text-2xl font-bold mb-6">Visibility & Social Media Analysis</h1>
       
   {/* Visibility Summary */}
-  <div className="mb-6 p-4 bg-indigo-50 rounded">
+  <div className="mb-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h2 className="text-xl font-semibold mb-2">Online Presence Overview</h2>
     <p>Overall Score: <span className="font-medium">{visibilityScore?.percentage || 0}%</span></p>
     <p>Total Points: <span className="font-medium">{visibilityScore?.totalPoints || 0}/15</span></p>
@@ -1328,8 +1413,8 @@ const generatePDF = async () => {
     {/* Facebook Likes */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Facebook Presence</h3>
-      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.facebookLikes?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{visibilityScore?.advice?.facebookLikes?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Likes: {visibilityScore?.advice?.facebookLikes?.value?.toLocaleString() || 0}</p>
         <p>Score: {visibilityScore?.facebookLikes || 0}/3</p>
         <p>Performance: <span className="capitalize">{visibilityScore?.advice?.facebookLikes?.performance || 'none'}</span></p>
@@ -1340,8 +1425,8 @@ const generatePDF = async () => {
     {/* Instagram Followers */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Instagram Reach</h3>
-      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.instagramFollowers?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{visibilityScore?.advice?.instagramFollowers?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Followers: {visibilityScore?.advice?.instagramFollowers?.value?.toLocaleString() || 0}</p>
         <p>Score: {visibilityScore?.instagramFollowers || 0}/3</p>
         <p>Performance: <span className="capitalize">{visibilityScore?.advice?.instagramFollowers?.performance || 'none'}</span></p>
@@ -1352,8 +1437,8 @@ const generatePDF = async () => {
     {/* YouTube Subscribers */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">YouTube Channel</h3>
-      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.youtubeSubscribers?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{visibilityScore?.advice?.youtubeSubscribers?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Subscribers: {visibilityScore?.advice?.youtubeSubscribers?.value?.toLocaleString() || 0}</p>
         <p>Score: {visibilityScore?.youtubeSubscribers || 0}/3</p>
         <p>Performance: <span className="capitalize">{visibilityScore?.advice?.youtubeSubscribers?.performance || 'none'}</span></p>
@@ -1364,8 +1449,8 @@ const generatePDF = async () => {
     {/* Post Reach */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Content Reach</h3>
-      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.postReach?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{visibilityScore?.advice?.postReach?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Average Reach: {visibilityScore?.advice?.postReach?.value?.toLocaleString() || 0}</p>
         <p>Score: {visibilityScore?.postReach || 0}/3</p>
         <p>Performance: <span className="capitalize">{visibilityScore?.advice?.postReach?.performance || 'none'}</span></p>
@@ -1376,8 +1461,8 @@ const generatePDF = async () => {
     {/* Engagement Rate */}
     <div className="p-4 border rounded">
       <h3 className="font-medium text-lg">Audience Engagement</h3>
-      <p className="text-gray-700 mb-2">{visibilityScore?.advice?.engagementRate?.message || 'No analysis available'}</p>
-      <div className="text-sm text-gray-600 space-y-1">
+      <p className=" mb-2">{visibilityScore?.advice?.engagementRate?.message || 'No analysis available'}</p>
+      <div className="text-sm  space-y-1">
         <p>Engagement Rate: {visibilityScore?.advice?.engagementRate?.value || 0}%</p>
         <p>Score: {visibilityScore?.engagementRate || 0}/3</p>
         <p>Performance: <span className="capitalize">{visibilityScore?.advice?.engagementRate?.performance || 'none'}</span></p>
@@ -1389,13 +1474,13 @@ const generatePDF = async () => {
   {/* Overall Visibility Recommendation */}
   {visibilityScore?.percentage !== undefined && (
     <div className="mt-8 p-4 border rounded" style={{
-      backgroundColor: visibilityScore.percentage >= 80 ? '#eef2ff' : 
-                       visibilityScore.percentage >= 60 ? '#f5f3ff' : '#faf5ff',
-      borderColor: visibilityScore.percentage >= 80 ? '#c7d2fe' : 
-                   visibilityScore.percentage >= 60 ? '#ddd6fe' : '#e9d5ff'
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
       <h3 className="font-semibold text-lg mb-2">Overall Visibility Strategy</h3>
-      <p className="text-gray-700">
+      <p className="">
         {visibilityScore.percentage >= 80 ? 
           "Exceptional online presence! Strong across all platforms with great engagement." :
          visibilityScore.percentage >= 60 ? 
@@ -1405,7 +1490,7 @@ const generatePDF = async () => {
           "Limited digital visibility. Start with 1-2 platforms and build consistent presence."
         }
       </p>
-      <p className="text-sm text-gray-600 mt-2">
+      <p className="text-sm  mt-2">
         Based on your overall score of {visibilityScore.percentage}%
       </p>
       
@@ -1424,9 +1509,14 @@ const generatePDF = async () => {
   )}
 
   {/* Social Media Success Tips */}
-  <div className="mt-6 p-4 bg-indigo-50 rounded">
+  <div className="mt-6 p-4 border rounded" style={{
+      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
+                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
+      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
+                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
+    }}>
     <h3 className="font-semibold text-lg mb-2">📱 Social Media Success Tips</h3>
-    <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+    <ul className="list-disc list-inside space-y-1 text-sm ">
       <li>Post consistently (3-5 times per week per platform)</li>
       <li>Use high-quality visuals and engaging captions</li>
       <li>Respond to comments and messages promptly</li>
@@ -1441,7 +1531,7 @@ const generatePDF = async () => {
   {Object.values(visibilityScore?.advice || {}).some(advice => advice.sentiment !== 'neutral') && (
     <div className="mt-6 p-4 bg-purple-50 rounded">
       <h3 className="font-semibold text-lg mb-2">🎯 Audience Sentiment Insights</h3>
-      <p className="text-sm text-gray-700">
+      <p className="text-sm ">
         {Object.values(visibilityScore?.advice || {}).filter(a => a.sentiment === 'positive').length > 0 &&
           "Positive audience sentiment detected on some platforms - leverage this engagement!"}
         {Object.values(visibilityScore?.advice || {}).filter(a => a.sentiment === 'negative').length > 0 &&
