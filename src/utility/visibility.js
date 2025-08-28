@@ -4,6 +4,8 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
+const mainTotal=15
+
 // Helper function to analyze sentiment for social media/text content
 function analyzeSocialMediaSentiment(text) {
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
@@ -193,11 +195,11 @@ export function calculateVisibilityScores(formData) {
   const totalPoints = scores.facebookLikes + scores.instagramFollowers + 
                       scores.youtubeSubscribers + scores.postReach + scores.engagementRate;
   
-  scores.percentage = Math.round((totalPoints / 15) * 100); // 5 metrics * 3 points max = 15
+  scores.percentage = Math.round((totalPoints / mainTotal) * 100); // 5 metrics * 3 points max = 15
   scores.totalPoints = totalPoints;
   scores.advice = advice;
 
-  return scores;
+  return {...scores,mainTotal};
 }
 
 // Additional function for detailed social media analysis

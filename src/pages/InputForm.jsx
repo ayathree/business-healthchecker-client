@@ -147,7 +147,8 @@ const handleSubmit = (e) => {
     const heartScore=calculateHeartScores(heartData)
     const visibilityScore=calculateVisibilityScores(visibilityData)
     
-  
+    const mainTotals=visibilityScore.mainTotal + scores.mainTotal + strengthScore.mainTotal + heartScore.mainTotal + bloodTestScore.mainTotal + goalScore.mainTotal + statusScore.mainTotal
+    console.log(mainTotals);
      const totalPoints = scores.totalPoints + goalScore.totalPoints + strengthScore.totalPoints + bloodTestScore.totalPoints + heartScore.totalPoints + visibilityScore.totalPoints + statusScore.totalPoints;
     const form = e.target;
     const name = form.name.value;
@@ -168,6 +169,7 @@ const handleSubmit = (e) => {
     heartScore,
     visibilityScore,
     totalPoints,
+    mainTotals,
     info,
     
     timestamp: new Date().toISOString() // Optional: add timestamp

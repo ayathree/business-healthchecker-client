@@ -26,8 +26,11 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore, strengthScore, bloodTestScore,heartScore, visibilityScore, statusScore, totalPoints } = reportData;
-
+  const { scores, info, goalScore, strengthScore, bloodTestScore,heartScore, visibilityScore, statusScore, totalPoints,mainTotals } = reportData;
+   
+  console.log(mainTotals);
+  
+ 
   const getAdviceForScore = (category, percentage) => {
     const categoryData = adviceData.find(item => item.category === category);
     if (!categoryData) return null;
@@ -180,7 +183,7 @@ const generatePDF = async () => {
                    statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
     }}>
           <div className="mb-4" >
-            <p className="text-xl font-semibold mb-4">Total Score: {totalPoints}</p>
+            <p className="text-xl font-semibold mb-4">Total Score: {totalPoints} / {mainTotals}</p>
             <h3 className="text-lg font-medium text-blue-600 capitalize">Business Position/Status</h3>
             <p>Business Position/Status Score: {statusScore.percentage}%</p>
             <div className="w-full bg-gray-200 rounded-full h-4 mt-2">

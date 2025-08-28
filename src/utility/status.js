@@ -4,6 +4,8 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
+const mainTotal=18
+
 // Helper function to analyze sentiment for infrastructure text
 function analyzeInfrastructureSentiment(text) {
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
@@ -246,10 +248,10 @@ export function calculateInfrastructureScores(formData) {
 
   // Calculate totals
   scores.totalPoints = Object.values(scores).slice(0, 6).reduce((a, b) => a + b, 0);
-  scores.percentage = Math.round((scores.totalPoints / 18) * 100);
+  scores.percentage = Math.round((scores.totalPoints / mainTotal) * 100);
   scores.advice = advice;
 
-  return scores;
+  return {...scores,mainTotal};
 }
 
 // Additional function for detailed infrastructure analysis

@@ -4,6 +4,8 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
+const mainTotal=15
+
 // Helper function to analyze sentiment for organizational strength text
 function analyzeStrengthSentiment(text) {
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
@@ -225,11 +227,11 @@ export function calculateStrengthScores(responses) {
                      scores.operationalResilience + scores.marketingPlan + 
                      scores.softwareUsage;
   
-  scores.percentage = Math.round((totalPoints / 15) * 100);
+  scores.percentage = Math.round((totalPoints / mainTotal) * 100);
   scores.totalPoints = totalPoints;
   scores.advice = advice;
 
-  return scores;
+  return {...scores,mainTotal};
 }
 
 // Additional function for detailed organizational analysis

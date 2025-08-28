@@ -4,6 +4,8 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
+const mainTotal=15
+
 // Helper function to analyze sentiment for product/service text
 function analyzeProductSentiment(text) {
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
@@ -207,11 +209,11 @@ export function calculateHeartScores(formData) {
     scores.pricingPolicy +
     scores.dateLabeling;
     
-  scores.percentage = Math.round((totalPoints / 15) * 100);
+  scores.percentage = Math.round((totalPoints / mainTotal) * 100);
   scores.totalPoints = totalPoints;
   scores.advice = advice;
 
-  return scores;
+  return {...scores,mainTotal};
 }
 
 // Simple function to get product advice for any metric
