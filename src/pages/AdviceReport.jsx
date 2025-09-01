@@ -138,113 +138,171 @@ const generatePDF = async () => {
   };
 
   return (
-    <div className="p-8" id="report-content">
-      <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-        <p style={{
-        fontSize: '32px',
-        fontWeight: 'bold',
-        textTransform: 'capitalize',
-        color: '#3b82f6', // blue-500
-        margin: 0
-      }} >plan<span style={{ color: '#ef4444' }}>B</span> solution</p>
-           
-      <h1 style={{
-        fontSize: '20px',
-        fontWeight: 'bold',
-        textTransform: 'capitalize',
-        color: '#3b82f6', // blue-500
-        margin: 0
-      }}>Business Health Report</h1>
-      </div>
+    <div className="p-8 bg-blue-50  " id="report-content">
+      
+      <div style={{
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  
+
+}}>
+  <div>
+    <img 
+      src="https://i.ibb.co.com/KzWNyxsQ/Chat-GPT-Image-Sep-1-2025-11-23-34-AM.png" 
+      alt="" 
+      style={{
+        width: '300px',
+        height: '200px'
+      }} 
+    />
+  </div>
+  <div style={{ width: '300px' }}></div>
+  <div style={{ width: '300px' }}></div>
+  <div>
+    <p style={{
+      fontSize: '2.25rem',
+      fontWeight: '600',
+      marginBottom: '1rem'
+    }}>
+      Total Score: 
+      <span style={{
+        border: '2px solid black',
+        borderRadius: '9999px',
+        backgroundColor: '#fecaca',
+        padding: '20px',
+        marginLeft: '0.5rem'
+      }}>
+        {totalPoints} / {mainTotals}
+      </span>
+    </p>
+  </div>
+</div>
 
       {/* Company Info */}
-      <section className="mb-8 p-6 border rounded-lg" style={{
-      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
-                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
-      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
-                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
-    }}>
-        <h2 className="text-xl font-semibold mb-4">Company Information</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <p><span className="font-medium">Name:</span> {info.name}</p>
-          <p><span className="font-medium">Organization:</span> {info.organization}</p>
-          <p><span className="font-medium">Position:</span> {info.position}</p>
-          <p><span className="font-medium">Service:</span> {info.service}</p>
-        </div>
-      </section>
+      <section style={{
+  margin: '2.5rem 0',
+  padding: '1.5rem',
+  backgroundColor: '#e5e7eb'
+}}>
+  <div className="grid grid-cols-2 justify-center items-center gap-4">
+    <div>
+      <h2 style={{
+        fontSize: '2.25rem',
+        fontWeight: '600',
+        marginBottom: '1rem',
+        textAlign: 'center'
+      }}>Primary Data</h2>
+      <hr style={{
+        border: '5px solid #2563eb',
+        margin: '20px auto',
+        width: '250px'
+      }} />
+    </div>
+   
+    <div>
+      <p style={{fontWeight: '700'}}>
+        <span style={{fontWeight: '500'}}>Name:</span> {info.name}
+      </p>
+      <p style={{fontWeight: '700'}}>
+        <span style={{fontWeight: '500'}}>Organization:</span> {info.organization}
+      </p>
+      <p style={{fontWeight: '700'}}>
+        <span style={{fontWeight: '500'}}>Position:</span> {info.position}
+      </p>
+      <p style={{fontWeight: '700'}}>
+        <span style={{fontWeight: '500'}}>Service:</span> {info.service}
+      </p>
+    </div>
+  </div>
+</section>
 
-      {/* Scores */}
-      <section className="mb-8" >
-        <h2 className="text-5xl font-semibold m-10 text-center ">Assessment Results</h2>
-        <div className="bg-white p-6 border rounded-lg shadow " style={{
-      backgroundColor: statusScore.percentage >= 80 ? '#faf5ff' : 
-                       statusScore.percentage >= 60 ? '#f5f3ff' : '#eef2ff',
-      borderColor: statusScore.percentage >= 80 ? '#ddd6fe' : 
-                   statusScore.percentage >= 60 ? '#c7d2fe' : '#a5b4fc'
-    }}>
-          <div className="mb-4" >
-            <p className="text-xl font-semibold mb-4">Total Score: {totalPoints} / {mainTotals}</p>
-            <h3 className="text-lg font-medium text-blue-600 capitalize">Business Position/Status</h3>
-            <p>Business Position/Status Score: {statusScore.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+{/* scores */}
+<section className="flex justify-center items-center bg-gray-50">
+  <div className="grid grid-cols-3 gap-20 justify-center items-center">
+    <div className="space-y-25">
+      <div className="flex justify-center items-center gap-4">
+        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-red-400 h-8 rounded-full"
                 style={{ width: `${statusScore.percentage}%` }}
               ></div>
-            </div>
-            <h3 className="text-lg font-medium text-blue-600 capitalize mt-4">Institutional eye, mouth and ear examination</h3>
-            <p>Institutional eye, mouth and ear examination Score: {scores.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+      </div>
+      <p className="text-2xl font-bold">{statusScore.percentage}%</p>
+      </div>
+       <div className="flex justify-center items-center gap-4" >
+        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-green-500 h-8 rounded-full"
                 style={{ width: `${scores.percentage}%` }}
               ></div>
             </div>
-            <h3 className="text-lg font-medium text-blue-600 mt-4">Brain Checkup</h3>
-            <p>Brain Checkup Score: {goalScore.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+            <p className="text-2xl font-bold">{scores.percentage}%</p>
+       </div>
+      <div className="flex justify-center items-center gap-4">
+        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-orange-400 h-8 rounded-full"
                 style={{ width: `${goalScore.percentage}%` }}
               ></div>
             </div>
-            <h3 className="text-lg font-medium text-blue-600 mt-4">Strength</h3>
-            <p>Strength Score: {strengthScore.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+            <p className="text-2xl font-bold">{goalScore.percentage}%</p>
+      </div>
+      <div className="flex justify-center items-center gap-4">
+        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-[#803232] h-8 rounded-full"
                 style={{ width: `${strengthScore.percentage}%` }}
               ></div>
             </div>
-             <h3 className="text-lg font-medium text-blue-600 mt-4">Blood Test</h3>
-            <p>Blood Test Score: {bloodTestScore.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+            <p className="text-2xl font-bold">{strengthScore.percentage}%</p>
+      </div>
+      <div className="flex justify-center items-center gap-4">
+        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-blue-400 h-8 rounded-full"
                 style={{ width: `${bloodTestScore.percentage}%` }}
               ></div>
             </div>
-            <h3 className="text-lg font-medium text-blue-600 mt-4">Heart(Product)</h3>
-            <p>Heart(Product) Score: {heartScore.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+            <p className="text-2xl font-bold">{bloodTestScore.percentage}%</p>
+      </div>
+     <div className="flex justify-center items-center gap-4">
+      <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-red-800 h-8 rounded-full"
                 style={{ width: `${heartScore.percentage}%` }}
               ></div>
             </div>
-            <h3 className="text-lg font-medium text-blue-600 mt-4">Outlooking (Visibility)</h3>
-            <p>Outlooking (Visibility) Score: {visibilityScore.percentage}%</p>
-            <div className="w-full bg-gray-200 rounded-full h-4 mt-2">
+            <p className="text-2xl font-bold">{heartScore.percentage}%</p>
+     </div>
+      <div className="flex justify-center items-center gap-4">
+        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
               <div
-                className="bg-blue-600 h-4 rounded-full"
+                className="bg-[#54275c] h-8 rounded-full"
                 style={{ width: `${visibilityScore.percentage}%` }}
               ></div>
             </div>
-          </div>
+            <p className="text-2xl font-bold">{visibilityScore.percentage}%</p>
+      </div>
+    </div>
+    <div className="">
+      <img src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg" alt="" />
+    </div>
+    <div className="space-y-25">
+      <p className="text-xl font-bold text-red-400">Business Preparation, Legals & Positions</p>
+      <p className="text-xl font-bold text-green-500">Market Size & Customers</p>
+      <p className="text-xl font-bold text-orange-400">Business Vision,Planning,& ActionPlan</p>
+      <p className="text-xl font-bold text-[#803232]">Business Strategy,System & Manpower</p>
+      <p className="text-xl font-bold text-blue-400">Profit,Productivity & Growth</p>
+      <p className="text-xl font-bold text-red-800">Your Products & Supply Chain</p>
+      <p className="text-xl font-bold text-[#54275c]">Visibility, Engagement & Conversion</p>
+    </div>
 
-          
-        </div>
-      </section>
+  </div>
+</section>
+
+      
 
       {/* Recommendations */}
       <section className="p-6 rounded-lg  mb-8 space-y-10" >
