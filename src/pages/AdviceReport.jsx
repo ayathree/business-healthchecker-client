@@ -220,7 +220,7 @@ const generatePDF = async () => {
 
 {/* scores */}
 <section className="flex justify-center items-center bg-gray-50">
-  <div className="grid grid-cols-3 gap-20 justify-center items-center">
+  <div className="grid grid-cols-3 grid-rows-7 gap-20 justify-center items-center">
     <div className="space-y-25">
       <div className="flex justify-center items-center gap-4">
         <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
@@ -286,7 +286,7 @@ const generatePDF = async () => {
             <p className="text-2xl font-bold">{visibilityScore.percentage}%</p>
       </div>
     </div>
-    <div className="">
+    <div className="row-span-1">
       <img src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg" alt="" />
     </div>
     <div className="space-y-25">
@@ -306,7 +306,7 @@ const generatePDF = async () => {
 
       {/* Recommendations */}
       <section className="p-6 rounded-lg  mb-8 space-y-10" >
-        <h2 className="text-5xl font-semibold m-10 text-center ">Recommendations</h2>
+        <h2 className="text-5xl font-semibold m-10 text-center">Recommendations</h2>
          
         {statusAdvice ? (
           <div
