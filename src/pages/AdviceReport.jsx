@@ -220,86 +220,123 @@ const generatePDF = async () => {
 
 {/* scores */}
 <section className="flex justify-center items-center bg-gray-50">
-  <div className="grid grid-cols-3 grid-rows-7 gap-20 justify-center items-center">
-    <div className="space-y-25">
-      <div className="flex justify-center items-center gap-4">
-        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-red-400 h-8 rounded-full"
-                style={{ width: `${statusScore.percentage}%` }}
-              ></div>
+ <div className="grid grid-cols-3 grid-rows-7 gap-6">
+  {/* Left column - progress bars */}
+  <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
+    {/* Progress bar 1 */}
+    <div className="flex items-center gap-2 mt-16">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-red-400 h-6 rounded-full"
+          style={{ width: `${statusScore.percentage}%` }}
+        ></div>
       </div>
-      <p className="text-2xl font-bold">{statusScore.percentage}%</p>
-      </div>
-       <div className="flex justify-center items-center gap-4" >
-        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-green-500 h-8 rounded-full"
-                style={{ width: `${scores.percentage}%` }}
-              ></div>
-            </div>
-            <p className="text-2xl font-bold">{scores.percentage}%</p>
-       </div>
-      <div className="flex justify-center items-center gap-4">
-        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-orange-400 h-8 rounded-full"
-                style={{ width: `${goalScore.percentage}%` }}
-              ></div>
-            </div>
-            <p className="text-2xl font-bold">{goalScore.percentage}%</p>
-      </div>
-      <div className="flex justify-center items-center gap-4">
-        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-[#803232] h-8 rounded-full"
-                style={{ width: `${strengthScore.percentage}%` }}
-              ></div>
-            </div>
-            <p className="text-2xl font-bold">{strengthScore.percentage}%</p>
-      </div>
-      <div className="flex justify-center items-center gap-4">
-        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-blue-400 h-8 rounded-full"
-                style={{ width: `${bloodTestScore.percentage}%` }}
-              ></div>
-            </div>
-            <p className="text-2xl font-bold">{bloodTestScore.percentage}%</p>
-      </div>
-     <div className="flex justify-center items-center gap-4">
-      <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-red-800 h-8 rounded-full"
-                style={{ width: `${heartScore.percentage}%` }}
-              ></div>
-            </div>
-            <p className="text-2xl font-bold">{heartScore.percentage}%</p>
-     </div>
-      <div className="flex justify-center items-center gap-4">
-        <div className="w-1/2 bg-gray-200 rounded-full h-8 mt-2">
-              <div
-                className="bg-[#54275c] h-8 rounded-full"
-                style={{ width: `${visibilityScore.percentage}%` }}
-              ></div>
-            </div>
-            <p className="text-2xl font-bold">{visibilityScore.percentage}%</p>
-      </div>
-    </div>
-    <div className="row-span-1">
-      <img src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg" alt="" />
-    </div>
-    <div className="space-y-25">
-      <p className="text-xl font-bold text-red-400">Business Preparation, Legals & Positions</p>
-      <p className="text-xl font-bold text-green-500">Market Size & Customers</p>
-      <p className="text-xl font-bold text-orange-400">Business Vision,Planning,& ActionPlan</p>
-      <p className="text-xl font-bold text-[#803232]">Business Strategy,System & Manpower</p>
-      <p className="text-xl font-bold text-blue-400">Profit,Productivity & Growth</p>
-      <p className="text-xl font-bold text-red-800">Your Products & Supply Chain</p>
-      <p className="text-xl font-bold text-[#54275c]">Visibility, Engagement & Conversion</p>
+      <p className="text-lg font-bold">{statusScore.percentage}%</p>
     </div>
 
+    {/* Progress bar 2 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-green-500 h-6 rounded-full"
+          style={{ width: `${scores.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{scores.percentage}%</p>
+    </div>
+
+    {/* Progress bar 3 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-orange-400 h-6 rounded-full"
+          style={{ width: `${goalScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{goalScore.percentage}%</p>
+    </div>
+
+    {/* Progress bar 4 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-[#803232] h-6 rounded-full"
+          style={{ width: `${strengthScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{strengthScore.percentage}%</p>
+    </div>
+
+    {/* Progress bar 5 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-blue-400 h-6 rounded-full"
+          style={{ width: `${bloodTestScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{bloodTestScore.percentage}%</p>
+    </div>
+
+    {/* Progress bar 6 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-red-800 h-6 rounded-full"
+          style={{ width: `${heartScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{heartScore.percentage}%</p>
+    </div>
+
+    {/* Progress bar 7 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-[#54275c] h-6 rounded-full"
+          style={{ width: `${visibilityScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{visibilityScore.percentage}%</p>
+    </div>
   </div>
+
+  {/* Middle column - image (spans 7 rows so it aligns) */}
+  <div className="row-span-7 flex justify-center items-center">
+    <img
+      src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg"
+      alt="Business health chart"
+      className="h-[550px] object-contain"
+    />
+  </div>
+
+  {/* Right column - labels */}
+  <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
+    <p className="text-lg font-bold text-red-400 mt-16">
+      Business Preparation, Legals & Positions
+    </p>
+    <p className="text-lg font-bold text-green-500">
+      Market Size & Customers
+    </p>
+    <p className="text-lg font-bold text-orange-400">
+      Business Vision, Planning, & Action Plan
+    </p>
+    <p className="text-lg font-bold text-[#803232]">
+      Business Strategy, System & Manpower
+    </p>
+    <p className="text-lg font-bold text-blue-400">
+      Profit, Productivity & Growth
+    </p>
+    <p className="text-lg font-bold text-red-800">
+      Your Products & Supply Chain
+    </p>
+    <p className="text-lg font-bold text-[#54275c]">
+      Visibility, Engagement & Conversion
+    </p>
+  </div>
+</div>
+
+
 </section>
 
       
