@@ -339,6 +339,145 @@ const generatePDF = async () => {
 
 </section>
 
+{/* recommendation 1 */}
+<section>
+  <h2 className="text-5xl font-semibold m-10 text-center">Recommendations</h2>
+   <div className="grid grid-cols-3 grid-rows-7 gap-6">
+  {/* Left column - progress bars */}
+  <div className="flex flex-col gap-6 row-span-7">
+    {/* Progress bar 1 */}
+    <div className="mt-20"></div>
+
+     <div className="mt-20">
+      <p className="text-lg font-bold text-green-500">
+      {marketAdvice.tier} Status
+    </p>
+    <ol className="list-disc pl-6  text-green-500">
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.marketScope?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.marketSize?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.marketTrend?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.targetCustomer?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.monthlyCustomers?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.repeatCustomers?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-green-500">{scores?.advice?.competitors?.message || 'No analysis available'}</li>
+    </ol>
+     </div>
+
+    {/* Progress bar 3 */}
+    <div className=""></div>
+
+    {/* Progress bar 4 */}
+    <div className="">
+      <p className="text-lg font-bold text-[#803232]">
+      {strengthAdvice.tier} Status
+    </p>
+    <ol className="list-disc pl-6  text-[#803232]">
+      <li className="text-xm font-semibold text-[#803232]">{strengthScore?.advice?.employeeCount?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-[#803232]">{strengthScore?.advice?.employeeSkills?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-[#803232]">{strengthScore?.advice?.operationalResilience?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-[#803232]">{strengthScore?.advice?.marketingPlan?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-[#803232]">{strengthScore?.advice?.softwareUsage?.message || 'No analysis available'}</li>
+    </ol>
+     </div>
+
+    {/* Progress bar 5 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-blue-400 h-6 rounded-full"
+          style={{ width: `${bloodTestScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{bloodTestScore.percentage}%</p>
+    </div>
+
+    {/* Progress bar 6 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-red-800 h-6 rounded-full"
+          style={{ width: `${heartScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{heartScore.percentage}%</p>
+    </div>
+
+    {/* Progress bar 7 */}
+    <div className="flex items-center gap-2">
+      <div className="w-1/2 bg-gray-200 rounded-full h-6">
+        <div
+          className="bg-[#54275c] h-6 rounded-full"
+          style={{ width: `${visibilityScore.percentage}%` }}
+        ></div>
+      </div>
+      <p className="text-lg font-bold">{visibilityScore.percentage}%</p>
+    </div>
+  </div>
+
+  {/* Middle column - image (spans 7 rows so it aligns) */}
+  <div className="row-span-7 flex justify-center items-center">
+    <img
+      src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg"
+      alt="Business health chart"
+      className="max-h-full max-w-full object-contain"
+    />
+  </div>
+
+  {/* Right column - labels */}
+  <div className="flex flex-col gap-6 row-span-7  ">
+    <div>
+      <p className="text-lg font-bold text-red-400">
+      {statusAdvice.tier} Status
+    </p>
+    <ol className="list-disc pl-6  text-red-400">
+      <li className="text-xm font-semibold text-red-400">{statusScore?.advice?.tradeLicense?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-red-400">{statusScore?.advice?.bankAccount?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-red-400">{statusScore?.advice?.officeShowroom?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-red-400">{statusScore?.advice?.website?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-red-400">{statusScore?.advice?.socialMedia?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-red-400">{statusScore?.advice?.marketplace?.message || 'No analysis available'}</li>
+    </ol>
+    </div>
+    <div></div>
+   <div>
+      <p className="text-lg font-bold text-orange-400">
+      {visionAdvice.tier} Status
+    </p>
+    <ol className="list-disc pl-6  text-orange-400">
+      <li className="text-xm font-semibold text-orange-400">{goalScore.advice?.hasVision?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-orange-400">{goalScore.advice?.visionText?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-orange-400">{goalScore.advice?.hasActionPlan?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-orange-400">{goalScore.advice?.resourcePercentage?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-orange-400">{goalScore.advice?.hasSkilledManpower?.message || 'No analysis available'}</li>
+    </ol>
+     </div>
+    <div></div>
+    <div>
+      <p className="text-lg font-bold text-blue-400">
+      {visionAdvice.tier} Status
+    </p>
+    <ol className="list-disc pl-6  text-blue-400">
+      <li className="text-xm font-semibold text-blue-400">{goalScore.advice?.hasVision?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-blue-400">{goalScore.advice?.visionText?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-blue-400">{goalScore.advice?.hasActionPlan?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-blue-400">{goalScore.advice?.resourcePercentage?.message || 'No analysis available'}</li>
+      <li className="text-xm font-semibold text-blue-400">{goalScore.advice?.hasSkilledManpower?.message || 'No analysis available'}</li>
+    </ol>
+     </div>
+    <p className="text-lg font-bold text-blue-400">
+      Profit, Productivity & Growth
+    </p>
+    <p className="text-lg font-bold text-red-800">
+      Your Products & Supply Chain
+    </p>
+    <p className="text-lg font-bold text-[#54275c]">
+      Visibility, Engagement & Conversion
+    </p>
+  </div>
+</div>
+
+</section>
+
       
 
       {/* Recommendations */}
