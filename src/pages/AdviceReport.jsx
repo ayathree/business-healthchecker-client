@@ -26,7 +26,7 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore, strengthScore, bloodTestScore,heartScore, visibilityScore, statusScore, totalPoints,mainTotals } = reportData;
+  const { scores, info, goalScore, strengthScore, bloodTestScore, heartScore, visibilityScore, statusScore, totalPoints, mainTotals } = reportData;
    
   console.log(mainTotals);
   
@@ -268,7 +268,7 @@ const AdviceReport = () => {
 
 
 </section>
-
+777
 {/* recommendation 1 */}
   <div>
      <h2 className="text-5xl font-semibold m-10 text-center">Recommendations</h2>
@@ -422,23 +422,13 @@ const AdviceReport = () => {
 </section>
   </div>
 
-
-  
-
-    
-
-
-      {/* PDF Button */}
-      <div className="flex justify-center items-center mt-20">
-
-      <button
-        
-        className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 cursor-pointer"
-      >
-        Download
-      </button>
-      </div>
-    </div>
+  {/* PDF Button */}
+  <div className="flex justify-center items-center mt-20">
+  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg flex items-center gap-2 cursor-pointer">
+    Download
+  </button>
+  </div>
+  </div>
   );
 };
 
