@@ -4,7 +4,7 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
-const mainTotal=15
+const mainTotal=12
 
 // Helper function to analyze sentiment for social media/text content
 function analyzeSocialMediaSentiment(text) {
