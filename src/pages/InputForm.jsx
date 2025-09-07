@@ -189,9 +189,11 @@ const handleSubmit = (e) => {
   };
   
     return (
-        <div>
-            <p className="text-4xl text-center font-bold capitalize text-blue-500 mt-16">plan<span className="text-red-500">B</span> solution</p>
-            <p className="text-xl text-center font-bold capitalize mt-2">business health checker</p>
+        <div className="bg-blue-50">
+          <div className="flex justify-center items-center">
+
+            <img src="https://i.ibb.co.com/KzWNyxsQ/Chat-GPT-Image-Sep-1-2025-11-23-34-AM.png" alt="" className="h-[200px] w-[300px]" />
+          </div>
             <div className="mt-16 ">
                 <p className="text-xl text-center font-bold capitalize mt-2">please fill up this form</p>
                 <div className="flex justify-center items-center mt-2">
@@ -218,8 +220,8 @@ const handleSubmit = (e) => {
                         </div>
                         {/* part 2 */}
                         <div className="flex flex-col items-start justify-center gap-4 mt-6">
-                           <p className="text-xl font-semibold text-blue-500">2. Business Position/Status:</p>
-                        <p className="text-lg text-blue-500">Business legal documents, positioning, and related information.</p>
+                           <p className="text-xl font-semibold text-red-400">2. Business Position/Status:</p>
+                        <p className="text-lg text-red-400">Business legal documents, positioning, and related information.</p>
                               {/* 2.1 Trade License */}
       <label className="font-semibold">2.1 Do you have a trade license?</label>
       <div className="flex flex-col gap-4">
@@ -329,9 +331,9 @@ const handleSubmit = (e) => {
 
                             {/* part 3 */}
                             <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">3. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>
-                        <p className="text-lg font-semibold text-blue-500">Who is your ideal customer? Which market is ideal for you?</p>
-                        <p  className="text-lg text-blue-500">Keep in mind that someone who tries to make a product for everyone, ends up making it for no one.Identify and understand your ideal customer.</p>
+                              <p className="text-xl font-semibold text-orange-400 mt-10">3. Examining the Eyes, Ears, and Mouth of the Organization (Market & Customer)</p>
+                        <p className="text-lg font-semibold text-orange-400">Who is your ideal customer? Which market is ideal for you?</p>
+                        <p  className="text-lg text-orange-400">Keep in mind that someone who tries to make a product for everyone, ends up making it for no one.Identify and understand your ideal customer.</p>
                             <label className="font-semibold">3.1 Where is your product's potential market?</label>
                            <div className="flex flex-col gap-2">
                               <label>
@@ -451,8 +453,8 @@ const handleSubmit = (e) => {
                             </div>
                             {/* part 4 */}
                             <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">4. Organization Brain Checkup (Vision or Goal)</p>
-                        <p className="text-lg font-semibold text-blue-500">Without a clear vision, a company cannot grow well. You should clearly write down where you want to see your organization in the next 3/5 years.</p>
+                              <p className="text-xl font-semibold text-green-500 mt-10">4. Organization Brain Checkup (Vision or Goal)</p>
+                        <p className="text-lg font-semibold text-green-500">Without a clear vision, a company cannot grow well. You should clearly write down where you want to see your organization in the next 3/5 years.</p>
                         <label className="font-semibold">4.1 Do you have a written vision or SMART goal for the next 5 years?</label>
                          {['written', 'inMind', 'noUnderstanding'].map((option) => (
                          <label key={option} className="flex items-center gap-2">
@@ -517,8 +519,8 @@ const handleSubmit = (e) => {
                              </div>
                              {/* part 5 */}
                              <div className="flex flex-col items-start justify-center gap-4">
-                              <p className="text-xl font-semibold text-blue-500 mt-10">5. Strength (Employees / System / Strategy)</p>
-                        <p className="text-lg font-semibold text-blue-500">For any organization to achieve its goals, the first requirement is the right strategy, and skilled manpower to execute it. Tell us about your organization’s strategy and workforce.</p>
+                              <p className="text-xl font-semibold text-[#803232] mt-10">5. Strength (Employees / System / Strategy)</p>
+                        <p className="text-lg font-semibold text-[#803232]">For any organization to achieve its goals, the first requirement is the right strategy, and skilled manpower to execute it. Tell us about your organization’s strategy and workforce.</p>
                         <label className="font-semibold">5.1 How many employees do you have in your organization? (excluding yourself)</label>
                          <input 
                           type="number" 
@@ -608,8 +610,8 @@ const handleSubmit = (e) => {
                               </div>
                             {/* part 6 */}
                              <div className="flex flex-col items-start justify-center gap-4">
-                       <p className="text-xl font-semibold text-blue-500 mt-10">6. Blood Test (Finance / Productivity / Growth)</p>
-                       <p className="text-lg font-semibold text-blue-500">Profit in business is like blood. If you keep making a loss every month, your business will suffer from "anemia." If this situation continues for a long time, the business will eventually weaken and shut down.</p>
+                       <p className="text-xl font-semibold text-red-800 mt-10">6. Blood Test (Finance / Productivity / Growth)</p>
+                       <p className="text-lg font-semibold text-red-800">Profit in business is like blood. If you keep making a loss every month, your business will suffer from "anemia." If this situation continues for a long time, the business will eventually weaken and shut down.</p>
                        
                        <label className="font-semibold">6.1 What is your average monthly sales revenue?(Please provide the average of your total sales for the last three months.)</label>
                        <input 
@@ -808,7 +810,7 @@ const handleSubmit = (e) => {
                              </div>
                              {/* part 8 */}
                              <div className="flex flex-col items-start justify-center gap-4">
-                               <p className="text-xl font-semibold text-blue-500 mt-10">8. Out Looking (Visibility)</p>
+                               <p className="text-xl font-semibold text-[#54275c] mt-10">8. Out Looking (Visibility)</p>
                               {/* 8.1 Facebook Likes */}
                               <label className="font-semibold">
                                 8.1 Number of Facebook Page Likes of your organization?
