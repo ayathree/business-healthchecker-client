@@ -210,7 +210,7 @@ const AdviceReport = () => {
             />
           </div>
           <div style={{ width: '300px' }}></div>
-          <div style={{ width: '300px' }}></div>
+          {/* <div style={{ width: '300px' }}></div> */}
           <div>
             <p style={{
               fontSize: '2.25rem',
@@ -222,7 +222,7 @@ const AdviceReport = () => {
                 border: '2px solid black',
                 borderRadius: '9999px',
                 backgroundColor: '#fecaca',
-                padding: '20px',
+                padding: '16px',
                 marginLeft: '0.5rem'
               }}>
                 {totalPoints} / {mainTotals}
