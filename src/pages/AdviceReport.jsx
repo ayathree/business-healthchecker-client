@@ -271,12 +271,12 @@ const AdviceReport = () => {
 
         {/* Original scores section */}
         <section className="flex justify-center items-center bg-gray-50">
-          <div className="grid grid-cols-3 grid-rows-7 gap-6">
+          <div className="grid grid-cols-3 grid-rows-7 gap-0">
             {/* Left column - progress bars */}
             <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
               {/* Progress bars */}
               <div className="flex items-center gap-2 mt-16">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-red-400 h-6 rounded-full"
                     style={{ width: `${statusScore.percentage}%` }}
@@ -286,7 +286,7 @@ const AdviceReport = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-green-500 h-6 rounded-full"
                     style={{ width: `${goalScore.percentage}%` }}
@@ -296,7 +296,7 @@ const AdviceReport = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-orange-400 h-6 rounded-full"
                     style={{ width: `${scores.percentage}%` }}
@@ -306,7 +306,7 @@ const AdviceReport = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-[#803232] h-6 rounded-full"
                     style={{ width: `${strengthScore.percentage}%` }}
@@ -316,7 +316,7 @@ const AdviceReport = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-blue-400 h-6 rounded-full"
                     style={{ width: `${heartScore.percentage}%` }}
@@ -326,7 +326,7 @@ const AdviceReport = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-red-800 h-6 rounded-full"
                     style={{ width: `${bloodTestScore.percentage}%` }}
@@ -336,7 +336,7 @@ const AdviceReport = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <div className="w-1/2 bg-gray-200 rounded-full h-6">
+                <div className="w-full bg-gray-200 rounded-full h-6">
                   <div
                     className="bg-[#54275c] h-6 rounded-full"
                     style={{ width: `${visibilityScore.percentage}%` }}
@@ -357,17 +357,17 @@ const AdviceReport = () => {
 
             {/* Right column - labels */}
             <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
-              <p className="text-lg font-bold text-red-400 mt-16">
+              <p className="text-xm font-bold text-red-400 mt-16">
                 Business Preparation, Legals & Positions
               </p>
-              <p className="text-lg font-bold text-green-500">
+              <p className="text-xm font-bold text-green-500">
                 Business Vision, Planning, & Action Plan
               </p>
-              <p className="text-lg font-bold text-orange-400">
+              <p className="text-xm font-bold text-orange-400">
                 
                 Market Size & Customers
               </p>
-              <p className="text-lg font-bold text-[#803232]">
+              <p className="text-xm font-bold text-[#803232]">
                 Business Strategy, System & Manpower
               </p>
               <p className="text-lg font-bold text-blue-400">
