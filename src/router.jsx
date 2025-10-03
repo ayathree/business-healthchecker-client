@@ -5,8 +5,9 @@ import AdviceReport from "./pages/AdviceReport";
 import Home from "./pages/Home";
 import Basic from "./pages/Basic";
 import BusinessPosition from "./pages/BusinessPosition";
-import MarketAndCustomer from "./pages/MarketandCustomer";
+
 import PositionScore from "./pages/score/PositionScore";
+import Market from "./pages/Market";
 
 
 const router = createBrowserRouter([
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'/marketScope',
-                element:<MarketAndCustomer></MarketAndCustomer>
+                element:<Market></Market>
             },
             {
                 path:'/positionScore',
