@@ -11,6 +11,8 @@ import Market from "./pages/Market";
 import MarketScore from "./pages/score/MarketScore";
 import VisionAndGoal from "./pages/VisionAndGoal";
 import VisionScore from "./pages/score/VisionScore";
+import StrengthStrategy from "./pages/StrengthStrategy";
+import StrengthScore from "./pages/score/StrengthScore";
 
 
 const router = createBrowserRouter([
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
                 element:<VisionAndGoal></VisionAndGoal>
             },
             {
+                path:'/strength',
+                element:<StrengthStrategy></StrengthStrategy>
+            },
+            {
                 path:'/positionScore',
                 element:<PositionScore></PositionScore>
             },
@@ -49,6 +55,10 @@ const router = createBrowserRouter([
             {
                 path:'/visionScore',
                 element:<VisionScore></VisionScore>
+            },
+            {
+                path:'/strengthScore',
+                element:<StrengthScore></StrengthScore>
             },
             {
                 path:'/input',

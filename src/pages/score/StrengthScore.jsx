@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 
 
-const VisionScore = () => {
-      const [reportData, setReportData] = useState(null);
+const StrengthScore = () => {
+    const [reportData, setReportData] = useState(null);
         
         useEffect(() => {
-            const storedData = localStorage.getItem('businessHealthReport-Vision');
+            const storedData = localStorage.getItem('businessHealthReport-Strength');
             if (storedData) {
                 setReportData(JSON.parse(storedData));
             }
@@ -40,7 +40,7 @@ const VisionScore = () => {
                     <div className="text-center mt-16">
     <TypeAnimation
         sequence={[
-            "Your Total Score in Vision and Goal section is",
+            "Your Total Score in Business Strategy and Strength section is",
             500,
         ]}
         wrapper="p"
@@ -54,7 +54,7 @@ const VisionScore = () => {
         <span className="text-blue-600">{mainTotals}</span>
     </div>
 
-    <Link to={'/strength'}>
+    <Link to={'/marketScope'}>
     <div className="mt-10 flex justify-center items-center mb-10"><button className="bg-blue-500 text-white font-bold text-lg cursor-pointer btn hover:bg-slate-500 hover:text-black capitalize p-2 w-1/2 outline-2 flex justify-center items-center gap-3 ">next<FaArrowRight className=""></FaArrowRight></button></div></Link>
 
     
@@ -65,4 +65,4 @@ const VisionScore = () => {
     );
 };
 
-export default VisionScore;
+export default StrengthScore;
