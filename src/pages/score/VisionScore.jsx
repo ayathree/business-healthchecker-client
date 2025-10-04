@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
 
 
-const MarketScore = () => {
-     const [reportData, setReportData] = useState(null);
+const VisionScore = () => {
+      const [reportData, setReportData] = useState(null);
         
         useEffect(() => {
-            const storedData = localStorage.getItem('businessHealthReport-MarketScope');
+            const storedData = localStorage.getItem('businessHealthReport-Vision');
             if (storedData) {
                 setReportData(JSON.parse(storedData));
             }
@@ -17,7 +17,7 @@ const MarketScore = () => {
         // Provide default values to prevent undefined errors
         const { totalPoints = 0, mainTotals = 0 } = reportData || {};
     return (
-        <div className="bg-blue-50">
+         <div className="bg-blue-50">
             <div className="flex justify-center items-center">
                 <img 
                     src="https://i.ibb.co.com/KzWNyxsQ/Chat-GPT-Image-Sep-1-2025-11-23-34-AM.png" 
@@ -40,7 +40,7 @@ const MarketScore = () => {
                     <div className="text-center mt-16">
     <TypeAnimation
         sequence={[
-            "Your Total Score in Market Scope section is",
+            "Your Total Score in Vision and Goal section is",
             500,
         ]}
         wrapper="p"
@@ -54,7 +54,7 @@ const MarketScore = () => {
         <span className="text-blue-600">{mainTotals}</span>
     </div>
 
-    <Link to={'/vision'}>
+    <Link to={'/'}>
     <div className="mt-10 flex justify-center items-center mb-10"><button className="bg-blue-500 text-white font-bold text-lg cursor-pointer btn hover:bg-slate-500 hover:text-black capitalize p-2 w-1/2 outline-2 flex justify-center items-center gap-3 ">next<FaArrowRight className=""></FaArrowRight></button></div></Link>
 
     
@@ -65,4 +65,4 @@ const MarketScore = () => {
     );
 };
 
-export default MarketScore;
+export default VisionScore;

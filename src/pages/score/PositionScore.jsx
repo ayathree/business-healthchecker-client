@@ -40,7 +40,7 @@ const PositionScore = () => {
                     <div className="text-center mt-16">
     <TypeAnimation
         sequence={[
-            "Your Total Score in business position section is",
+            "Your Total Score in Business Position section is",
             500,
         ]}
         wrapper="p"
