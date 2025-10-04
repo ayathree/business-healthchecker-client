@@ -13,6 +13,9 @@ import VisionAndGoal from "./pages/VisionAndGoal";
 import VisionScore from "./pages/score/VisionScore";
 import StrengthStrategy from "./pages/StrengthStrategy";
 import StrengthScore from "./pages/score/StrengthScore";
+import BloodTest from "./pages/BloodTest";
+import BloodTestScore from "./pages/score/BloodTestScore";
+import Product from "./pages/Product";
 
 
 const router = createBrowserRouter([
@@ -45,6 +48,14 @@ const router = createBrowserRouter([
                 element:<StrengthStrategy></StrengthStrategy>
             },
             {
+                path:'/bloodTest',
+                element:<BloodTest></BloodTest>
+            },
+            {
+                path:'/product',
+                element:<Product></Product>
+            },
+            {
                 path:'/positionScore',
                 element:<PositionScore></PositionScore>
             },
@@ -59,6 +70,10 @@ const router = createBrowserRouter([
             {
                 path:'/strengthScore',
                 element:<StrengthScore></StrengthScore>
+            },
+            {
+                path:'/bloodTestScore',
+                element:<BloodTestScore></BloodTestScore>
             },
             {
                 path:'/input',
