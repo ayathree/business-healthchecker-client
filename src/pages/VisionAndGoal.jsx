@@ -20,22 +20,22 @@ const VisionAndGoal = () => {
         const goalScore = calculateVisionScores(goalVisionData);
         
         
-        const mainTotals=goalScore.mainTotal
-        console.log(mainTotals);
-        const totalPoints =goalScore.totalPoints;
+        const mainVisionTotals=goalScore.mainVisionTotal
+        console.log(mainVisionTotals);
+        const totalVisionPoints =goalScore.totalVisionPoints;
         // Save to localStorage
       localStorage.setItem('businessHealthReport-Vision', JSON.stringify({ 
         
         goalScore,
-        totalPoints,
-        mainTotals,
+        totalVisionPoints,
+        mainVisionTotals,
       }));
        navigate('/visionScore');
         
      
         console.log(goalScore);
        
-        console.log(totalPoints);
+        console.log(totalVisionPoints);
         
       };  
     return (

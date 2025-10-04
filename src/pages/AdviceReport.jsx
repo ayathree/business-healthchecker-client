@@ -3,12 +3,61 @@ import { Link } from "react-router-dom";
 import adviceData from '../utility/data.json';
 
 const AdviceReport = () => {
-  const [reportData, setReportData] = useState(null);
+  const [basicData, setBasicData] = useState(null);
+  const [positionData,setPositionData]=useState(null);
+  const [marketData,setMarketData]=useState(null);
+  const [visionData,setVisionData]=useState(null);
+  const [strengthData,setStrengthData]=useState(null);
+  const [bloodTestData,setBloodTestData]=useState(null);
+  const[productData,setProductData]=useState(null);
+  const[visibilityData,setVisibilityData]=useState(null);
 
   useEffect(() => {
-    const storedData = localStorage.getItem('businessHealthReport');
+    const storedData = localStorage.getItem('businessHealthReport-Basic');
     if (storedData) {
-      setReportData(JSON.parse(storedData));
+      setBasicData(JSON.parse(storedData));
+    }
+  }, []);
+   useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-BusinessPosition');
+    if (storedData) {
+      setPositionData(JSON.parse(storedData));
+    }
+  }, []);
+   useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-MarketScope');
+    if (storedData) {
+      setMarketData(JSON.parse(storedData));
+    }
+  }, []);
+  useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-Vision');
+    if (storedData) {
+      setVisionData(JSON.parse(storedData));
+    }
+  }, []);
+   useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-Strength');
+    if (storedData) {
+      setStrengthData(JSON.parse(storedData));
+    }
+  }, []);
+   useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-BloodTest');
+    if (storedData) {
+      setBloodTestData(JSON.parse(storedData));
+    }
+  }, []);
+   useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-Product');
+    if (storedData) {
+      setProductData(JSON.parse(storedData));
+    }
+  }, []);
+   useEffect(() => {
+    const storedData = localStorage.getItem('businessHealthReport-OutLooking');
+    if (storedData) {
+      setVisibilityData(JSON.parse(storedData));
     }
   }, []);
 
@@ -16,7 +65,7 @@ const AdviceReport = () => {
     window.print();
   };
 
-  if (!reportData) {
+  if (!basicData) {
     return (
       <div className="p-8 text-center">
         <h2 className="text-2xl font-bold text-red-500">No report found</h2>
@@ -28,7 +77,19 @@ const AdviceReport = () => {
     );
   }
 
-  const { scores, info, goalScore, strengthScore, bloodTestScore, heartScore, visibilityScore, statusScore, totalPoints, mainTotals } = reportData;
+  const { info} = basicData;
+  const { statusScore,totalPositionPoints,mainPositionTotals}=positionData;
+  const{ scores, totalMarketPoints,mainMarketTotals}=marketData;
+  const{ goalScore,totalVisionPoints,mainVisionTotals}=visionData;
+  const{strengthScore,totalStrengthPoints,mainStrengthTotals}=strengthData;
+   const{ bloodTestScore,totalBloodTestPoints,mainBloodTestTotals}=bloodTestData;
+   const{heartScore,totalProductPoints,mainProductTotals}=productData;
+   const{visibilityScore,totalVisibilityPoints,mainVisibilityTotals}=visibilityData
+
+const mainTotals=mainBloodTestTotals+mainMarketTotals+mainPositionTotals+mainProductTotals+mainStrengthTotals+mainVisibilityTotals+mainVisionTotals;
+
+const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+totalProductPoints+totalStrengthPoints+totalStrengthPoints+totalVisibilityPoints+totalVisionPoints;
+
    
   const getAdviceForScore = (category, percentage) => {
     const categoryData = adviceData.find(item => item.category === category);

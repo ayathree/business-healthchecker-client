@@ -4,7 +4,7 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
-const mainTotal=21
+const mainMarketTotal=21
 
 // Helper function to analyze sentiment for market/customer text
 function analyzeMarketSentiment(text) {
@@ -232,13 +232,13 @@ export function calculateMarketScores(formData) {
   scores.competitors = calculateMarketScore(formData.competitors, 'competitors', 'competitionDescription');
 
   // Calculate total points (max 21)
-  const totalPoints = Object.values(scores).reduce((sum, score) => sum + score, 0);
+  const totalMarketPoints = Object.values(scores).reduce((sum, score) => sum + score, 0);
   
-  scores.percentage = Math.round((totalPoints / mainTotal) * 100);
-  scores.totalPoints = totalPoints;
+  scores.percentage = Math.round((totalMarketPoints / mainMarketTotal) * 100);
+  scores.totalMarketPoints = totalMarketPoints;
   scores.advice = advice;
 
-  return {...scores,mainTotal};
+  return {...scores,mainMarketTotal};
 }
 
 // Additional function for detailed market analysis

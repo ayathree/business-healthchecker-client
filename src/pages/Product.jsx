@@ -18,17 +18,17 @@ const Product = () => {
        
         const heartScore=calculateHeartScores(heartData)
        
-        const mainTotals=heartScore.mainTotal
-        console.log(mainTotals);
-         const totalPoints = heartScore.totalPoints 
+        const mainProductTotals=heartScore.mainProductTotal
+        console.log(mainProductTotals);
+         const totalProductPoints = heartScore.totalProductPoints 
        
         // Save to localStorage
       localStorage.setItem('businessHealthReport-Product', JSON.stringify({ 
         
         heartScore,
        
-        totalPoints,
-        mainTotals,
+        totalProductPoints,
+        mainProductTotals,
         
         
        
@@ -38,7 +38,7 @@ const Product = () => {
        
         console.log(heartScore);
        
-        console.log(totalPoints);
+        console.log(totalProductPoints);
         
       };
       const handleHeartInputChange = (e) => {

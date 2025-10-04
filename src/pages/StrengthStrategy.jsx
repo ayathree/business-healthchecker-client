@@ -20,18 +20,17 @@ const StrengthStrategy = () => {
         
          const strengthScore = calculateStrengthScores(strengthFormData);
          
-         
-         const mainTotals=strengthScore.mainTotal
-         console.log(mainTotals);
-          const totalPoints = strengthScore.totalPoints
+         const mainStrengthTotals=strengthScore.mainStrengthTotal
+         console.log(mainStrengthTotals);
+          const totalStrengthPoints = strengthScore.totalStrengthPoints
         
          // Save to localStorage
        localStorage.setItem('businessHealthReport-Strength', JSON.stringify({ 
         
          strengthScore,
          
-         totalPoints,
-         mainTotals,
+         totalStrengthPoints,
+         mainStrengthTotals,
         
          timestamp: new Date().toISOString() // Optional: add timestamp
        }));
@@ -40,7 +39,7 @@ const StrengthStrategy = () => {
        
          console.log(strengthScore);
         
-         console.log(totalPoints);
+         console.log(totalStrengthPoints);
          
        };
        

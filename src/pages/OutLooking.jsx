@@ -17,16 +17,16 @@ const OutLooking = () => {
         
         const visibilityScore=calculateVisibilityScores(visibilityData)
         
-        const mainTotals=visibilityScore.mainTotal 
-        console.log(mainTotals);
-         const totalPoints = visibilityScore.totalPoints
+        const mainVisibilityTotals=visibilityScore.mainVisibilityTotal 
+        console.log(mainVisibilityTotals);
+         const totalVisibilityPoints = visibilityScore.totalVisibilityPoints
         
         // Save to localStorage
       localStorage.setItem('businessHealthReport-OutLooking', JSON.stringify({ 
         
         visibilityScore,
-        totalPoints,
-        mainTotals,
+        totalVisibilityPoints,
+        mainVisibilityTotals,
        
       }));
        navigate('/visibility');
@@ -34,7 +34,7 @@ const OutLooking = () => {
        
         console.log(visibilityScore);
        
-        console.log(totalPoints);
+        console.log(totalVisibilityPoints);
         
       }; 
       

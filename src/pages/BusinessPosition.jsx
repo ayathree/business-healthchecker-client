@@ -24,17 +24,17 @@ const BusinessPosition = () => {
           const statusScore = calculateInfrastructureScores(statusData)
           
           
-          const mainTotals= statusScore.mainTotal 
-          console.log(mainTotals);
-           const totalPoints =  statusScore.totalPoints 
+          const mainPositionTotals= statusScore.mainPositionTotal 
+          console.log(mainPositionTotals);
+           const totalPositionPoints =  statusScore.totalPositionPoints 
           
           // Save to localStorage
         localStorage.setItem('businessHealthReport-BusinessPosition', JSON.stringify({ 
            
           statusScore,
          
-          totalPoints,
-          mainTotals,
+          totalPositionPoints,
+          mainPositionTotals,
           
           
           
@@ -44,7 +44,7 @@ const BusinessPosition = () => {
         
           console.log(statusScore);
          
-          console.log(totalPoints);
+          console.log(totalPositionPoints);
           
         };
 

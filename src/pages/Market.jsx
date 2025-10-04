@@ -21,17 +21,17 @@ const Market = () => {
         const scores = calculateMarketScores(formData);
         
         
-        const mainTotals=scores.mainTotal
-        console.log(mainTotals);
-         const totalPoints = scores.totalPoints
+        const mainMarketTotals=scores.mainMarketTotal
+        console.log(mainMarketTotals);
+         const totalMarketPoints = scores.totalMarketPoints
         
         // Save to localStorage
       localStorage.setItem('businessHealthReport-MarketScope', JSON.stringify({ 
        
         scores, 
         
-        totalPoints,
-        mainTotals,
+        totalMarketPoints,
+        mainMarketTotals,
        
       }));
        navigate('/marketScore');
@@ -39,7 +39,7 @@ const Market = () => {
       
         console.log(scores);
         
-        console.log(totalPoints);
+        console.log(totalMarketPoints);
         
       };
     return (

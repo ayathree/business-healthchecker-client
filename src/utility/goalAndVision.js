@@ -4,7 +4,7 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
-const mainTotal=15
+const mainVisionTotal=15
 
 // Helper function to analyze sentiment using the library's full capabilities
 function analyzeVisionSentiment(text) {
@@ -157,11 +157,11 @@ export function calculateVisionScores(responses) {
   scores.sentimentAnalysis = visionSentiment;
 
   // Calculate totals
-  const totalPoints = Object.values(scores).filter(val => typeof val === 'number')
+  const totalVisionPoints = Object.values(scores).filter(val => typeof val === 'number')
                      .reduce((sum, score) => sum + score, 0);
-  scores.percentage = Math.round((totalPoints / mainTotal) * 100);
+  scores.percentage = Math.round((totalVisionPoints / mainVisionTotal) * 100);
   
-  return {...scores, totalPoints, mainTotal};
+  return {...scores, totalVisionPoints, mainVisionTotal};
 }
 
 // Simple function to get vision advice

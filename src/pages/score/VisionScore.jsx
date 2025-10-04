@@ -15,7 +15,7 @@ const VisionScore = () => {
         }, []);
         
         // Provide default values to prevent undefined errors
-        const { totalPoints = 0, mainTotals = 0 } = reportData || {};
+        const { totalVisionPoints = 0, mainVisionTotals = 0 } = reportData || {};
     return (
          <div className="bg-blue-50">
             <div className="flex justify-center items-center">
@@ -28,9 +28,9 @@ const VisionScore = () => {
             
             <div className="mt-16 flex flex-col justify-center items-center">
                 <div className="rounded-full border-blue-600 border-4 p-15">
-                    <p className="font-bold text-9xl text-center text-blue-600">{totalPoints}</p>
+                    <p className="font-bold text-9xl text-center text-blue-600">{totalVisionPoints}</p>
                     <hr className="border-4 border-blue-600"/>
-                    <p className="font-bold text-9xl text-blue-600">{mainTotals}</p>
+                    <p className="font-bold text-9xl text-blue-600">{mainVisionTotals}</p>
                 </div>
 
                 
@@ -49,9 +49,9 @@ const VisionScore = () => {
         repeat={Infinity}
     />
     <div className="flex justify-center gap-2 text-4xl font-bold">
-        <span className="text-blue-600">{totalPoints}</span>
+        <span className="text-blue-600">{totalVisionPoints}</span>
         <span>out of</span>
-        <span className="text-blue-600">{mainTotals}</span>
+        <span className="text-blue-600">{mainVisionTotals}</span>
     </div>
 
     <Link to={'/strength'}>

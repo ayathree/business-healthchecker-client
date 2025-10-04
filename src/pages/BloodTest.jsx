@@ -26,17 +26,17 @@ const BloodTest = () => {
          
          const bloodTestScore= calculateBloodTestScores(bloodTestFormData);
         
-         const mainTotals= bloodTestScore.mainTotal 
-         console.log(mainTotals);
-          const totalPoints = bloodTestScore.totalPoints
+         const mainBloodTestTotals= bloodTestScore.mainBloodTestTotal 
+         console.log(mainBloodTestTotals);
+          const totalBloodTestPoints = bloodTestScore.totalBloodTestPoints
          
          // Save to localStorage
        localStorage.setItem('businessHealthReport-BloodTest', JSON.stringify({ 
          
          bloodTestScore,
          
-         totalPoints,
-         mainTotals,
+         totalBloodTestPoints,
+         mainBloodTestTotals,
          
          
          
@@ -46,7 +46,7 @@ const BloodTest = () => {
         
          console.log(bloodTestScore);
         
-         console.log(totalPoints);
+         console.log(totalBloodTestPoints);
          
        };
 

@@ -4,7 +4,7 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
-const mainTotal=30
+const mainBloodTestTotal=30
 
 // Helper function to analyze sentiment for financial/business text
 function analyzeFinancialSentiment(text) {
@@ -133,7 +133,7 @@ export function calculateBloodTestScores(formData) {
     totalAssets: 0,
     customersQ4_2021: 0,
     customersQ1_2022: 0,
-    totalPoints: 0,
+    totalBloodTestPoints: 0,
     percentage: 0
   };
 
@@ -173,16 +173,16 @@ export function calculateBloodTestScores(formData) {
   scores.customersQ1_2022 = calculateScore(formData.customersQ1_2022, 'customersQ1_2022');
 
   // Calculate total points (max 30)
-  const totalPoints = Object.values(scores)
+  const totalBloodTestPoints = Object.values(scores)
     .filter(val => typeof val === 'number')
     .reduce((sum, score) => sum + score, 0);
 
   // Convert to percentage
-  scores.percentage = Math.round((totalPoints / mainTotal) * 100);
-  scores.totalPoints = totalPoints;
+  scores.percentage = Math.round((totalBloodTestPoints / mainBloodTestTotal) * 100);
+  scores.totalBloodTestPoints = totalBloodTestPoints;
   scores.advice = advice;
 
-  return {...scores,mainTotal};
+  return {...scores,mainBloodTestTotal};
 }
 
 // Simple function to get financial advice for any metric
