@@ -16,6 +16,7 @@ import StrengthScore from "./pages/score/StrengthScore";
 import BloodTest from "./pages/BloodTest";
 import BloodTestScore from "./pages/score/BloodTestScore";
 import Product from "./pages/Product";
+import ProductScore from "./pages/score/ProductScore";
 
 
 const router = createBrowserRouter([
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path:'/bloodTestScore',
                 element:<BloodTestScore></BloodTestScore>
+            },
+            {
+                path:'/productScore',
+                element:<ProductScore></ProductScore>
             },
             {
                 path:'/input',
