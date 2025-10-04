@@ -17,6 +17,8 @@ import BloodTest from "./pages/BloodTest";
 import BloodTestScore from "./pages/score/BloodTestScore";
 import Product from "./pages/Product";
 import ProductScore from "./pages/score/ProductScore";
+import OutLooking from "./pages/OutLooking";
+import VisibilityScore from "./pages/score/VisibilityScore";
 
 
 const router = createBrowserRouter([
@@ -57,6 +59,10 @@ const router = createBrowserRouter([
                 element:<Product></Product>
             },
             {
+                path:'/outLooking',
+                element:<OutLooking></OutLooking>
+            },
+            {
                 path:'/positionScore',
                 element:<PositionScore></PositionScore>
             },
@@ -79,6 +85,10 @@ const router = createBrowserRouter([
             {
                 path:'/productScore',
                 element:<ProductScore></ProductScore>
+            },
+            {
+                path:'/visibility',
+                element:<VisibilityScore></VisibilityScore>
             },
             {
                 path:'/input',
