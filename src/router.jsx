@@ -8,6 +8,7 @@ import BusinessPosition from "./pages/BusinessPosition";
 
 import PositionScore from "./pages/score/PositionScore";
 import Market from "./pages/Market";
+import MarketScore from "./pages/score/MarketScore";
 
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path:'/positionScore',
                 element:<PositionScore></PositionScore>
+            },
+            {
+                path:'/marketScore',
+                element:<MarketScore></MarketScore>
             },
             {
                 path:'/input',
