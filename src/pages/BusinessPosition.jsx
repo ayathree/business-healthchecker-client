@@ -225,7 +225,7 @@ const BusinessPosition = () => {
                             {/* Glass Morphism Button */}
                             <div className="mt-8 flex justify-center items-center mb-10">
                                 <button className="relative group/btn overflow-hidden bg-gradient-to-r from-blue-600/90 to-blue-700/90 backdrop-blur-sm text-white font-bold text-lg cursor-pointer capitalize p-4 w-full max-w-md rounded-xl border border-white/30 shadow-2xl hover:shadow-3xl transition-all duration-300 flex justify-center items-center gap-3 hover:from-blue-700 hover:to-blue-800">
-                                    <span className="relative z-10">Next</span>
+                                    <span className="relative z-10">Get The Score</span>
                                     <FaArrowRight className="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1" />
                                     <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent -skew-x-12 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"></div>
                                 </button>
