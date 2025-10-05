@@ -65,7 +65,7 @@ const Market = () => {
                 <div className="flex justify-center items-center mb-10">
                         <TypeAnimation
                             sequence={[
-                                "Who is your ideal customer? Which market is ideal for you?Keep in mind that someone who tries to make a product for everyone, ends up making it for no one.Identify and understand your ideal customer.",
+                                "Who is your ideal customer? Which market is ideal for you? Keep in mind that someone who tries to make a product for everyone, ends up making it for no one.Identify and understand your ideal customer.",
                                 500,
                                 ""
                             ]}
