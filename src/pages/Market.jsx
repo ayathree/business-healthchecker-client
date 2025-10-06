@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { calculateMarketScores } from '../utility/scoreCalculation';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
 import { TypeAnimation } from 'react-type-animation';
 
@@ -52,9 +52,9 @@ const Market = () => {
             <div className="absolute bottom-10 left-20 w-72 h-72 bg-blue-50/50 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-2000"></div>
             <div className='relative z-10'>
               {/* Header Section */}
-              <div className="flex justify-center items-center pt-8">
+              <Link to={'/'}><div className="flex justify-center items-center pt-8">
               <img src={logo} alt="" className="h-[200px] w-[300px]" />
-              </div>
+              </div></Link>
 
             </div>
              

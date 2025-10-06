@@ -24,14 +24,14 @@ const MarketScore = () => {
             <div className="absolute top-40 right-10 w-72 h-72 bg-slate-200/40 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-1000"></div>
             <div className="absolute bottom-10 left-20 w-72 h-72 bg-blue-50/50 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-2000"></div>
             <div className="relative z-10">
-                <div className="flex justify-center items-center pt-8">
+                <Link to={'/'}><div className="flex justify-center items-center pt-8">
 
                 <img 
                     src={logo} 
                     alt="" 
                     className="h-[200px] w-[300px]" 
                 />
-                </div>
+                </div></Link>
                 <div className="mt-16 flex flex-col justify-center items-center px-4">
                     <div className="relative group">
 

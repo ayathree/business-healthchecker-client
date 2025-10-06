@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { calculateStrengthScores } from "../utility/strength";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import { TypeAnimation } from "react-type-animation";
 import logo from '../assets/logo.png'
@@ -49,9 +49,9 @@ const StrengthStrategy = () => {
             <div className="absolute bottom-10 left-20 w-72 h-72 bg-blue-50/50 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-2000"></div>
             
             <div className="relative z-10">
-               <div className="flex justify-center items-center pt-8">
+               <Link to={'/'}><div className="flex justify-center items-center pt-8">
                   <img src={logo} alt="" className="h-[200px] w-[300px]" />
-               </div>
+               </div></Link>
 
                 <div className="mt-8">
                     <p className="text-2xl text-center font-bold capitalize text-slate-800">Strength & Strategy Assessment</p>

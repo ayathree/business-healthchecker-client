@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { calculateVisionScores } from "../utility/goalAndVision";
 import { TypeAnimation } from "react-type-animation";
 import logo from '../assets/logo.png'
@@ -39,9 +39,9 @@ const VisionAndGoal = () => {
             
             <div className="relative z-10">
                 {/* Header Section */}
-                 <div className="flex justify-center items-center pt-8">
+                 <Link to={'/'}><div className="flex justify-center items-center pt-8">
                      <img src={logo} alt="" className="h-[200px] w-[300px]" />
-                  </div>
+                  </div></Link>
 
                 <div className="mt-8">
                     <p className="text-2xl text-center font-bold capitalize text-slate-800">Vision & Goal Assessment</p>
