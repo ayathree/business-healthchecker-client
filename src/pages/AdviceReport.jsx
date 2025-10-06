@@ -260,7 +260,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
           justifyContent: 'space-around',
           alignItems: 'center',
         }}>
-          <div>
+          <Link to={'/'}><div>
             <img 
               src="https://i.ibb.co.com/KzWNyxsQ/Chat-GPT-Image-Sep-1-2025-11-23-34-AM.png" 
               alt="" 
@@ -269,7 +269,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
                 height: '200px'
               }} 
             />
-          </div>
+          </div></Link>
           <div style={{ width: '300px' }}></div>
           {/* <div style={{ width: '300px' }}></div> */}
           <div>
