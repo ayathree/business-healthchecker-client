@@ -1,59 +1,13 @@
-// Import the sentiment library
-import Sentiment from 'sentiment';
+const mainMarketTotal = 21;
 
-// Initialize sentiment analyzer once
-const sentimentAnalyzer = new Sentiment();
-
-const mainMarketTotal=21
-
-// Helper function to analyze sentiment for market/customer text
-function analyzeMarketSentiment(text) {
-  if (!text || typeof text !== 'string' || text.trim().length === 0) {
-    return {
-      score: 0,
-      comparative: 0,
-      sentiment: 'neutral',
-      confidence: 0,
-      tokenCount: 0
-    };
-  }
-  
-  // Use the sentiment library for analysis
-  const result = sentimentAnalyzer.analyze(text);
-  
-  // Determine sentiment category
-  let sentimentCategory = 'neutral';
-  if (result.comparative > 0.1) sentimentCategory = 'positive';
-  else if (result.comparative < -0.1) sentimentCategory = 'negative';
-  
-  // Calculate confidence based on score strength
-  const confidence = Math.min(1, Math.abs(result.comparative) * 10);
-  
-  return {
-    score: result.score,
-    comparative: result.comparative,
-    sentiment: sentimentCategory,
-    confidence: confidence,
-    tokenCount: result.words.length,
-    tokens: result.words
-  };
-}
-
-// Generate market/customer advice based on metrics and sentiment
-function generateMarketAdvice(metricName, value, description = null, additionalData = null) {
-  let sentiment = { sentiment: 'neutral', confidence: 0.5 };
-  
-  // Analyze description text if provided
-  if (description && typeof description === 'string' && description.trim().length > 0) {
-    sentiment = analyzeMarketSentiment(description);
-  }
-
+// Generate market/customer advice based on metrics
+function generateMarketAdvice(metricName, value) {
   const adviceTemplates = {
     'marketScope': {
-      high: "Excellent market understanding! Clear scope definition indicates strong market awareness.",
-      medium: "Good market scope definition. Consider more detailed market segmentation.",
-      low: "Market scope needs refinement. Focus on defining your target market more precisely.",
-      level: (level) => `Market scope level ${level}/3. ${level >= 2 ? 'Solid market understanding.' : 'Needs deeper market analysis.'}`
+      '3': "Excellent! International market reach provides massive growth potential.",
+      '2': "Good! National market offers substantial opportunities.",
+      '1': "Regional market provides focused opportunities. Consider expansion.",
+      'default': "Market scope needs definition for strategic planning."
     },
     'marketSize': {
       high: "Large market size identified! Significant growth potential available.",
@@ -62,14 +16,16 @@ function generateMarketAdvice(metricName, value, description = null, additionalD
       none: "Market size undefined. Critical to understand your total addressable market."
     },
     'marketTrend': {
-      expanding: "Market is expanding! Excellent timing for growth and investment.",
-      stable: "Market is stable. Focus on gaining market share and efficiency.",
-      contracting: "Market is contracting. Consider diversification or niche strategies."
+      '3': "Market is expanding! Excellent timing for growth and investment.",
+      '2': "Market is stable. Focus on gaining market share and efficiency.", 
+      '1': "Market is contracting. Consider diversification or niche strategies.",
+      'default': "Market trend analysis needed for strategic planning."
     },
     'targetCustomer': {
-      identified: "Excellent customer targeting! Well-defined target audience.",
-      everyone: "Targeting too broad. Focus on specific customer segments for better results.",
-      unknown: "Customer targeting unclear. Critical to define your ideal customer profile."
+      '3': "Excellent customer targeting! Well-defined target audience.",
+      '1': "Targeting too broad. Focus on specific customer segments for better results.",
+      '0': "Customer targeting unclear. Critical to define your ideal customer profile.",
+      'default': "Customer targeting requires definition."
     },
     'monthlyCustomers': {
       high: "Strong customer base! Excellent monthly customer volume.",
@@ -79,7 +35,7 @@ function generateMarketAdvice(metricName, value, description = null, additionalD
     },
     'repeatCustomers': {
       high: "Outstanding customer loyalty! High repeat business indicates great satisfaction.",
-      medium: "Good customer retention. Focus on improving repeat rates.",
+      medium: "Good customer retention. Focus on improving repeat rates.", 
       low: "Low repeat business. Prioritize customer satisfaction and loyalty programs.",
       none: "Minimal repeat customers. Critical to improve customer experience."
     },
@@ -91,43 +47,39 @@ function generateMarketAdvice(metricName, value, description = null, additionalD
     }
   };
 
-  // Generate appropriate message based on metric
   let message = '';
   let performance = '';
 
   switch (metricName) {
     case 'marketScope':
-      performance = value >= 3 ? 'high' : value >= 2 ? 'medium' : 'low';
-      message = value > 0 ? adviceTemplates.marketScope.level(value) : adviceTemplates.marketScope.none;
+    case 'marketTrend':
+    case 'targetCustomer':
+      performance = value;
+      message = adviceTemplates[metricName][value] || adviceTemplates[metricName].default;
       break;
       
     case 'marketSize':
-      performance = value >= 3 ? 'high' : value >= 2 ? 'medium' : value >= 1 ? 'low' : 'none';
+      const sizeValue = parseInt(value) || 0;
+      performance = sizeValue > 10000 ? 'high' : sizeValue > 1000 ? 'medium' : sizeValue > 0 ? 'low' : 'none';
       message = adviceTemplates.marketSize[performance];
       break;
       
-    case 'marketTrend':
-      message = adviceTemplates.marketTrend[value] || "Market trend analysis needed.";
-      performance = value;
-      break;
-      
-    case 'targetCustomer':
-      message = adviceTemplates.targetCustomer[value] || "Customer targeting requires definition.";
-      performance = value;
-      break;
-      
     case 'monthlyCustomers':
-      performance = value >= 3 ? 'high' : value >= 2 ? 'medium' : value >= 1 ? 'low' : 'none';
+      const monthlyValue = parseInt(value) || 0;
+      performance = monthlyValue > 200 ? 'high' : monthlyValue > 50 ? 'medium' : monthlyValue > 10 ? 'low' : 'none';
       message = adviceTemplates.monthlyCustomers[performance];
       break;
       
     case 'repeatCustomers':
-      performance = value >= 3 ? 'high' : value >= 2 ? 'medium' : value >= 1 ? 'low' : 'none';
+      // Handle percentage input (remove % sign if present)
+      const repeatValue = parseInt(value.toString().replace('%', '')) || 0;
+      performance = repeatValue > 60 ? 'high' : repeatValue > 30 ? 'medium' : repeatValue > 10 ? 'low' : 'none';
       message = adviceTemplates.repeatCustomers[performance];
       break;
       
     case 'competitors':
-      performance = value >= 3 ? 'high' : value >= 2 ? 'medium' : value >= 1 ? 'low' : 'none';
+      const compValue = parseInt(value) || 0;
+      performance = compValue >= 1000 ? 'high' : compValue > 10 ? 'medium' : compValue > 0 ? 'low' : 'none';
       message = adviceTemplates.competitors[performance];
       break;
       
@@ -135,121 +87,96 @@ function generateMarketAdvice(metricName, value, description = null, additionalD
       message = "Market analysis provided. Continuous market monitoring is essential.";
   }
 
-  // Add sentiment insights if description provided
-  if (description && description.trim().length > 0) {
-    if (sentiment.sentiment === 'positive') {
-      message += " Positive market sentiment detected in analysis.";
-    } else if (sentiment.sentiment === 'negative') {
-      message += " Cautious market sentiment noted in assessment.";
-    }
-  }
-
   return {
     message: message,
-    sentiment: sentiment.sentiment,
-    confidence: sentiment.confidence,
     performance: performance,
     value: value
   };
 }
 
-// Enhanced market analysis with sentiment capabilities
+// Calculate market scores
 export function calculateMarketScores(formData) {
   const scores = {
     marketScope: 0,
-    marketSize: 0,
+    marketSize: 0, 
     marketTrend: 0,
     targetCustomer: 0,
     monthlyCustomers: 0,
     repeatCustomers: 0,
     competitors: 0,
-    totalPoints: 0,
+    totalMarketPoints: 0,
     percentage: 0
   };
 
   const advice = {};
 
-  // Helper function to calculate score with sentiment-aware advice
-  const calculateMarketScore = (value, metricName, descriptionField = null) => {
-    let score = 0;
-    let numericValue = typeof value === 'number' ? value : parseInt(value) || 0;
+  // Calculate market scope score (1-3 points)
+  scores.marketScope = parseInt(formData.marketScope) || 0;
+  advice.marketScope = generateMarketAdvice('marketScope', formData.marketScope);
 
-    switch (metricName) {
-      case 'marketScope':
-        score = Math.min(3, Math.max(0, numericValue));
-        break;
-        
-      case 'marketSize':
-        if (numericValue > 10000) score = 3;
-        else if (numericValue > 1000) score = 2;
-        else if (numericValue > 0) score = 1;
-        break;
-        
-      case 'marketTrend':
-        if (value === "expanding") score = 3;
-        else if (value === "stable") score = 2;
-        else if (value === "contracting") score = 1;
-        break;
-        
-      case 'targetCustomer':
-        if (value === "identified") score = 3;
-        else if (value === "everyone") score = 1;
-        break;
-        
-      case 'monthlyCustomers':
-        if (numericValue > 200) score = 3;
-        else if (numericValue > 50) score = 2;
-        else if (numericValue > 10) score = 1;
-        break;
-        
-      case 'repeatCustomers':
-        if (numericValue > 60) score = 3;
-        else if (numericValue > 30) score = 2;
-        else if (numericValue > 10) score = 1;
-        break;
-        
-      case 'competitors':
-        if (numericValue >= 1000) score = 3;
-        else if (numericValue > 10) score = 2;
-        else if (numericValue > 0) score = 1;
-        break;
-    }
+  // Calculate market size score
+  const marketSizeValue = parseInt(formData.marketSize) || 0;
+  if (marketSizeValue > 10000) scores.marketSize = 3;
+  else if (marketSizeValue > 1000) scores.marketSize = 2; 
+  else if (marketSizeValue > 0) scores.marketSize = 1;
+  advice.marketSize = generateMarketAdvice('marketSize', formData.marketSize);
 
-    // Generate advice with optional description analysis
-    const description = descriptionField ? formData[descriptionField] : null;
-    advice[metricName] = generateMarketAdvice(metricName, value, description);
+  // Calculate market trend score
+  scores.marketTrend = parseInt(formData.marketTrend) || 0;
+  advice.marketTrend = generateMarketAdvice('marketTrend', formData.marketTrend);
 
-    return score;
-  };
+  // Calculate target customer score
+  scores.targetCustomer = parseInt(formData.targetCustomer) || 0;
+  advice.targetCustomer = generateMarketAdvice('targetCustomer', formData.targetCustomer);
 
-  // Calculate all scores
-  scores.marketScope = calculateMarketScore(formData.marketScope, 'marketScope', 'marketScopeDescription');
-  scores.marketSize = calculateMarketScore(formData.marketSize, 'marketSize', 'marketSizeDescription');
-  scores.marketTrend = calculateMarketScore(formData.marketTrend, 'marketTrend', 'marketTrendDescription');
-  scores.targetCustomer = calculateMarketScore(formData.targetCustomer, 'targetCustomer', 'targetCustomerDescription');
-  scores.monthlyCustomers = calculateMarketScore(formData.monthlyCustomers, 'monthlyCustomers', 'customersDescription');
-  scores.repeatCustomers = calculateMarketScore(formData.repeatCustomers, 'repeatCustomers', 'retentionDescription');
-  scores.competitors = calculateMarketScore(formData.competitors, 'competitors', 'competitionDescription');
+  // Calculate monthly customers score
+  const monthlyValue = parseInt(formData.monthlyCustomers) || 0;
+  if (monthlyValue > 200) scores.monthlyCustomers = 3;
+  else if (monthlyValue > 50) scores.monthlyCustomers = 2;
+  else if (monthlyValue > 10) scores.monthlyCustomers = 1;
+  advice.monthlyCustomers = generateMarketAdvice('monthlyCustomers', formData.monthlyCustomers);
 
-  // Calculate total points (max 21)
-  const totalMarketPoints = Object.values(scores).reduce((sum, score) => sum + score, 0);
+  // Calculate repeat customers score
+  const repeatValue = parseInt(formData.repeatCustomers.toString().replace('%', '')) || 0;
+  if (repeatValue > 60) scores.repeatCustomers = 3;
+  else if (repeatValue > 30) scores.repeatCustomers = 2;
+  else if (repeatValue > 10) scores.repeatCustomers = 1;
+  advice.repeatCustomers = generateMarketAdvice('repeatCustomers', formData.repeatCustomers);
+
+  // Calculate competitors score
+  const compValue = parseInt(formData.competitors) || 0;
+  if (compValue >= 1000) scores.competitors = 3;
+  else if (compValue > 10) scores.competitors = 2;
+  else if (compValue > 0) scores.competitors = 1;
+  advice.competitors = generateMarketAdvice('competitors', formData.competitors);
+
+  // Calculate totals
+  const totalPoints = Object.values(scores).reduce((sum, score, index) => {
+    return index < 7 ? sum + score : sum; // Sum first 7 scores only
+  }, 0);
   
-  scores.percentage = Math.round((totalMarketPoints / mainMarketTotal) * 100);
-  scores.totalMarketPoints = totalMarketPoints;
+  scores.totalMarketPoints = totalPoints;
+  scores.percentage = Math.round((totalPoints / mainMarketTotal) * 100);
   scores.advice = advice;
 
-  return {...scores,mainMarketTotal};
+  return { ...scores, mainMarketTotal };
 }
 
-// Additional function for detailed market analysis
-export function analyzeMarketOpportunity(marketData, description = null) {
-  const sentiment = description ? analyzeMarketSentiment(description) : { sentiment: 'neutral', confidence: 0.5 };
+// Utility function for market analysis summary
+export function getMarketAnalysisSummary(scores) {
+  const performanceLevel = scores.percentage >= 80 ? 'Excellent' :
+                          scores.percentage >= 60 ? 'Good' :
+                          scores.percentage >= 40 ? 'Average' : 'Needs Improvement';
   
   return {
-    marketSize: marketData.size,
-    growthPotential: marketData.trend === 'expanding' ? 'high' : marketData.trend === 'stable' ? 'medium' : 'low',
-    competitionLevel: marketData.competitors >= 1000 ? 'high' : marketData.competitors > 10 ? 'medium' : 'low',
-    sentiment: sentiment.sentiment,
-    recommendation: generateMarketAdvice('marketScope', marketData.scope, description).message
+    performanceLevel,
+    totalPoints: scores.totalMarketPoints,
+    maxPoints: mainMarketTotal,
+    percentage: scores.percentage,
+    recommendation: scores.percentage >= 70 ? 
+      "Strong market position. Focus on growth and expansion." :
+      scores.percentage >= 50 ?
+      "Moderate market position. Improve weak areas." :
+      "Market position needs significant improvement. Review strategy."
   };
 }
