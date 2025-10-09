@@ -4,88 +4,180 @@ import Sentiment from 'sentiment';
 // Initialize sentiment analyzer once
 const sentimentAnalyzer = new Sentiment();
 
-const mainVisionTotal=15
+const mainVisionTotal = 15;
 
-// Helper function to analyze sentiment using the library's full capabilities
+// CUSTOMIZED: Enhanced sentiment analysis for vision statements
 function analyzeVisionSentiment(text) {
   if (!text || typeof text !== 'string' || text.trim().length === 0) {
     return {
       score: 0,
       comparative: 0,
       sentiment: 'neutral',
+      confidence: 0,
       positiveWords: [],
       negativeWords: [],
-      tokenCount: 0
+      tokenCount: 0,
+      visionClarity: 0
     };
   }
   
-  // Let the sentiment library do ALL the work automatically
   const result = sentimentAnalyzer.analyze(text);
+  const trimmedText = text.trim();
+  const wordCount = trimmedText.split(/\s+/).length;
   
-  // Determine sentiment category based on the library's comprehensive analysis
+  // CUSTOMIZED: More realistic thresholds for vision statements
   let sentimentCategory = 'neutral';
-  if (result.comparative > 0.05) sentimentCategory = 'positive';
-  else if (result.comparative < -0.05) sentimentCategory = 'negative';
+  let confidence = Math.min(1, Math.abs(result.comparative) * 15); // Increased multiplier
+  
+  if (result.comparative > 0.03) sentimentCategory = 'positive';    // Reduced threshold
+  else if (result.comparative < -0.03) sentimentCategory = 'negative'; // Reduced threshold
+  
+  // CUSTOMIZED: Vision-specific word analysis
+  const visionKeywords = [
+    'growth', 'expand', 'increase', 'achieve', 'success', 'leadership',
+    'innovation', 'excellence', 'quality', 'customer', 'market', 'revenue',
+    'profit', 'efficiency', 'development', 'transformation', 'digital',
+    'technology', 'sustainable', 'competitive', 'premium', 'value'
+  ];
+  
+  const positiveVisionWords = [
+    'excellent', 'outstanding', 'amazing', 'great', 'strong', 'premium',
+    'best', 'top', 'leading', 'innovative', 'quality', 'successful',
+    'profitable', 'efficient', 'sustainable', 'competitive'
+  ];
+  
+  // Count vision-related keywords
+  const visionKeywordCount = visionKeywords.filter(keyword => 
+    new RegExp(`\\b${keyword}\\b`, 'i').test(text)
+  ).length;
+  
+  const positiveVisionWordCount = positiveVisionWords.filter(keyword =>
+    new RegExp(`\\b${keyword}\\b`, 'i').test(text)
+  ).length;
+  
+  // CUSTOMIZED: Vision clarity score based on content
+  const hasFutureOrientation = /(will|going to|future|next|years|vision|goal|target|plan|strategy)/i.test(text);
+  const hasSpecificMetrics = /\d+|%|\$|million|thousand|growth|expand|increase|reach|achievement/i.test(text);
+  const hasTimeline = /(year|month|quarter|deadline|by|until|within|timeframe)/i.test(text);
+  
+  let visionClarity = 0;
+  if (hasFutureOrientation) visionClarity += 1;
+  if (hasSpecificMetrics) visionClarity += 1;
+  if (hasTimeline) visionClarity += 1;
+  if (wordCount > 30) visionClarity += 1;
+  
+  // CUSTOMIZED: Boost sentiment if vision clarity is high
+  if (visionClarity >= 3 && sentimentCategory === 'neutral') {
+    sentimentCategory = 'positive';
+    confidence = Math.max(confidence, 0.7);
+  }
   
   return {
     score: result.score,
-    comparative: result.comparative, // This is the score per word (most important)
+    comparative: result.comparative,
     sentiment: sentimentCategory,
-    positiveWords: result.positive, // Library-detected positive words
-    negativeWords: result.negative, // Library-detected negative words
+    confidence: confidence,
+    positiveWords: result.positive,
+    negativeWords: result.negative,
     tokenCount: result.words.length,
-    tokens: result.words
+    tokens: result.words,
+    visionClarity: visionClarity,
+    visionKeywordCount: visionKeywordCount,
+    positiveVisionWordCount: positiveVisionWordCount,
+    hasFutureOrientation: hasFutureOrientation,
+    hasSpecificMetrics: hasSpecificMetrics,
+    hasTimeline: hasTimeline,
+    wordCount: wordCount
   };
 }
 
-// Generate advice based PURELY on automatic sentiment analysis
+// CUSTOMIZED: Enhanced advice generation
 function generateSentimentAdvice(sentimentAnalysis, question, answer) {
-  // For vision text - use ONLY the automatic sentiment analysis
   if (question === 'visionText') {
-    const { sentiment, comparative, positiveWords, negativeWords, tokenCount } = sentimentAnalysis;
+    const { 
+      sentiment, 
+      comparative, 
+      positiveWords, 
+      negativeWords, 
+      visionClarity,
+      visionKeywordCount,
+      positiveVisionWordCount,
+      hasFutureOrientation,
+      hasSpecificMetrics,
+      hasTimeline,
+      wordCount
+    } = sentimentAnalysis;
     
+    let message = '';
+    
+    // CUSTOMIZED: More nuanced advice based on multiple factors
     if (sentiment === 'negative') {
-      return {
-        message: "Your vision carries some concerning tones. The sentiment analysis detected more negative language. Consider focusing on opportunities and strengths rather than challenges.",
-        positiveWords: positiveWords.length,
-        negativeWords: negativeWords.length,
-        comparativeScore: comparative.toFixed(3)
-      };
+      message = "Your vision shows some concerns. Focus on opportunities and strengths. ";
     } else if (sentiment === 'positive') {
-      return {
-        message: "Excellent vision statement! The sentiment analysis detected strong positive language that will inspire and motivate your team.",
-        positiveWords: positiveWords.length,
-        negativeWords: negativeWords.length,
-        comparativeScore: comparative.toFixed(3)
-      };
-    } else {
-      return {
-        message: "Your vision appears balanced and practical. The sentiment is neutral, which suggests a factual rather than emotional approach.",
-        positiveWords: positiveWords.length,
-        negativeWords: negativeWords.length,
-        comparativeScore: comparative.toFixed(3)
-      };
+      if (visionClarity >= 3) {
+        message = "Excellent vision! Clear, future-oriented with specific targets. ";
+      } else if (visionClarity >= 2) {
+        message = "Strong vision statement with good direction. ";
+      } else {
+        message = "Positive vision! Consider adding more specific details. ";
+      }
+    } else { // neutral
+      if (visionClarity >= 3) {
+        message = "Well-structured vision with clear goals (neutral tone). ";
+        sentimentAnalysis.sentiment = 'positive'; // Boost for high clarity
+      } else if (visionClarity >= 2) {
+        message = "Practical vision statement. Could benefit from more inspirational language. ";
+      } else {
+        message = "Vision needs more development and specific details. ";
+      }
     }
+    
+    // Add clarity feedback
+    if (!hasFutureOrientation) {
+      message += "Add future-oriented language. ";
+    }
+    if (!hasSpecificMetrics) {
+      message += "Include specific, measurable targets. ";
+    }
+    if (!hasTimeline) {
+      message += "Define clear timelines. ";
+    }
+    if (wordCount < 20) {
+      message += "Expand your vision with more details. ";
+    }
+    
+    return {
+      message: message.trim(),
+      positiveWords: positiveWords.length,
+      negativeWords: negativeWords.length,
+      comparativeScore: comparative.toFixed(3),
+      visionClarity: visionClarity,
+      visionKeywords: visionKeywordCount
+    };
   }
   
-  // For other questions, use simple value-based advice
+  // Rest of the function remains same...
   const adviceMap = {
     'hasVision': {
-      'written': 'Great job having a written vision! Documented goals are 42% more likely to be achieved.',
-      'inMind': 'Consider documenting your vision. Written goals are much more effective than mental plans.',
-      'noUnderstanding': "It's important to understand SMART goals for effective vision setting."
+      'written': 'Excellent! Written vision dramatically increases success probability.',
+      'inMind': 'Good start! Documenting your vision will improve clarity and focus.',
+      'noUnderstanding': 'SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound) provide clear direction.'
     },
     'hasActionPlan': {
-      'yes': 'Strong planning! Consistent execution separates dreams from reality.',
-      'no': 'Action planning is essential. Begin with just the next 90 days.'
+      'yes': 'Strong execution planning! Regular reviews ensure progress.',
+      'no': 'Action planning is crucial. Start with 90-day milestones for quick wins.'
     },
     'resourcePercentage': (value) => {
       const numValue = parseInt(value) || 0;
-      return `Resource assessment: ${numValue}/10. ${numValue >= 7 ? 'Good resource awareness!' : 'Focus on strategic allocation.'}`;
+      const actualPercent = numValue * 10;
+      if (actualPercent >= 80) return `Strong resource base (${actualPercent}%)! Focus on optimal utilization.`;
+      if (actualPercent >= 50) return `Moderate resources (${actualPercent}%). Strategic allocation needed.`;
+      if (actualPercent >= 20) return `Limited resources (${actualPercent}%). Creativity and partnerships help.`;
+      return `Minimal resources (${actualPercent}%). Leverage existing assets effectively.`;
     },
     'hasSkilledManpower': {
-      'yes': 'Strong team foundation! Invest in your people—they build your future.',
-      'no': 'Team capabilities are important. Consider skills development before new hiring.'
+      'yes': 'Strong team foundation! Continuous development drives growth.',
+      'no': 'Team capabilities are key. Consider training before new hiring.'
     }
   };
   
@@ -110,22 +202,39 @@ function generateSentimentAdvice(sentimentAnalysis, question, answer) {
     message, 
     positiveWords: 0, 
     negativeWords: 0,
-    comparativeScore: 0 
+    comparativeScore: 0,
+    visionClarity: 0,
+    visionKeywords: 0
   };
 }
 
-// Vision quality scoring based PURELY on automatic sentiment analysis
+// CUSTOMIZED: Enhanced vision quality scoring
 function calculateVisionQualityScore(sentimentAnalysis) {
-  const { comparative } = sentimentAnalysis;
+  const { comparative, visionClarity, visionKeywordCount, positiveVisionWordCount } = sentimentAnalysis;
   
-  // Convert comparative score (-inf to +inf) to a 0-3 scale
-  if (comparative > 0.1) return 3;    // Very positive
-  if (comparative > 0.05) return 2;   // Positive
-  if (comparative > -0.05) return 1;  // Neutral
-  return 0;                            // Negative
+  // Base score from sentiment
+  let baseScore = 0;
+  if (comparative > 0.03) baseScore = 2;    // Reduced threshold
+  else if (comparative > 0.01) baseScore = 1; 
+  else if (comparative < -0.03) baseScore = 0;
+  else baseScore = 1; // Neutral gets 1 instead of 0
+  
+  // Boost score based on vision clarity
+  const clarityBoost = visionClarity * 0.5; // Up to 2 points boost
+  
+  // Boost for vision keywords
+  const keywordBoost = Math.min(1, visionKeywordCount / 5);
+  
+  // Boost for positive vision words
+  const positiveBoost = Math.min(1, positiveVisionWordCount / 3);
+  
+  const totalScore = baseScore + clarityBoost + keywordBoost + positiveBoost;
+  
+  // Convert to 0-3 scale
+  return Math.min(3, Math.max(0, Math.round(totalScore)));
 }
 
-// Main scoring function with AUTOMATIC sentiment analysis
+// Enhanced main scoring function
 export function calculateVisionScores(responses) {
   const scores = {
     writtenVision: responses.hasVision === "written" ? 3 : 
@@ -140,11 +249,11 @@ export function calculateVisionScores(responses) {
     skilledManpower: responses.hasSkilledManpower === "yes" ? 3 : 0
   };
   
-  // Analyze sentiment AUTOMATICALLY for vision text
+  // Enhanced sentiment analysis
   const visionSentiment = analyzeVisionSentiment(responses.visionText);
   scores.visionQuality = calculateVisionQualityScore(visionSentiment);
   
-  // Generate advice for each field
+  // Generate enhanced advice
   scores.advice = {
     hasVision: generateSentimentAdvice({sentiment: 'neutral'}, 'hasVision', responses.hasVision),
     visionText: generateSentimentAdvice(visionSentiment, 'visionText', responses.visionText),
@@ -153,7 +262,7 @@ export function calculateVisionScores(responses) {
     hasSkilledManpower: generateSentimentAdvice({sentiment: 'neutral'}, 'hasSkilledManpower', responses.hasSkilledManpower)
   };
 
-  // Store the full sentiment analysis for debugging
+  // Store enhanced analysis
   scores.sentimentAnalysis = visionSentiment;
 
   // Calculate totals
@@ -164,14 +273,16 @@ export function calculateVisionScores(responses) {
   return {...scores, totalVisionPoints, mainVisionTotal};
 }
 
-// Simple function to get vision advice
+// Enhanced vision advice function
 export function getVisionAdvice(visionText) {
   if (!visionText || visionText.trim().length < 5) {
     return {
-      message: "Please provide a more detailed vision statement for analysis.",
+      message: "Please provide a more detailed vision statement (minimum 5 words) for meaningful analysis.",
       positiveWords: 0,
       negativeWords: 0,
-      comparativeScore: 0
+      comparativeScore: 0,
+      visionClarity: 0,
+      visionKeywords: 0
     };
   }
   
