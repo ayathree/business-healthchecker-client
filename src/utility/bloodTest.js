@@ -1,191 +1,277 @@
-// Import the sentiment library
-import Sentiment from 'sentiment';
+const mainBloodTestTotal = 30;
 
-// Initialize sentiment analyzer once
-const sentimentAnalyzer = new Sentiment();
-
-const mainBloodTestTotal=30
-
-// Helper function to analyze sentiment for financial/business text
-function analyzeFinancialSentiment(text) {
-  if (!text || typeof text !== 'string' || text.trim().length === 0) {
-    return {
-      score: 0,
-      comparative: 0,
-      sentiment: 'neutral',
-      confidence: 0,
-      tokenCount: 0
-    };
-  }
-  
-  // Use the sentiment library for analysis
-  const result = sentimentAnalyzer.analyze(text);
-  
-  // Determine sentiment category
-  let sentimentCategory = 'neutral';
-  if (result.comparative > 0.1) sentimentCategory = 'positive';
-  else if (result.comparative < -0.1) sentimentCategory = 'negative';
-  
-  // Calculate confidence based on score strength
-  const confidence = Math.min(1, Math.abs(result.comparative) * 10);
-  
-  return {
-    score: result.score,
-    comparative: result.comparative,
-    sentiment: sentimentCategory,
-    confidence: confidence,
-    tokenCount: result.words.length,
-    tokens: result.words
-  };
-}
-
-// Generate financial advice based on sentiment and content analysis
-function generateFinancialAdvice(question, answer, value = null) {
-  // Analyze sentiment of the answer
-  const sentiment = analyzeFinancialSentiment(answer);
-  
-  const adviceTemplates = {
-    // Revenue and financial metrics
-    'avgMonthlyRevenue': {
-      positive: "Strong revenue reporting! Clear financial tracking shows good business awareness.",
-      neutral: "Revenue data provided. Consider more precise tracking for better insights.",
-      negative: "Revenue reporting needs improvement. Accurate financial data is crucial for decision-making."
-    },
-    'grossProfitMargin': {
-      positive: "Excellent profit margin awareness! Understanding margins is key to profitability.",
-      neutral: "Margin information provided. Regular margin analysis can drive better pricing strategies.",
-      negative: "Profit margin clarity needed. Focus on understanding your true costs and pricing."
-    },
-    'monthlyFixedCosts': {
-      positive: "Great cost awareness! Knowing fixed costs helps with financial planning and stability.",
-      neutral: "Cost information noted. Detailed cost tracking can reveal optimization opportunities.",
-      negative: "Cost understanding needs improvement. Fixed costs significantly impact cash flow."
-    },
-    
-    // Loans and financial obligations
-    'loanInstallment': {
-      positive: "Good loan management awareness! Understanding debt obligations is crucial for financial health.",
-      neutral: "Loan information provided. Regular debt review helps maintain financial stability.",
-      negative: "Loan clarity needed. Debt management is essential for business sustainability."
-    },
-    
-    // Operational metrics
-    'dailyProduction': {
-      positive: "Excellent production awareness! Capacity understanding drives operational efficiency.",
-      neutral: "Production data provided. Detailed capacity tracking can improve resource allocation.",
-      negative: "Production clarity needed. Understanding capacity constraints is key to growth."
-    },
-    
-    // Investment and assets
-    'totalInvestment': {
-      positive: "Strong investment tracking! Good awareness of capital deployment and business value.",
-      neutral: "Investment information provided. Regular investment review supports strategic decisions.",
-      negative: "Investment clarity needed. Understanding capital structure is vital for growth planning."
-    },
-    'totalAssets': {
-      positive: "Excellent asset awareness! Good understanding of business valuation and resource allocation.",
-      neutral: "Asset information provided. Comprehensive asset tracking supports financial management.",
-      negative: "Asset clarity needed. Understanding your asset base is crucial for financial health."
-    },
-    
-    // Customer metrics
-    'customersQ4_2021': {
-      positive: "Great customer tracking! Understanding historical trends informs future strategies.",
-      neutral: "Customer data provided. Detailed customer analytics can reveal growth opportunities.",
-      negative: "Customer clarity needed. Tracking customer metrics is essential for business development."
-    },
-    'customersQ1_2022': {
-      positive: "Excellent recent customer awareness! Current data drives immediate business decisions.",
-      neutral: "Customer information provided. Regular customer tracking supports adaptive strategies.",
-      negative: "Recent customer clarity needed. Up-to-date metrics are crucial for responsive management."
+// Financial scoring thresholds and advice templates
+const financialMetrics = {
+  avgMonthlyRevenue: {
+    thresholds: [50000, 100000, 200000], // 0-50k, 50k-100k, 100k-200k, 200k+
+    advice: {
+      3: "Excellent revenue! Strong monthly sales indicate healthy business growth.",
+      2: "Good revenue stream. Consistent monthly income supports business stability.",
+      1: "Moderate revenue. Focus on sales strategies to increase monthly income.",
+      0: "Low revenue. Urgent need to develop customer acquisition and sales channels."
     }
-  };
+  },
+  grossProfitMargin: {
+    thresholds: [15, 25, 35], // 0-15%, 15-25%, 25-35%, 35%+
+    advice: {
+      3: "Outstanding profit margin! Highly efficient operations and pricing strategy.",
+      2: "Good profit margin. Healthy business with sustainable profitability.",
+      1: "Moderate profit margin. Review costs and pricing for better margins.",
+      0: "Low profit margin. Critical to optimize costs and improve pricing strategy."
+    }
+  },
+  monthlyFixedCost: {
+    thresholds: [50000, 100000, 200000], // Cost levels
+    advice: {
+      3: "Well-managed fixed costs! Efficient cost structure supports profitability.",
+      2: "Reasonable fixed costs. Good balance between expenses and operations.",
+      1: "Moderate fixed costs. Review expenses for optimization opportunities.",
+      0: "High fixed costs. Urgent need to optimize operational expenses."
+    }
+  },
+  loanManagement: {
+    thresholds: [0, 0.2, 0.4], // Debt-to-revenue ratio
+    advice: {
+      3: "Excellent debt management! Minimal loans or well-managed debt structure.",
+      2: "Good loan management. Manageable debt with proper financial planning.",
+      1: "Moderate debt load. Monitor loan obligations carefully.",
+      0: "High debt concern. Critical to review and manage loan commitments."
+    }
+  },
+  ownerSalary: {
+    thresholds: [10000, 20000, 30000], // Salary levels
+    advice: {
+      3: "Reasonable owner compensation! Balanced salary supports personal and business needs.",
+      2: "Moderate owner salary. Sustainable compensation level.",
+      1: "Low owner salary. Consider fair compensation for your contributions.",
+      0: "Minimal owner compensation. Review personal financial needs."
+    }
+  },
+  dailyProduction: {
+    thresholds: [50, 100, 200], // Production capacity
+    advice: {
+      3: "Strong production capacity! High output supports sales and growth.",
+      2: "Good production level. Meets current demand effectively.",
+      1: "Moderate production. Consider capacity expansion for growth.",
+      0: "Limited production. Focus on optimizing production processes."
+    }
+  },
+  totalInvestment: {
+    thresholds: [100000, 500000, 1000000], // Investment levels
+    advice: {
+      3: "Significant capital investment! Strong financial foundation for growth.",
+      2: "Good investment level. Adequate capital for business operations.",
+      1: "Moderate investment. Consider additional capital for expansion.",
+      0: "Minimal investment. Build capital base for business development."
+    }
+  },
+  totalAssets: {
+    thresholds: [100000, 500000, 1000000], // Asset values
+    advice: {
+      3: "Strong asset base! Valuable business assets support long-term stability.",
+      2: "Good asset foundation. Solid business valuation and resources.",
+      1: "Moderate assets. Focus on asset accumulation and value creation.",
+      0: "Limited assets. Build asset base for business credibility."
+    }
+  },
+  customerGrowth: {
+    thresholds: [0, 0.1, 0.3], // Growth percentage
+    advice: {
+      3: "Excellent customer growth! Strong acquisition and retention strategies.",
+      2: "Good customer growth. Steady business development.",
+      1: "Moderate customer base. Focus on customer acquisition.",
+      0: "Declining customers. Urgent need for customer growth strategies."
+    }
+  }
+};
 
-  // Get the appropriate advice based on question and sentiment
-  const template = adviceTemplates[question];
-  if (template) {
+// Calculate score based on value and thresholds
+function calculateFinancialScore(value, metricConfig) {
+  if (!value && value !== 0) return 0;
+  
+  const numValue = parseFloat(value);
+  if (isNaN(numValue)) return 0;
+  
+  const { thresholds } = metricConfig;
+  
+  if (numValue >= thresholds[2]) return 3;
+  if (numValue >= thresholds[1]) return 2;
+  if (numValue >= thresholds[0]) return 1;
+  return 0;
+}
+
+// Generate financial advice based on score
+function generateFinancialAdvice(metricName, score, actualValue = null) {
+  const metricConfig = financialMetrics[metricName];
+  if (!metricConfig) {
     return {
-      message: template[sentiment.sentiment],
-      sentiment: sentiment.sentiment,
-      confidence: sentiment.confidence,
-      score: sentiment.comparative
+      message: "Financial metric assessment completed.",
+      performance: 'neutral',
+      value: score
     };
   }
-  
+
+  let message = metricConfig.advice[score];
+  let performance = score >= 3 ? 'excellent' : score >= 2 ? 'good' : score >= 1 ? 'moderate' : 'poor';
+
+  // Add context for specific metrics
+  if (actualValue !== null) {
+    switch (metricName) {
+      case 'avgMonthlyRevenue':
+        message += ` (₹${actualValue.toLocaleString()}/month)`;
+        break;
+      case 'grossProfitMargin':
+        message += ` (${actualValue}% margin)`;
+        break;
+      case 'monthlyFixedCost':
+        message += ` (₹${actualValue.toLocaleString()}/month)`;
+        break;
+      case 'ownerSalary':
+        message += ` (₹${actualValue.toLocaleString()}/month)`;
+        break;
+      case 'totalInvestment':
+        message += ` (₹${actualValue.toLocaleString()} invested)`;
+        break;
+      case 'totalAssets':
+        message += ` (₹${actualValue.toLocaleString()} assets)`;
+        break;
+    }
+  }
+
   return {
-    message: "Thank you for the financial information. Regular tracking of this metric supports better business decisions.",
-    sentiment: 'neutral',
-    confidence: 0.5,
-    score: 0
+    message,
+    performance,
+    value: score,
+    numericValue: actualValue
   };
 }
 
-// Score calculation logic for Business Metrics section (6.1-6.10)
+// Main scoring function - 100% compatible with your form
 export function calculateBloodTestScores(formData) {
   const scores = {
     avgMonthlyRevenue: 0,
     grossProfitMargin: 0,
-    monthlyFixedCosts: 0,
-    loanInstallment: 0,
+    monthlyFixedCost: 0,
+    loanManagement: 0,
     ownerSalary: 0,
     dailyProduction: 0,
     totalInvestment: 0,
     totalAssets: 0,
-    customersQ4_2021: 0,
-    customersQ1_2022: 0,
+    customerGrowth: 0,
     totalBloodTestPoints: 0,
     percentage: 0
   };
 
   const advice = {};
 
-  // Helper function to calculate score based on sentiment and content quality
-  const calculateScore = (answer, question) => {
-    if (!answer || answer.trim().length === 0) return 0;
-    
-    const sentiment = analyzeFinancialSentiment(answer);
-    const lengthScore = Math.min(3, Math.floor(answer.length / 10)); // Reward detailed answers
-    const numericScore = /\d/.test(answer) ? 2 : 0; // Reward numeric data
-    
-    // Base score on sentiment strength and content quality
-    let score = 0;
-    
-    if (sentiment.sentiment === 'positive') score = 2 + lengthScore + numericScore;
-    else if (sentiment.sentiment === 'neutral') score = 1 + lengthScore + numericScore;
-    else score = lengthScore; // Negative sentiment gets minimal points
-    
-    // Generate advice
-    advice[question] = generateFinancialAdvice(question, answer);
-    
-    return Math.min(3, Math.max(0, score));
-  };
+  // 6.1 Average Monthly Revenue
+  const revenue = parseFloat(formData.avgMonthlyRevenue) || 0;
+  scores.avgMonthlyRevenue = calculateFinancialScore(revenue, financialMetrics.avgMonthlyRevenue);
+  advice.avgMonthlyRevenue = generateFinancialAdvice('avgMonthlyRevenue', scores.avgMonthlyRevenue, revenue);
 
-  // Calculate scores using sentiment analysis
-  scores.avgMonthlyRevenue = calculateScore(formData.avgMonthlyRevenue, 'avgMonthlyRevenue');
-  scores.grossProfitMargin = calculateScore(formData.grossProfitMargin, 'grossProfitMargin');
-  scores.monthlyFixedCosts = calculateScore(formData.monthlyFixedCosts, 'monthlyFixedCosts');
-  scores.loanInstallment = calculateScore(formData.loanInstallment, 'loanInstallment');
-  scores.ownerSalary = calculateScore(formData.ownerSalary, 'ownerSalary');
-  scores.dailyProduction = calculateScore(formData.dailyProduction, 'dailyProduction');
-  scores.totalInvestment = calculateScore(formData.totalInvestment, 'totalInvestment');
-  scores.totalAssets = calculateScore(formData.totalAssets, 'totalAssets');
-  scores.customersQ4_2021 = calculateScore(formData.customersQ4_2021, 'customersQ4_2021');
-  scores.customersQ1_2022 = calculateScore(formData.customersQ1_2022, 'customersQ1_2022');
+  // 6.2 Gross Profit Margin
+  const margin = parseFloat(formData.grossProfitMargin) || 0;
+  scores.grossProfitMargin = calculateFinancialScore(margin, financialMetrics.grossProfitMargin);
+  advice.grossProfitMargin = generateFinancialAdvice('grossProfitMargin', scores.grossProfitMargin, margin);
 
-  // Calculate total points (max 30)
-  const totalBloodTestPoints = Object.values(scores)
+  // 6.3 Monthly Fixed Cost
+  const fixedCost = parseFloat(formData.monthlyFixedCost) || 0;
+  scores.monthlyFixedCost = calculateFinancialScore(fixedCost, financialMetrics.monthlyFixedCost);
+  advice.monthlyFixedCost = generateFinancialAdvice('monthlyFixedCost', scores.monthlyFixedCost, fixedCost);
+
+  // 6.4 Loan Management
+  let loanScore = 0;
+  if (formData.hasLoan === 'no') {
+    loanScore = 3; // No loans = excellent
+  } else if (formData.hasLoan === 'yes') {
+    const installment = parseFloat(formData.loanInstallment) || 0;
+    const debtRatio = revenue > 0 ? installment / revenue : 1;
+    loanScore = calculateFinancialScore(1 - debtRatio, financialMetrics.loanManagement);
+  }
+  scores.loanManagement = loanScore;
+  advice.loanManagement = generateFinancialAdvice('loanManagement', loanScore);
+
+  // 6.5 Owner Salary
+  const salary = parseFloat(formData.ownerSalary) || 0;
+  scores.ownerSalary = calculateFinancialScore(salary, financialMetrics.ownerSalary);
+  advice.ownerSalary = generateFinancialAdvice('ownerSalary', scores.ownerSalary, salary);
+
+  // 6.6 Daily Production
+  const production = parseFloat(formData.dailyProduction) || 0;
+  scores.dailyProduction = calculateFinancialScore(production, financialMetrics.dailyProduction);
+  advice.dailyProduction = generateFinancialAdvice('dailyProduction', scores.dailyProduction, production);
+
+  // 6.7 Total Investment
+  const investment = parseFloat(formData.totalInvestment) || 0;
+  scores.totalInvestment = calculateFinancialScore(investment, financialMetrics.totalInvestment);
+  advice.totalInvestment = generateFinancialAdvice('totalInvestment', scores.totalInvestment, investment);
+
+  // 6.8 Total Assets
+  const assets = parseFloat(formData.totalAssets) || 0;
+  scores.totalAssets = calculateFinancialScore(assets, financialMetrics.totalAssets);
+  advice.totalAssets = generateFinancialAdvice('totalAssets', scores.totalAssets, assets);
+
+  // 6.9-6.10 Customer Growth Analysis
+  const customersQ4 = parseFloat(formData.customersQ4_2021) || 0;
+  const customersQ1 = parseFloat(formData.customersQ1_2025) || 0;
+  
+  let growthScore = 0;
+  if (customersQ4 > 0 && customersQ1 > 0) {
+    const growthRate = (customersQ1 - customersQ4) / customersQ4;
+    growthScore = calculateFinancialScore(growthRate, financialMetrics.customerGrowth);
+  } else if (customersQ1 > 0) {
+    growthScore = 2; // New customers only in current period
+  }
+  scores.customerGrowth = growthScore;
+  advice.customerGrowth = generateFinancialAdvice('customerGrowth', growthScore);
+
+  // Calculate totals
+  const totalPoints = Object.values(scores)
     .filter(val => typeof val === 'number')
     .reduce((sum, score) => sum + score, 0);
 
-  // Convert to percentage
-  scores.percentage = Math.round((totalBloodTestPoints / mainBloodTestTotal) * 100);
-  scores.totalBloodTestPoints = totalBloodTestPoints;
+  scores.totalBloodTestPoints = totalPoints;
+  scores.percentage = Math.round((totalPoints / mainBloodTestTotal) * 100);
   scores.advice = advice;
 
-  return {...scores,mainBloodTestTotal};
+  return {
+    ...scores,
+    mainBloodTestTotal,
+    performanceLevel: getFinancialPerformanceLevel(scores.percentage)
+  };
 }
 
-// Simple function to get financial advice for any metric
-export function getFinancialAdvice(metricName, answer) {
-  return generateFinancialAdvice(metricName, answer);
+// Performance level utility
+function getFinancialPerformanceLevel(percentage) {
+  if (percentage >= 80) return 'Excellent Financial Health';
+  if (percentage >= 60) return 'Good Financial Position';
+  if (percentage >= 40) return 'Moderate Financial Condition';
+  return 'Needs Financial Improvement';
+}
+
+// Quick financial health assessment
+export function analyzeFinancialHealth(scores) {
+  const strengths = [];
+  const concerns = [];
+
+  if (scores.avgMonthlyRevenue >= 2) strengths.push("Strong revenue generation");
+  else concerns.push("Improve monthly revenue");
+
+  if (scores.grossProfitMargin >= 2) strengths.push("Healthy profit margins");
+  else concerns.push("Optimize profit margins");
+
+  if (scores.loanManagement >= 2) strengths.push("Good debt management");
+  else concerns.push("Review loan obligations");
+
+  if (scores.customerGrowth >= 2) strengths.push("Positive customer growth");
+  else concerns.push("Focus on customer acquisition");
+
+  return {
+    strengths,
+    concerns,
+    overallScore: scores.percentage,
+    recommendation: strengths.length >= 4 ? 
+      "Strong financial foundation. Focus on strategic growth." :
+      "Build financial stability through revenue and cost optimization."
+  };
 }
