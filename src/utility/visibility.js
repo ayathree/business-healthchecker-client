@@ -1,216 +1,217 @@
-// Import the sentiment library
-import Sentiment from 'sentiment';
+const mainVisibilityTotal = 12;
 
-// Initialize sentiment analyzer once
-const sentimentAnalyzer = new Sentiment();
+// Social media scoring configuration
+const socialMediaMetrics = {
+  facebookLikes: {
+    thresholds: [100, 1000, 10000], // low, medium, high
+    advice: {
+      3: "Excellent Facebook presence! Strong engagement indicates good brand awareness.",
+      2: "Good Facebook following. Consider more engaging content to boost likes.",
+      1: "Facebook presence needs improvement. Focus on regular posting and engagement.",
+      0: "Facebook visibility requires attention. Start with consistent content strategy."
+    }
+  },
+  instagramFollowers: {
+    thresholds: [100, 500, 5000], // low, medium, high
+    advice: {
+      3: "Outstanding Instagram reach! Strong visual presence and audience connection.",
+      2: "Solid Instagram following. Leverage stories and reels for better engagement.",
+      1: "Instagram growth needed. Focus on visual content and hashtag strategy.",
+      0: "Instagram presence underdeveloped. Invest in visual content creation."
+    }
+  },
+  youtubeSubscribers: {
+    thresholds: [10, 100, 1000], // low, medium, high
+    advice: {
+      3: "Excellent YouTube channel! Strong subscriber base indicates valuable content.",
+      2: "Good YouTube presence. Consistent uploads can drive subscriber growth.",
+      1: "YouTube channel needs growth. Focus on regular, valuable video content.",
+      0: "YouTube visibility minimal. Consider video content strategy."
+    }
+  },
+  postReach: {
+    thresholds: [50, 500, 5000], // low, medium, high
+    advice: {
+      3: "Exceptional post reach! Content resonates well with your audience.",
+      2: "Good content reach. Optimize posting times for better engagement.",
+      1: "Post reach needs improvement. Focus on quality and relevance of content.",
+      0: "Limited content reach. Revise content strategy and targeting."
+    }
+  }
+};
 
-const mainVisibilityTotal=12
+// Calculate score based on value and thresholds
+function calculateSocialMediaScore(value, metricConfig) {
+  if (!value && value !== 0) return 0;
+  
+  const numValue = parseSocialMediaValue(value);
+  if (isNaN(numValue)) return 0;
+  
+  const { thresholds } = metricConfig;
+  
+  if (numValue >= thresholds[2]) return 3;
+  if (numValue >= thresholds[1]) return 2;
+  if (numValue >= thresholds[0]) return 1;
+  return 0;
+}
 
-// Helper function to analyze sentiment for social media/text content
-function analyzeSocialMediaSentiment(text) {
-  if (!text || typeof text !== 'string' || text.trim().length === 0) {
+// Parse social media numbers safely
+function parseSocialMediaValue(value) {
+  if (!value) return 0;
+  if (typeof value === 'number') return value;
+  
+  // Remove any non-digit characters and parse
+  const cleanedValue = value.toString().replace(/[^\d]/g, '');
+  const parsed = parseInt(cleanedValue);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+// Generate social media advice based on score
+function generateVisibilityAdvice(metricName, score, actualValue = null) {
+  const metricConfig = socialMediaMetrics[metricName];
+  if (!metricConfig) {
     return {
-      score: 0,
-      comparative: 0,
-      sentiment: 'neutral',
-      confidence: 0,
-      tokenCount: 0
+      message: "Social media assessment completed.",
+      performance: 'neutral',
+      value: score
     };
   }
-  
-  // Use the sentiment library for analysis
-  const result = sentimentAnalyzer.analyze(text);
-  
-  // Determine sentiment category
-  let sentimentCategory = 'neutral';
-  if (result.comparative > 0.1) sentimentCategory = 'positive';
-  else if (result.comparative < -0.1) sentimentCategory = 'negative';
-  
-  // Calculate confidence based on score strength
-  const confidence = Math.min(1, Math.abs(result.comparative) * 10);
-  
-  return {
-    score: result.score,
-    comparative: result.comparative,
-    sentiment: sentimentCategory,
-    confidence: confidence,
-    tokenCount: result.words.length,
-    tokens: result.words
-  };
-}
 
-// Generate visibility/social media advice based on metrics and sentiment
-function generateVisibilityAdvice(metricName, value, description = null) {
-  let sentiment = { sentiment: 'neutral', confidence: 0.5 };
-  
-  // Analyze description text if provided
-  if (description && typeof description === 'string' && description.trim().length > 0) {
-    sentiment = analyzeSocialMediaSentiment(description);
-  }
+  let message = metricConfig.advice[score];
+  let performance = score >= 3 ? 'excellent' : score >= 2 ? 'good' : score >= 1 ? 'moderate' : 'poor';
 
-  const adviceTemplates = {
-    'facebookLikes': {
-      high: "Excellent Facebook presence! Strong engagement indicates good brand awareness.",
-      medium: "Good Facebook following. Consider more engaging content to boost likes.",
-      low: "Facebook presence needs improvement. Focus on regular posting and engagement.",
-      none: "Facebook visibility requires attention. Start with consistent content strategy."
-    },
-    'instagramFollowers': {
-      high: "Outstanding Instagram reach! Strong visual presence and audience connection.",
-      medium: "Solid Instagram following. Leverage stories and reels for better engagement.",
-      low: "Instagram growth needed. Focus on visual content and hashtag strategy.",
-      none: "Instagram presence underdeveloped. Invest in visual content creation."
-    },
-    'youtubeSubscribers': {
-      high: "Excellent YouTube channel! Strong subscriber base indicates valuable content.",
-      medium: "Good YouTube presence. Consistent uploads can drive subscriber growth.",
-      low: "YouTube channel needs growth. Focus on regular, valuable video content.",
-      none: "YouTube visibility minimal. Consider video content strategy."
-    },
-    'postReach': {
-      high: "Exceptional post reach! Content resonates well with your audience.",
-      medium: "Good content reach. Optimize posting times for better engagement.",
-      low: "Post reach needs improvement. Focus on quality and relevance of content.",
-      none: "Limited content reach. Revise content strategy and targeting."
-    },
-    'engagementRate': {
-      high: "Excellent engagement rates! Audience is highly involved with your content.",
-      medium: "Good engagement levels. Interactive content can boost participation.",
-      low: "Engagement needs improvement. Focus on calls-to-action and responses.",
-      none: "Low engagement detected. Prioritize audience interaction."
-    }
-  };
-
-  // Determine performance level based on value
-  let performanceLevel = 'none';
-  if (value > 0) {
-    const thresholds = {
-      'facebookLikes': { high: 10000, medium: 1000, low: 100 },
-      'instagramFollowers': { high: 5000, medium: 500, low: 100 },
-      'youtubeSubscribers': { high: 1000, medium: 100, low: 10 },
-      'postReach': { high: 5000, medium: 500, low: 50 },
-      'engagementRate': { high: 10, medium: 5, low: 2 } // percentage
-    };
-
-    if (value >= thresholds[metricName]?.high) performanceLevel = 'high';
-    else if (value >= thresholds[metricName]?.medium) performanceLevel = 'medium';
-    else if (value >= thresholds[metricName]?.low) performanceLevel = 'low';
-  }
-
-  let message = adviceTemplates[metricName]?.[performanceLevel] || 
-               "Social media presence needs development and strategy.";
-
-  // Add sentiment-based insights if description provided
-  if (description && description.trim().length > 0) {
-    if (sentiment.sentiment === 'positive') {
-      message += " Positive audience sentiment detected in feedback.";
-    } else if (sentiment.sentiment === 'negative') {
-      message += " Some negative sentiment noted in audience feedback.";
+  // Add context with actual numbers
+  if (actualValue !== null) {
+    switch (metricName) {
+      case 'facebookLikes':
+        message += ` (${actualValue.toLocaleString()} likes)`;
+        break;
+      case 'instagramFollowers':
+        message += ` (${actualValue.toLocaleString()} followers)`;
+        break;
+      case 'youtubeSubscribers':
+        message += ` (${actualValue.toLocaleString()} subscribers)`;
+        break;
+      case 'postReach':
+        message += ` (${actualValue.toLocaleString()} average reach)`;
+        break;
     }
   }
 
   return {
-    message: message,
-    sentiment: sentiment.sentiment,
-    confidence: sentiment.confidence,
-    performance: performanceLevel,
-    value: value
+    message,
+    performance,
+    value: score,
+    numericValue: actualValue
   };
 }
 
-// Enhanced scoring with sentiment analysis capabilities
+// Main scoring function - 100% compatible with your form
 export function calculateVisibilityScores(formData) {
   const scores = {
     facebookLikes: 0,
     instagramFollowers: 0,
     youtubeSubscribers: 0,
     postReach: 0,
-    engagementRate: 0,
     totalVisibilityPoints: 0,
     percentage: 0
   };
 
   const advice = {};
 
-  // Parse numeric values safely
-  const parseSocialMediaValue = (value) => {
-    if (!value) return 0;
-    if (typeof value === 'number') return value;
-    const parsed = parseInt(value.toString().replace(/[^\d]/g, ''));
-    return isNaN(parsed) ? 0 : parsed;
-  };
+  // 8.1 Facebook Likes Scoring
+  const facebookLikes = parseSocialMediaValue(formData.facebookLikes);
+  scores.facebookLikes = calculateSocialMediaScore(facebookLikes, socialMediaMetrics.facebookLikes);
+  advice.facebookLikes = generateVisibilityAdvice('facebookLikes', scores.facebookLikes, facebookLikes);
 
-  // Calculate scores with sentiment-aware advice
-  const calculateVisibilityScore = (value, metricName, descriptionField = null) => {
-    const numericValue = parseSocialMediaValue(value);
-    let score = 0;
+  // 8.2 Instagram Followers Scoring
+  const instagramFollowers = parseSocialMediaValue(formData.instagramFollowers);
+  scores.instagramFollowers = calculateSocialMediaScore(instagramFollowers, socialMediaMetrics.instagramFollowers);
+  advice.instagramFollowers = generateVisibilityAdvice('instagramFollowers', scores.instagramFollowers, instagramFollowers);
 
-    switch (metricName) {
-      case 'facebookLikes':
-        if (numericValue > 10000) score = 3;
-        else if (numericValue >= 1000) score = 2;
-        else if (numericValue >= 100) score = 1;
-        break;
-      
-      case 'instagramFollowers':
-        if (numericValue > 5000) score = 3;
-        else if (numericValue >= 500) score = 2;
-        else if (numericValue >= 100) score = 1;
-        break;
-      
-      case 'youtubeSubscribers':
-        if (numericValue > 1000) score = 3;
-        else if (numericValue >= 100) score = 2;
-        else if (numericValue >= 10) score = 1;
-        break;
-      
-      case 'postReach':
-        if (numericValue > 5000) score = 3;
-        else if (numericValue >= 500) score = 2;
-        else if (numericValue >= 50) score = 1;
-        break;
-      
-      case 'engagementRate':
-        if (numericValue > 10) score = 3;
-        else if (numericValue >= 5) score = 2;
-        else if (numericValue >= 2) score = 1;
-        break;
-    }
+  // 8.3 YouTube Subscribers Scoring
+  const youtubeSubscribers = parseSocialMediaValue(formData.youtubeSubscribers);
+  scores.youtubeSubscribers = calculateSocialMediaScore(youtubeSubscribers, socialMediaMetrics.youtubeSubscribers);
+  advice.youtubeSubscribers = generateVisibilityAdvice('youtubeSubscribers', scores.youtubeSubscribers, youtubeSubscribers);
 
-    // Generate advice with optional description analysis
-    const description = descriptionField ? formData[descriptionField] : null;
-    advice[metricName] = generateVisibilityAdvice(metricName, numericValue, description);
+  // 8.4 Post Reach Scoring
+  const postReach = parseSocialMediaValue(formData.postReach);
+  scores.postReach = calculateSocialMediaScore(postReach, socialMediaMetrics.postReach);
+  advice.postReach = generateVisibilityAdvice('postReach', scores.postReach, postReach);
 
-    return score;
-  };
-
-  // Calculate all scores
-  scores.facebookLikes = calculateVisibilityScore(formData.facebookLikes, 'facebookLikes', 'facebookDescription');
-  scores.instagramFollowers = calculateVisibilityScore(formData.instagramFollowers, 'instagramFollowers', 'instagramDescription');
-  scores.youtubeSubscribers = calculateVisibilityScore(formData.youtubeSubscribers, 'youtubeSubscribers', 'youtubeDescription');
-  scores.postReach = calculateVisibilityScore(formData.postReach, 'postReach', 'postReachDescription');
-  scores.engagementRate = calculateVisibilityScore(formData.engagementRate, 'engagementRate', 'engagementDescription');
-
-  // Calculate totals
-  const totalVisibilityPoints = scores.facebookLikes + scores.instagramFollowers + 
-                      scores.youtubeSubscribers + scores.postReach + scores.engagementRate;
-  
-  scores.percentage = Math.round((totalVisibilityPoints / mainVisibilityTotal) * 100); // 5 metrics * 3 points max = 15
+  // Calculate total points (max 12 - 4 metrics × 3 points each)
+  const totalVisibilityPoints = 
+    scores.facebookLikes +
+    scores.instagramFollowers +
+    scores.youtubeSubscribers +
+    scores.postReach;
+    
+  scores.percentage = Math.round((totalVisibilityPoints / mainVisibilityTotal) * 100);
   scores.totalVisibilityPoints = totalVisibilityPoints;
   scores.advice = advice;
 
-  return {...scores,mainVisibilityTotal};
+  return {
+    ...scores,
+    mainVisibilityTotal,
+    performanceLevel: getVisibilityPerformanceLevel(scores.percentage)
+  };
 }
 
-// Additional function for detailed social media analysis
-export function analyzeSocialMediaPerformance(platform, followers, engagement, description = null) {
-  const sentiment = description ? analyzeSocialMediaSentiment(description) : { sentiment: 'neutral', confidence: 0.5 };
-  
+// Performance level utility
+function getVisibilityPerformanceLevel(percentage) {
+  if (percentage >= 80) return 'Excellent Social Media Presence';
+  if (percentage >= 60) return 'Good Social Media Reach';
+  if (percentage >= 40) return 'Moderate Online Visibility';
+  return 'Needs Social Media Development';
+}
+
+// Social media analysis function
+export function analyzeSocialMediaPerformance(scores) {
+  const strengths = [];
+  const improvements = [];
+
+  if (scores.facebookLikes >= 2) strengths.push("Strong Facebook presence");
+  else improvements.push("Improve Facebook engagement");
+
+  if (scores.instagramFollowers >= 2) strengths.push("Good Instagram following");
+  else improvements.push("Grow Instagram audience");
+
+  if (scores.youtubeSubscribers >= 2) strengths.push("Solid YouTube channel");
+  else improvements.push("Develop YouTube content");
+
+  if (scores.postReach >= 2) strengths.push("Effective content reach");
+  else improvements.push("Increase post visibility");
+
   return {
-    platform: platform,
-    followerCount: followers,
-    engagementScore: engagement,
-    sentiment: sentiment.sentiment,
-    recommendation: generateVisibilityAdvice(platform.toLowerCase(), followers, description).message
+    strengths,
+    improvements,
+    overallScore: scores.percentage,
+    recommendation: strengths.length >= 2 ? 
+      "Strong social media foundation. Focus on content strategy and engagement." :
+      "Build social media presence through consistent posting and audience engagement."
   };
+}
+
+// Quick social media assessment
+export function getSocialMediaAdvice(platform, count) {
+  const numericCount = parseSocialMediaValue(count);
+  let score = 0;
+
+  switch (platform) {
+    case 'facebook':
+      score = calculateSocialMediaScore(numericCount, socialMediaMetrics.facebookLikes);
+      return generateVisibilityAdvice('facebookLikes', score, numericCount);
+    case 'instagram':
+      score = calculateSocialMediaScore(numericCount, socialMediaMetrics.instagramFollowers);
+      return generateVisibilityAdvice('instagramFollowers', score, numericCount);
+    case 'youtube':
+      score = calculateSocialMediaScore(numericCount, socialMediaMetrics.youtubeSubscribers);
+      return generateVisibilityAdvice('youtubeSubscribers', score, numericCount);
+    default:
+      return {
+        message: "Social media platform assessment completed.",
+        performance: 'neutral',
+        value: 0
+      };
+  }
 }
