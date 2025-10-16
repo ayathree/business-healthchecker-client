@@ -94,7 +94,7 @@ If you have any questions or need help:
 
 ## 🚀 Live Demo
 
-Check out the live application: [https://business-healthchecker-client.vercel.app]
+[Check out the live application](https://business-healthchecker-client.vercel.app)
 
 ---
 

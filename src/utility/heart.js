@@ -123,7 +123,7 @@ function calculateProductScore(answer, metricName) {
   return metricConfig.scores[answer] || 0;
 }
 
-// Main scoring function - 100% compatible with your form
+// Main scoring function 
 export function calculateHeartScores(formData) {
   const scores = {
     uniqueFeatures: 0,

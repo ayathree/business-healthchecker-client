@@ -146,7 +146,7 @@ function generateFinancialAdvice(metricName, score, actualValue = null) {
   };
 }
 
-// Main scoring function - 100% compatible with your form
+// Main scoring function
 export function calculateBloodTestScores(formData) {
   const scores = {
     avgMonthlyRevenue: 0,

@@ -106,7 +106,7 @@ function generateVisibilityAdvice(metricName, score, actualValue = null) {
   };
 }
 
-// Main scoring function - 100% compatible with your form
+// Main scoring function 
 export function calculateVisibilityScores(formData) {
   const scores = {
     facebookLikes: 0,

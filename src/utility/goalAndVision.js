@@ -243,7 +243,7 @@ class BusinessVisionAnalyzer {
   }
 }
 
-// Main scoring function for your existing system
+// Main scoring function for  existing system
 export function calculateVisionScores(responses) {
   const analyzer = new BusinessVisionAnalyzer();
   

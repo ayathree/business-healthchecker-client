@@ -74,7 +74,7 @@ function generateStrengthAdvice(metricName, value, numericValue = null) {
   };
 }
 
-// Optimized strength analysis - 100% compatible with your form
+// Optimized strength analysis
 export function calculateStrengthScores(responses) {
   const scores = {
     employeeCount: 0,
