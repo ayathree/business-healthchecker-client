@@ -254,12 +254,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
       {/* Screen version - original design */}
       <div className="screen-only p-8 bg-blue-50">
         {/* Original header section */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}>
+        <div className="flex lg:flex-row flex-col justify-around gap-2 items-center">
           <Link to={'/'}><div>
             <img 
               src="https://i.ibb.co.com/KzWNyxsQ/Chat-GPT-Image-Sep-1-2025-11-23-34-AM.png" 
@@ -273,11 +268,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
           <div style={{ width: '300px' }}></div>
           {/* <div style={{ width: '300px' }}></div> */}
           <div>
-            <p style={{
-              fontSize: '2.25rem',
-              fontWeight: '600',
-              marginBottom: '1rem'
-            }}>
+            <p className="flex lg:flex-row flex-col justify-center items-center text-3xl font-bold">
               Total Score: 
               <span style={{
                 border: '2px solid black',
@@ -298,7 +289,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
           padding: '1.5rem',
           backgroundColor: '#e5e7eb'
         }}>
-          <div className="grid grid-cols-2 justify-center items-center gap-4">
+          <div className="flex lg:flex-row flex-col justify-around items-center gap-4">
             <div>
               <h2 style={{
                 fontSize: '2.25rem',
@@ -332,9 +323,9 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
 
         {/* Original scores section */}
         <section className="flex justify-center items-center bg-gray-50">
-          <div className="grid grid-cols-3 grid-rows-7 gap-0">
+          <div className="grid md:grid-cols-3 grid-cols-2 grid-rows-7 gap-0">
             {/* Left column - progress bars */}
-            <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
+            <div className="flex flex-col gap-6 row-span-7 md:space-y-3 ">
               {/* Progress bars */}
               <div className="flex items-center gap-2 mt-16">
                 <div className="w-full bg-gray-200 rounded-full h-6">
@@ -412,12 +403,12 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
               <img
                 src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg"
                 alt="Business health chart"
-                className="h-[550px] object-contain"
+                className="md:h-[550px] h-[470px] object-contain"
               />
             </div>
 
             {/* Right column - labels */}
-            <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
+            <div className="flex flex-col gap-6 row-span-7 space-y-10 hidden md:block  ">
               <p className="text-xm font-bold text-red-400 mt-16">
                 Business Preparation, Legals & Positions
               </p>
@@ -447,12 +438,12 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
 
         {/* Original recommendations section */}
         <div>
-          <h2 className="text-5xl font-semibold m-10 text-center">Recommendations</h2>
+          <h2 className="md:text-5xl text-2xl font-semibold md:m-10 mt-10 text-center">Recommendations</h2>
           <section className="flex justify-center items-center ">
-            <div className="grid grid-cols-3 grid-rows-7 gap-6">
+            <div className="grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2 grid-rows-7 gap-6">
               {/* Left column */}
-              <div className="flex flex-col gap-6 row-span-7 space-y-3 ">
-                <div className="h-[250px]"></div>
+              <div className="flex flex-col gap-4 row-span-7 space-y-1 ">
+                <div className="lg:h-[150px]"></div>
 
                 
                 <div className="">
@@ -506,7 +497,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
               </div>
 
               {/* Middle column - image */}
-              <div className="row-span-7 flex justify-center items-center">
+              <div className="row-span-7 flex justify-center items-center hidden lg:block">
                 <img
                   src="https://i.ibb.co.com/0j7gJRff/Whats-App-Image-2025-09-01-at-13-26-13-8a3ce716.jpg"
                   alt="Business health chart"
@@ -515,7 +506,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
               </div>
 
               {/* Right column */}
-              <div className="flex flex-col gap-6 row-span-7 space-y-3  ">
+              <div className="flex flex-col gap-4 row-span-7 space-y-1  ">
                 <div className="">
                   <p className="text-lg font-bold text-red-400">
                     {statusAdvice?.tier} Status

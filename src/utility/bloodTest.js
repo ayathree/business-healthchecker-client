@@ -118,22 +118,22 @@ function generateFinancialAdvice(metricName, score, actualValue = null) {
   if (actualValue !== null) {
     switch (metricName) {
       case 'avgMonthlyRevenue':
-        message += ` (₹${actualValue.toLocaleString()}/month)`;
+        message += ` (${actualValue.toLocaleString()}/month)`;
         break;
       case 'grossProfitMargin':
         message += ` (${actualValue}% margin)`;
         break;
       case 'monthlyFixedCost':
-        message += ` (₹${actualValue.toLocaleString()}/month)`;
+        message += ` (${actualValue.toLocaleString()}/month)`;
         break;
       case 'ownerSalary':
-        message += ` (₹${actualValue.toLocaleString()}/month)`;
+        message += ` (${actualValue.toLocaleString()}/month)`;
         break;
       case 'totalInvestment':
-        message += ` (₹${actualValue.toLocaleString()} invested)`;
+        message += ` (${actualValue.toLocaleString()} invested)`;
         break;
       case 'totalAssets':
-        message += ` (₹${actualValue.toLocaleString()} assets)`;
+        message += ` (${actualValue.toLocaleString()} assets)`;
         break;
     }
   }
