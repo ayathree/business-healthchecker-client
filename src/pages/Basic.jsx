@@ -39,7 +39,7 @@ const Basic = () => {
                 </div></Link>
                 
                 <div className="mt-8">
-                    <p className="text-2xl text-center font-bold capitalize text-slate-800">Basic Information loto</p>
+                    <p className="text-2xl text-center font-bold capitalize text-slate-800">Basic Information </p>
                     <div className="flex justify-center items-center mb-10">
                         <TypeAnimation
                             sequence={[
