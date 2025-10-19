@@ -268,7 +268,7 @@ const totalPoints=totalBloodTestPoints+totalMarketPoints+totalPositionPoints+tot
           <div style={{ width: '300px' }}></div>
           {/* <div style={{ width: '300px' }}></div> */}
           <div>
-            <p className="flex lg:flex-row flex-col justify-center items-center text-3xl font-semibold">
+            <p className="flex lg:flex-row flex-col justify-center items-center text-3xl font-bold">
               Total Score: 
               <span style={{
                 border: '2px solid black',
